@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import { siteConfig } from "@/data/site";
 import { services } from "@/data/services";
+import { NoiseOverlay } from "@/components/AnimatedBackground";
 
 const footerNav = [
   { label: "Home", href: "#home" },
@@ -17,14 +19,36 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-stone-200/60 bg-white px-6 pt-16 pb-8 lg:px-10">
-      <div className="mx-auto max-w-7xl">
-        {/* Large statement */}
+    <footer className="relative overflow-hidden border-t border-stone-200/60 bg-white px-6 pt-16 pb-8 lg:px-10">
+      <NoiseOverlay opacity={0.015} />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        {/* Large animated statement */}
         <div className="mb-14">
-          <p className="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl md:text-5xl"
+          >
             Let&apos;s build something{" "}
-            <span className="text-gradient-violet">great.</span>
-          </p>
+            <motion.span
+              className="inline-block text-gradient-violet"
+              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                backgroundSize: "200% 200%",
+                background:
+                  "linear-gradient(135deg, #6C3AED, #3B82F6, #EC4899, #FB923C, #6C3AED)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              great.
+            </motion.span>
+          </motion.p>
         </div>
 
         {/* Grid */}
@@ -58,18 +82,20 @@ export default function Footer() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                    className="group inline-flex text-sm text-stone-500 transition-colors hover:text-stone-900"
                   >
                     {l.label}
+                    <span className="ml-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
                   </a>
                 </li>
               ))}
               <li>
                 <a
                   href="/booking"
-                  className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                  className="group inline-flex text-sm text-stone-500 transition-colors hover:text-stone-900"
                 >
                   Book a Session
+                  <span className="ml-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
                 </a>
               </li>
             </ul>
@@ -85,9 +111,10 @@ export default function Footer() {
                 <li key={s.id}>
                   <a
                     href="#services"
-                    className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                    className="group inline-flex text-sm text-stone-500 transition-colors hover:text-stone-900"
                   >
                     {s.title}
+                    <span className="ml-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
                   </a>
                 </li>
               ))}
@@ -106,9 +133,12 @@ export default function Footer() {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                    className="group inline-flex items-center gap-1 text-sm text-stone-500 transition-colors hover:text-stone-900"
                   >
                     {l.label}
+                    <span className="translate-x-0 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">
+                      ↗
+                    </span>
                   </a>
                 </li>
               ))}

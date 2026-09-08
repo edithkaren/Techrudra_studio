@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, ArrowRight } from "lucide-react";
 import { services, type Service } from "@/data/services";
+import { DotGrid, Orbs } from "@/components/AnimatedBackground";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -42,7 +43,7 @@ function ServiceCard({
       viewport={{ once: true, margin: "-60px" }}
       whileHover={{ y: -4 }}
       onClick={onClick}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-6 text-left transition-all duration-300 hover:border-stone-300 hover:shadow-xl hover:shadow-stone-900/[0.06] sm:p-8"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-stone-200/80 bg-white/80 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-stone-300 hover:shadow-xl hover:shadow-stone-900/[0.06] sm:p-8"
     >
       {/* Top accent bar */}
       <div
@@ -66,13 +67,13 @@ function ServiceCard({
           {service.tools.slice(0, 3).map((t) => (
             <span
               key={t}
-              className="rounded-full bg-stone-100 px-2.5 py-0.5 text-[11px] font-medium text-stone-600"
+              className="rounded-full bg-stone-100/80 px-2.5 py-0.5 text-[11px] font-medium text-stone-600"
             >
               {t}
             </span>
           ))}
           {service.tools.length > 3 && (
-            <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-[11px] font-medium text-stone-400">
+            <span className="rounded-full bg-stone-100/80 px-2.5 py-0.5 text-[11px] font-medium text-stone-400">
               +{service.tools.length - 3}
             </span>
           )}
@@ -107,7 +108,7 @@ function ServiceModal({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.98 }}
         transition={{ duration: 0.3 }}
-        className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-stone-200 bg-white p-8 shadow-2xl"
+        className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-stone-200 bg-white/95 backdrop-blur-md p-8 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -128,7 +129,6 @@ function ServiceModal({
           {service.summary}
         </p>
 
-        {/* Price + Duration */}
         <div className="mt-5 flex items-center gap-4">
           <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-700">
             {service.price}
@@ -199,8 +199,12 @@ export default function Services() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
-    <section id="services" className="px-6 py-24 sm:py-32 lg:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section id="services" className="relative px-6 py-24 sm:py-32 lg:px-10">
+      {/* Background decorations */}
+      <DotGrid opacity={0.15} />
+      <Orbs variant="services" />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* Section header */}
         <div className="mb-14 max-w-2xl">
           <motion.span

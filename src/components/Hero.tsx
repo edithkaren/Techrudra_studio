@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Orbs, FloatingShapes, NoiseOverlay } from "@/components/AnimatedBackground";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -16,9 +17,25 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20"
     >
-      {/* Subtle mesh background */}
+      {/* Animated background layers */}
+      <Orbs variant="hero" />
+      <FloatingShapes />
+      <NoiseOverlay opacity={0.025} />
+
+      {/* Subtle mesh gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-mesh" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(108,58,237,0.04)_0%,_transparent_70%)]" />
+
+      {/* Animated gradient sweep */}
+      <motion.div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(108,58,237,0.02) 90deg, transparent 180deg, rgba(59,130,246,0.02) 270deg, transparent 360deg)",
+        }}
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+      />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         {/* Status badge */}
@@ -72,14 +89,14 @@ export default function Hero() {
         >
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-[#6C3AED] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#5B2ED4] hover:shadow-lg hover:shadow-[#6C3AED]/25"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#6C3AED] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#5B2ED4] hover:shadow-xl hover:shadow-[#6C3AED]/30"
           >
             Start a Project
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </a>
           <a
             href="#portfolio"
-            className="inline-flex items-center rounded-full border border-stone-200 bg-white/60 px-7 py-3 text-sm font-medium text-stone-700 backdrop-blur-sm transition-all duration-300 hover:border-[#6C3AED]/30 hover:bg-white"
+            className="inline-flex items-center rounded-full border border-stone-200 bg-white/60 px-7 py-3 text-sm font-medium text-stone-700 backdrop-blur-sm transition-all duration-300 hover:border-[#6C3AED]/30 hover:bg-white hover:shadow-lg"
           >
             Explore Our Work
           </a>

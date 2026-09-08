@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+import { Orbs, NoiseOverlay } from "@/components/AnimatedBackground";
 
 const projectTypes = [
   "Website",
@@ -37,8 +38,12 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="px-6 py-24 sm:py-32 lg:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section id="contact" className="relative px-6 py-24 sm:py-32 lg:px-10">
+      {/* Background decorations */}
+      <Orbs variant="contact" />
+      <NoiseOverlay opacity={0.02} />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid gap-16 lg:grid-cols-2">
           {/* Left: copy */}
           <div>
@@ -107,7 +112,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.15 }}
           >
             {submitted ? (
-              <div className="flex flex-col items-center justify-center rounded-3xl border border-stone-200 bg-white p-10 text-center">
+              <div className="flex flex-col items-center justify-center rounded-3xl border border-stone-200 bg-white/80 backdrop-blur-sm p-10 text-center">
                 <CheckCircle2 className="mb-4 h-10 w-10 text-emerald-500" />
                 <h3 className="text-xl font-semibold text-stone-900">
                   Message received.
@@ -119,15 +124,11 @@ export default function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="rounded-3xl border border-stone-200 bg-white p-6 sm:p-8"
+                className="rounded-3xl border border-stone-200 bg-white/80 backdrop-blur-sm p-6 sm:p-8"
               >
                 <div className="grid gap-5">
-                  {/* Name */}
                   <div>
-                    <label
-                      htmlFor="name"
-                      className="mb-1.5 block text-xs font-medium text-stone-600"
-                    >
+                    <label htmlFor="name" className="mb-1.5 block text-xs font-medium text-stone-600">
                       Name
                     </label>
                     <input
@@ -139,12 +140,8 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Email */}
                   <div>
-                    <label
-                      htmlFor="email"
-                      className="mb-1.5 block text-xs font-medium text-stone-600"
-                    >
+                    <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-stone-600">
                       Email
                     </label>
                     <input
@@ -157,12 +154,8 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Project Type */}
                   <div>
-                    <label
-                      htmlFor="projectType"
-                      className="mb-1.5 block text-xs font-medium text-stone-600"
-                    >
+                    <label htmlFor="projectType" className="mb-1.5 block text-xs font-medium text-stone-600">
                       Project Type
                     </label>
                     <select
@@ -173,19 +166,13 @@ export default function Contact() {
                     >
                       <option value="">Select a project type</option>
                       {projectTypes.map((t) => (
-                        <option key={t} value={t}>
-                          {t}
-                        </option>
+                        <option key={t} value={t}>{t}</option>
                       ))}
                     </select>
                   </div>
 
-                  {/* Budget */}
                   <div>
-                    <label
-                      htmlFor="budget"
-                      className="mb-1.5 block text-xs font-medium text-stone-600"
-                    >
+                    <label htmlFor="budget" className="mb-1.5 block text-xs font-medium text-stone-600">
                       Budget Range
                     </label>
                     <select
@@ -195,19 +182,13 @@ export default function Contact() {
                     >
                       <option value="">Select budget range</option>
                       {budgetRanges.map((b) => (
-                        <option key={b} value={b}>
-                          {b}
-                        </option>
+                        <option key={b} value={b}>{b}</option>
                       ))}
                     </select>
                   </div>
 
-                  {/* Message */}
                   <div>
-                    <label
-                      htmlFor="message"
-                      className="mb-1.5 block text-xs font-medium text-stone-600"
-                    >
+                    <label htmlFor="message" className="mb-1.5 block text-xs font-medium text-stone-600">
                       Project Details
                     </label>
                     <textarea

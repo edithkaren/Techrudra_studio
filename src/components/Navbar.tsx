@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { siteConfig } from "@/data/site";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -46,11 +46,7 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="flex h-16 items-center justify-between lg:h-20">
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-1.5">
-              <span className="text-base font-bold tracking-tight text-stone-900 transition-colors hover:text-[#6C3AED]">
-                {siteConfig.name}
-              </span>
-            </a>
+            <Logo />
 
             {/* Desktop nav */}
             <div className="hidden items-center gap-8 md:flex">
@@ -58,16 +54,18 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                  className="group relative text-sm text-stone-500 transition-colors hover:text-stone-900"
                 >
                   {link.label}
+                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:w-full" />
                 </a>
               ))}
               <a
                 href="/auth"
-                className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                className="group relative text-sm text-stone-500 transition-colors hover:text-stone-900"
               >
                 Sign In
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:w-full" />
               </a>
             </div>
 
@@ -116,7 +114,13 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 bg-[#FAF8F5] backdrop-blur-xl md:hidden"
           >
-            <div className="flex h-full flex-col items-center justify-center gap-8">
+            {/* Decorative orbs in mobile menu */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#6C3AED]/5 blur-3xl" />
+              <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#3B82F6]/5 blur-3xl" />
+            </div>
+
+            <div className="relative flex h-full flex-col items-center justify-center gap-8">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
