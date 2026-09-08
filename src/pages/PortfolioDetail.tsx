@@ -2,6 +2,8 @@ import { useParams, Link } from "react-router";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { portfolioProjects } from "@/data/portfolio";
+import ProjectMockup from "@/components/ProjectMockup";
+import { Orbs, NoiseOverlay } from "@/components/AnimatedBackground";
 
 const accentColors: Record<string, string> = {
   Websites: "#6C3AED",
@@ -9,14 +11,6 @@ const accentColors: Record<string, string> = {
   Branding: "#FB923C",
   Video: "#EF4444",
   Marketing: "#14B8A6",
-};
-
-const gradients: Record<string, string> = {
-  Websites: "linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 50%, #C4B5FD 100%)",
-  AI: "linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 50%, #93C5FD 100%)",
-  Branding: "linear-gradient(135deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%)",
-  Video: "linear-gradient(135deg, #FEE2E2 0%, #FECACA 50%, #FCA5A5 100%)",
-  Marketing: "linear-gradient(135deg, #CCFBF1 0%, #99F6E4 50%, #5EEAD4 100%)",
 };
 
 export default function PortfolioDetail() {
@@ -71,9 +65,11 @@ export default function PortfolioDetail() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="px-6 pt-8 pb-16 lg:px-10"
+          className="relative overflow-hidden px-6 pt-8 pb-16 lg:px-10"
         >
-          <div className="mx-auto max-w-5xl">
+          <Orbs variant="hero" />
+          <NoiseOverlay opacity={0.02} />
+          <div className="relative z-10 mx-auto max-w-5xl">
             <span
               className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: accent }}
@@ -89,28 +85,29 @@ export default function PortfolioDetail() {
           </div>
         </motion.section>
 
-        {/* Image placeholder */}
-        <div className="px-6 lg:px-10">
+        {/* Project mockup */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="relative z-10 px-6 lg:px-10"
+        >
           <div className="mx-auto max-w-5xl">
-            <div
-              className="aspect-[16/9] w-full rounded-3xl"
-              style={{
-                background:
-                  gradients[project.category] || gradients.Websites,
-              }}
+            <ProjectMockup
+              projectSlug={project.slug}
+              category={project.category}
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Details */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="px-6 py-16 lg:px-10"
         >
           <div className="mx-auto max-w-5xl grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Client */}
             <div>
               <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-stone-400">
                 Client
@@ -119,8 +116,6 @@ export default function PortfolioDetail() {
                 {project.client}
               </p>
             </div>
-
-            {/* Role */}
             <div>
               <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-stone-400">
                 Role
@@ -129,8 +124,6 @@ export default function PortfolioDetail() {
                 {project.role}
               </p>
             </div>
-
-            {/* Technologies */}
             <div>
               <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-stone-400">
                 Technologies

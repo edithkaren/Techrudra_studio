@@ -6,6 +6,7 @@ import {
   portfolioCategories,
   type PortfolioCategory,
 } from "@/data/portfolio";
+import ProjectMockup from "@/components/ProjectMockup";
 
 const accentColors: Record<string, string> = {
   Websites: "#6C3AED",
@@ -48,14 +49,6 @@ function ProjectCard({
   const isLarge = project.featured && index % 3 === 0;
   const accent = accentColors[project.category] || "#6C3AED";
 
-  const gradients: Record<string, string> = {
-    Websites: "linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 50%, #C4B5FD 100%)",
-    AI: "linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 50%, #93C5FD 100%)",
-    Branding: "linear-gradient(135deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%)",
-    Video: "linear-gradient(135deg, #FEE2E2 0%, #FECACA 50%, #FCA5A5 100%)",
-    Marketing: "linear-gradient(135deg, #CCFBF1 0%, #99F6E4 50%, #5EEAD4 100%)",
-  };
-
   return (
     <motion.div
       layout
@@ -63,32 +56,38 @@ function ProjectCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className={`group relative overflow-hidden rounded-2xl border border-stone-200/80 bg-white transition-all duration-300 hover:border-stone-300 hover:shadow-xl hover:shadow-stone-900/[0.06] ${
+      className={`group relative overflow-hidden rounded-2xl border border-stone-200/80 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-stone-300 hover:shadow-2xl hover:shadow-stone-900/[0.08] ${
         isLarge ? "sm:col-span-2 sm:row-span-2" : ""
       }`}
     >
       <a href={`/portfolio/${project.slug}`} className="block">
-        {/* Image placeholder with category-colored gradient */}
+        {/* Mockup visual */}
         <div
-          className={`relative overflow-hidden ${
-            isLarge ? "aspect-[16/10]" : "aspect-[4/3]"
+          className={`relative overflow-hidden bg-stone-50/50 ${
+            isLarge ? "p-6 sm:p-8" : "p-4 sm:p-5"
           }`}
         >
-          <div
-            className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
-            style={{
-              background: gradients[project.category] || gradients.Websites,
-            }}
-          />
+          <motion.div
+            className="transition-transform duration-500"
+            whileHover={{ scale: 1.02 }}
+          >
+            <ProjectMockup
+              projectSlug={project.slug}
+              category={project.category}
+            />
+          </motion.div>
+
           {/* Accent stripe */}
           <div
             className="absolute top-0 left-0 h-1 w-0 transition-all duration-500 group-hover:w-full"
             style={{ backgroundColor: accent }}
           />
+
           {/* Hover overlay */}
-          <div className="absolute inset-0 bg-stone-900/0 transition-colors duration-300 group-hover:bg-stone-900/5" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
           {/* Arrow */}
-          <div className="absolute right-5 bottom-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
+          <div className="absolute right-5 bottom-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90">
             <ArrowUpRight className="h-4 w-4 text-stone-700" />
           </div>
         </div>
@@ -115,7 +114,7 @@ function ProjectCard({
             {project.technologies.map((t) => (
               <span
                 key={t}
-                className="rounded-full bg-stone-100 px-2.5 py-0.5 text-[11px] font-medium text-stone-500"
+                className="rounded-full bg-stone-100/80 px-2.5 py-0.5 text-[11px] font-medium text-stone-500"
               >
                 {t}
               </span>
@@ -178,7 +177,7 @@ export default function Portfolio() {
         </motion.div>
 
         {/* Grid */}
-        <motion.div layout className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (
               <ProjectCard key={project.id} project={project} index={i} />

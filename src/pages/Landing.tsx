@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
+import FeaturedShowcase from "@/components/FeaturedShowcase";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
@@ -13,6 +14,7 @@ export default function Landing() {
       <main>
         <Hero />
         <Marquee />
+        <FeaturedShowcase />
         <Services />
         <Portfolio />
         <Contact />
