@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Orbs, FloatingShapes, NoiseOverlay } from "@/components/AnimatedBackground";
+import { NoiseOverlay } from "@/components/AnimatedBackground";
+import {
+  LiquidBlob,
+  FlowingGradients,
+  DarkParticles,
+  LiquidWaves,
+  blobPaths,
+} from "@/components/DarkLiquidHero";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -16,27 +23,39 @@ export default function Hero() {
     <section
       id="home"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20"
+      style={{
+        background:
+          "linear-gradient(180deg, #0A0612 0%, #110D1F 30%, #15102A 60%, #0E0A1A 100%)",
+      }}
     >
-      {/* Animated background layers */}
-      <Orbs variant="hero" />
-      <FloatingShapes />
-      <NoiseOverlay opacity={0.025} />
+      {/* ── Dark liquid background layers ───────────────────────── */}
+      {/* Morphing blobs */}
+      {blobPaths.map((blob, i) => (
+        <LiquidBlob key={i} blob={blob} index={i} />
+      ))}
 
-      {/* Subtle mesh gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-mesh" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(108,58,237,0.04)_0%,_transparent_70%)]" />
+      {/* Flowing gradient streaks */}
+      <FlowingGradients />
 
-      {/* Animated gradient sweep */}
-      <motion.div
+      {/* Dark particles */}
+      <DarkParticles />
+
+      {/* Liquid wave lines at bottom */}
+      <LiquidWaves />
+
+      {/* Noise texture */}
+      <NoiseOverlay opacity={0.04} />
+
+      {/* Dark radial overlay for depth */}
+      <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(108,58,237,0.02) 90deg, transparent 180deg, rgba(59,130,246,0.02) 270deg, transparent 360deg)",
+            "radial-gradient(ellipse at 50% 40%, transparent 0%, rgba(10,6,18,0.6) 60%, rgba(10,6,18,0.9) 100%)",
         }}
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       />
 
+      {/* ── Content ─────────────────────────────────────────────── */}
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         {/* Status badge */}
         <motion.div
@@ -44,11 +63,11 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/60 px-4 py-1.5 text-xs font-medium text-stone-500 backdrop-blur-sm"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/60 backdrop-blur-md"
         >
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
           </span>
           Available for projects
         </motion.div>
@@ -59,11 +78,23 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="text-4xl font-bold leading-[1.05] tracking-tight text-stone-900 sm:text-5xl md:text-6xl lg:text-7xl"
+          className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
         >
           Make your project
           <br />
-          <span className="text-gradient-violet">look trend.</span>
+          <span
+            style={{
+              background:
+                "linear-gradient(135deg, #A78BFA 0%, #818CF8 25%, #60A5FA 50%, #C084FC 75%, #A78BFA 100%)",
+              backgroundSize: "200% 200%",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              animation: "gradient-shift 4s ease-in-out infinite",
+            }}
+          >
+            look trend.
+          </span>
         </motion.h1>
 
         {/* Supporting text */}
@@ -72,7 +103,7 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-stone-500 sm:text-lg"
+          className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/50 sm:text-lg"
         >
           We build bold digital experiences for brands that want to stand out.
           From smart websites and AI tools to video, branding, and marketing —
@@ -89,14 +120,14 @@ export default function Hero() {
         >
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-[#6C3AED] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#5B2ED4] hover:shadow-xl hover:shadow-[#6C3AED]/30"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#6C3AED] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#7C4AFF] hover:shadow-2xl hover:shadow-[#6C3AED]/40"
           >
             Start a Project
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </a>
           <a
             href="#portfolio"
-            className="inline-flex items-center rounded-full border border-stone-200 bg-white/60 px-7 py-3 text-sm font-medium text-stone-700 backdrop-blur-sm transition-all duration-300 hover:border-[#6C3AED]/30 hover:bg-white hover:shadow-lg"
+            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-7 py-3 text-sm font-medium text-white/80 backdrop-blur-md transition-all duration-300 hover:border-white/25 hover:bg-white/10 hover:text-white"
           >
             Explore Our Work
           </a>
@@ -108,14 +139,28 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="mt-8 text-xs text-stone-400"
+          className="mt-8 text-xs text-white/30"
         >
           Currently accepting freelance projects &middot; Remote &middot; Worldwide
         </motion.p>
       </div>
 
-      {/* Thin horizontal rule */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent" />
+      {/* Bottom fade into light section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, #FAF8F5)",
+        }}
+      />
+
+      {/* CSS for gradient animation */}
+      <style>{`
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+      `}</style>
     </section>
   );
 }
