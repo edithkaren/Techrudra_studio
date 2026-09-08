@@ -46,11 +46,10 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="flex h-16 items-center justify-between lg:h-20">
             {/* Logo */}
-            <a
-              href="#home"
-              className="text-base font-semibold tracking-tight text-stone-900 transition-colors hover:text-stone-600"
-            >
-              {siteConfig.name}
+            <a href="#home" className="flex items-center gap-1.5">
+              <span className="text-base font-bold tracking-tight text-stone-900 transition-colors hover:text-[#6C3AED]">
+                {siteConfig.name}
+              </span>
             </a>
 
             {/* Desktop nav */}
@@ -64,6 +63,12 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/auth"
+                className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+              >
+                Sign In
+              </a>
             </div>
 
             {/* Availability + CTA */}
@@ -79,7 +84,7 @@ export default function Navbar() {
               </div>
               <a
                 href="#contact"
-                className="inline-flex items-center rounded-full bg-stone-900 px-5 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-stone-800 hover:shadow-lg hover:shadow-stone-900/10"
+                className="inline-flex items-center rounded-full bg-[#6C3AED] px-5 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-[#5B2ED4] hover:shadow-lg hover:shadow-[#6C3AED]/20"
               >
                 Let&apos;s Work Together
               </a>
@@ -120,11 +125,21 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.05 }}
-                  className="text-2xl font-medium text-stone-900 transition-colors hover:text-stone-500"
+                  className="text-2xl font-medium text-stone-900 transition-colors hover:text-[#6C3AED]"
                 >
                   {link.label}
                 </motion.a>
               ))}
+              <motion.a
+                href="/auth"
+                onClick={() => setMobileOpen(false)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-2xl font-medium text-stone-900 transition-colors hover:text-[#6C3AED]"
+              >
+                Sign In
+              </motion.a>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -143,7 +158,7 @@ export default function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="inline-flex items-center rounded-full bg-stone-900 px-8 py-3 text-sm font-medium text-white"
+                  className="inline-flex items-center rounded-full bg-[#6C3AED] px-8 py-3 text-sm font-medium text-white"
                 >
                   Let&apos;s Work Together
                 </a>

@@ -31,7 +31,6 @@ export default function Contact() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call — replace with actual backend
     await new Promise((r) => setTimeout(r, 1200));
     setLoading(false);
     setSubmitted(true);
@@ -47,7 +46,7 @@ export default function Contact() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="mb-3 block text-xs font-medium uppercase tracking-[0.2em] text-stone-400"
+              className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#6C3AED]"
             >
               Contact
             </motion.span>
@@ -58,9 +57,9 @@ export default function Contact() {
               transition={{ duration: 0.6 }}
               className="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"
             >
-              Let&apos;s build something
+              Have an idea?
               <br />
-              together.
+              <span className="text-gradient-violet">Let&apos;s make it real.</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 15 }}
@@ -69,9 +68,9 @@ export default function Contact() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-4 max-w-md text-sm leading-relaxed text-stone-500"
             >
-              Whether you need a website, AI solution, automation system, brand
-              experience, or digital growth strategy — tell me about your project
-              and I&apos;ll get back to you within 24 hours.
+              Whether you need a website, an AI tool, a brand overhaul, a video,
+              or a full marketing strategy — drop us a message and we&apos;ll
+              get back to you within 24 hours.
             </motion.p>
 
             <motion.div
@@ -79,15 +78,24 @@ export default function Contact() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="mt-10 flex items-center gap-3"
+              className="mt-8 flex flex-col gap-3"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              <span className="text-sm font-medium text-stone-600">
-                Available for projects
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                <span className="text-sm font-medium text-stone-600">
+                  Available for projects
+                </span>
+              </div>
+              <a
+                href="/booking"
+                className="inline-flex items-center gap-2 text-sm font-medium text-[#6C3AED] transition-colors hover:text-[#5B2ED4]"
+              >
+                Or book a session directly
+                <ArrowRight className="h-3.5 w-3.5" />
+              </a>
             </motion.div>
           </div>
 
@@ -105,7 +113,7 @@ export default function Contact() {
                   Message received.
                 </h3>
                 <p className="mt-2 text-sm text-stone-500">
-                  Let&apos;s create something amazing. I&apos;ll be in touch soon.
+                  We&apos;ll be in touch soon. Let&apos;s create something amazing.
                 </p>
               </div>
             ) : (
@@ -127,7 +135,7 @@ export default function Contact() {
                       name="name"
                       required
                       placeholder="Your name"
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-400 focus:bg-white"
+                      className="w-full rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-[#6C3AED] focus:bg-white"
                     />
                   </div>
 
@@ -145,7 +153,7 @@ export default function Contact() {
                       type="email"
                       required
                       placeholder="you@company.com"
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-400 focus:bg-white"
+                      className="w-full rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-[#6C3AED] focus:bg-white"
                     />
                   </div>
 
@@ -161,7 +169,7 @@ export default function Contact() {
                       id="projectType"
                       name="projectType"
                       required
-                      className="w-full appearance-none rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors focus:border-stone-400 focus:bg-white"
+                      className="w-full appearance-none rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors focus:border-[#6C3AED] focus:bg-white"
                     >
                       <option value="">Select a project type</option>
                       {projectTypes.map((t) => (
@@ -183,7 +191,7 @@ export default function Contact() {
                     <select
                       id="budget"
                       name="budget"
-                      className="w-full appearance-none rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors focus:border-stone-400 focus:bg-white"
+                      className="w-full appearance-none rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors focus:border-[#6C3AED] focus:bg-white"
                     >
                       <option value="">Select budget range</option>
                       {budgetRanges.map((b) => (
@@ -207,8 +215,8 @@ export default function Contact() {
                       name="message"
                       rows={4}
                       required
-                      placeholder="Tell me about your project, goals, and timeline…"
-                      className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-400 focus:bg-white"
+                      placeholder="Tell us about your project, goals, and timeline…"
+                      className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50/50 px-4 py-2.5 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-[#6C3AED] focus:bg-white"
                     />
                   </div>
                 </div>
@@ -216,7 +224,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-stone-900 px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-stone-800 hover:shadow-lg hover:shadow-stone-900/10 disabled:opacity-60"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#6C3AED] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#5B2ED4] hover:shadow-lg hover:shadow-[#6C3AED]/20 disabled:opacity-60"
                 >
                   {loading ? (
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />

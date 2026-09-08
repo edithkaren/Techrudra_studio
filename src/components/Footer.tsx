@@ -22,7 +22,8 @@ export default function Footer() {
         {/* Large statement */}
         <div className="mb-14">
           <p className="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
-            Let&apos;s build something great.
+            Let&apos;s build something{" "}
+            <span className="text-gradient-violet">great.</span>
           </p>
         </div>
 
@@ -30,7 +31,7 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <p className="mb-3 text-base font-semibold text-stone-900">
+            <p className="mb-3 text-base font-bold text-stone-900">
               {siteConfig.name}
             </p>
             <p className="text-sm leading-relaxed text-stone-500">
@@ -63,6 +64,14 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href="/booking"
+                  className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+                >
+                  Book a Session
+                </a>
+              </li>
             </ul>
           </div>
 

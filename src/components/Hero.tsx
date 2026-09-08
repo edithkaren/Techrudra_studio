@@ -16,8 +16,9 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20"
     >
-      {/* Subtle background texture */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(0,0,0,0.02)_0%,_transparent_70%)]" />
+      {/* Subtle mesh background */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-mesh" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(108,58,237,0.04)_0%,_transparent_70%)]" />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         {/* Status badge */}
@@ -43,11 +44,9 @@ export default function Hero() {
           animate="visible"
           className="text-4xl font-bold leading-[1.05] tracking-tight text-stone-900 sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          Building digital experiences
+          Make your project
           <br />
-          <span className="text-stone-400">
-            where code, AI &amp; creativity meet.
-          </span>
+          <span className="text-gradient-violet">look trend.</span>
         </motion.h1>
 
         {/* Supporting text */}
@@ -58,8 +57,9 @@ export default function Hero() {
           animate="visible"
           className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-stone-500 sm:text-lg"
         >
-          A one-person creative technology studio helping startups, brands, and
-          creators turn ideas into high-performing digital products.
+          We build bold digital experiences for brands that want to stand out.
+          From smart websites and AI tools to video, branding, and marketing —
+          we make it happen.
         </motion.p>
 
         {/* CTAs */}
@@ -72,16 +72,16 @@ export default function Hero() {
         >
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-stone-900 px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-stone-800 hover:shadow-lg hover:shadow-stone-900/10"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#6C3AED] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#5B2ED4] hover:shadow-lg hover:shadow-[#6C3AED]/25"
           >
             Start a Project
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </a>
           <a
             href="#portfolio"
-            className="inline-flex items-center rounded-full border border-stone-200 bg-white/60 px-7 py-3 text-sm font-medium text-stone-700 backdrop-blur-sm transition-all duration-300 hover:border-stone-300 hover:bg-white"
+            className="inline-flex items-center rounded-full border border-stone-200 bg-white/60 px-7 py-3 text-sm font-medium text-stone-700 backdrop-blur-sm transition-all duration-300 hover:border-[#6C3AED]/30 hover:bg-white"
           >
-            Explore My Work
+            Explore Our Work
           </a>
         </motion.div>
 

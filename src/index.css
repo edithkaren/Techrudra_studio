@@ -42,44 +42,47 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* CHANGE VALUES FOR THEME — Studio: warm off-whites, muted neutrals, thin framing */
+/* Techrudra.Studio — warm base, bold colorful accents */
 :root {
-  --radius: 0.5rem;
+  --radius: 0.625rem;
   --background: #FAF8F5;
   --foreground: #1C1917;
   --card: #FFFFFF;
   --card-foreground: #1C1917;
   --popover: #FFFFFF;
   --popover-foreground: #1C1917;
-  --primary: #1C1917;
-  --primary-foreground: #FAF8F5;
+  --primary: #6C3AED;
+  --primary-foreground: #FFFFFF;
   --secondary: #F0EDE8;
   --secondary-foreground: #1C1917;
   --muted: #F0EDE8;
   --muted-foreground: #78716C;
-  --accent: #F0EDE8;
-  --accent-foreground: #1C1917;
+  --accent: #FB923C;
+  --accent-foreground: #FFFFFF;
   --destructive: oklch(0.577 0.245 27.325);
   --border: #E7E5E4;
   --input: #E7E5E4;
-  --ring: #A8A29E;
-  --chart-1: #57534E;
-  --chart-2: #78716C;
-  --chart-3: #A8A29E;
-  --chart-4: #D6D3D1;
-  --chart-5: #1C1917;
+  --ring: #6C3AED;
+  --chart-1: #6C3AED;
+  --chart-2: #3B82F6;
+  --chart-3: #EC4899;
+  --chart-4: #FB923C;
+  --chart-5: #14B8A6;
   --sidebar: #FFFFFF;
   --sidebar-foreground: #1C1917;
-  --sidebar-primary: #1C1917;
-  --sidebar-primary-foreground: #FAF8F5;
+  --sidebar-primary: #6C3AED;
+  --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #F0EDE8;
   --sidebar-accent-foreground: #1C1917;
   --sidebar-border: #E7E5E4;
-  --sidebar-ring: #A8A29E;
+  --sidebar-ring: #6C3AED;
   --studio-cream: #FAF8F5;
   --studio-warm: #F5F0EB;
-  --studio-stone: #78716C;
-  --studio-charcoal: #1C1917;
+  --studio-violet: #6C3AED;
+  --studio-blue: #3B82F6;
+  --studio-pink: #EC4899;
+  --studio-orange: #FB923C;
+  --studio-teal: #14B8A6;
 }
 
 .dark {
@@ -126,5 +129,35 @@
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #6C3AED, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-warm {
+    background: linear-gradient(135deg, #FB923C, #EC4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, #6C3AED, #3B82F6, #14B8A6);
+  }
+  .bg-gradient-warm {
+    background: linear-gradient(135deg, #FB923C, #EC4899);
+  }
+  .bg-gradient-cool {
+    background: linear-gradient(135deg, #3B82F6, #6C3AED);
+  }
+  .bg-gradient-mesh {
+    background:
+      radial-gradient(at 20% 80%, rgba(108, 58, 237, 0.08) 0%, transparent 50%),
+      radial-gradient(at 80% 20%, rgba(251, 146, 60, 0.06) 0%, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
   }
 }
