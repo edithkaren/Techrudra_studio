@@ -15,6 +15,7 @@ const AuthPage = lazy(() => import("./pages/AuthPage.tsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
 const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail.tsx"));
 const BookingPage = lazy(() => import("./pages/BookingPage.tsx"));
+const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 // Simple loading fallback for route transitions
@@ -135,6 +136,7 @@ createRoot(document.getElementById("root")!).render(
                 }
               />
               <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/booking" element={<BookingPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

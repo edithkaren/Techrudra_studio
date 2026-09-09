@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router";
 import Logo from "@/components/Logo";
 
 const navLinks = [
   { label: "Home", href: "#home" },
+  { label: "About", href: "/about" },
   { label: "Services", href: "#services" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Contact", href: "#contact" },
@@ -51,14 +53,25 @@ export default function Navbar() {
             {/* Desktop nav */}
             <div className="hidden items-center gap-8 md:flex">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="group relative text-sm text-stone-500 transition-colors hover:text-stone-900"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:w-full" />
-                </a>
+                link.href.startsWith("/") ? (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="group relative text-sm text-stone-500 transition-colors hover:text-stone-900"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="group relative text-sm text-stone-500 transition-colors hover:text-stone-900"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#6C3AED] transition-all duration-300 group-hover:w-full" />
+                  </a>
+                )
               ))}
               <a
                 href="/auth"
@@ -122,17 +135,34 @@ export default function Navbar() {
 
             <div className="relative flex h-full flex-col items-center justify-center gap-8">
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                  className="text-2xl font-medium text-stone-900 transition-colors hover:text-[#6C3AED]"
-                >
-                  {link.label}
-                </motion.a>
+                link.href.startsWith("/") ? (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.05 }}
+                  >
+                    <Link
+                      to={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="text-2xl font-medium text-stone-900 transition-colors hover:text-[#6C3AED]"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.05 }}
+                    className="text-2xl font-medium text-stone-900 transition-colors hover:text-[#6C3AED]"
+                  >
+                    {link.label}
+                  </motion.a>
+                )
               ))}
               <motion.a
                 href="/auth"
