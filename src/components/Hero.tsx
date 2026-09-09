@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring, useScroll, useTransform } from "fram
 import AnimatedText from "@/components/motion/AnimatedText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
+import ParticleRing from "@/components/ParticleRing";
 
 const words = [
   "native",
@@ -589,6 +590,14 @@ export default function Hero() {
       <MouseGradient />
       <AnimatedGrid />
       <GradientOrb />
+      <ParticleRing
+        className="z-[1]"
+        particleCount={900}
+        radiusX={440}
+        radiusY={150}
+        speed={0.00035}
+        color="167,139,250"
+      />
       <EnergyRings />
       <FloatingGeometry />
       <Particles />
