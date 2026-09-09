@@ -7,6 +7,7 @@ interface AnimatedCounterProps {
   prefix?: string;
   duration?: number;
   className?: string;
+  color?: string;
 }
 
 export default function AnimatedCounter({
@@ -15,6 +16,7 @@ export default function AnimatedCounter({
   prefix = "",
   duration = 2000,
   className = "",
+  color,
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
@@ -35,7 +37,7 @@ export default function AnimatedCounter({
   }, [inView, value, duration]);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} style={color ? { color } : undefined}>
       {prefix}{count}{suffix}
     </span>
   );

@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
+import AnimatedCounter from "@/components/motion/AnimatedCounter";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -41,10 +42,10 @@ const values = [
 ];
 
 const stats = [
-  { value: "50+", label: "Projects Delivered", color: "#A78BFA" },
-  { value: "30+", label: "Brands Served", color: "#60A5FA" },
-  { value: "10+", label: "Industries", color: "#F472B6" },
-  { value: "∞", label: "Curiosity", color: "#FB923C" },
+  { value: 50, suffix: "+", label: "Projects Delivered", color: "#A78BFA" },
+  { value: 30, suffix: "+", label: "Brands Served", color: "#60A5FA" },
+  { value: 10, suffix: "+", label: "Industries", color: "#F472B6" },
+  { value: 0, suffix: "", label: "Curiosity", color: "#FB923C", special: true },
 ];
 
 export default function AboutPage() {
@@ -84,9 +85,31 @@ export default function AboutPage() {
         <div className="mx-auto max-w-5xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={stagger} className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {stats.map((stat) => (
-              <motion.div key={stat.label} variants={scaleIn} className="rounded-2xl border border-white/[0.06] bg-[#111111] p-6 text-center">
-                <span className="text-3xl font-bold md:text-4xl" style={{ color: stat.color }}>{stat.value}</span>
+              <motion.div
+                key={stat.label}
+                variants={scaleIn}
+                whileHover={{ y: -4, borderColor: `${stat.color}30` }}
+                className="group rounded-2xl border border-white/[0.06] bg-[#111111] p-6 text-center transition-colors duration-300"
+              >
+                <div className="relative">
+                  {"special" in stat && stat.special ? (
+                    <span className="text-3xl font-bold md:text-4xl" style={{ color: stat.color }}>&infin;</span>
+                  ) : (
+                    <AnimatedCounter
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      duration={2200}
+                      color={stat.color}
+                      className="text-3xl font-bold md:text-4xl tabular-nums"
+                    />
+                  )}
+                </div>
                 <p className="mt-1 text-sm text-white/35">{stat.label}</p>
+                {/* Animated underline on hover */}
+                <div
+                  className="mx-auto mt-3 h-[2px] w-0 rounded-full transition-all duration-500 group-hover:w-12"
+                  style={{ backgroundColor: stat.color }}
+                />
               </motion.div>
             ))}
           </motion.div>
