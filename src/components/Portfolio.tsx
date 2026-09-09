@@ -32,6 +32,23 @@ function FilterPill({ label, active, onClick }: { label: string; active: boolean
   );
 }
 
+/* Liquid title that warps on hover */
+function LiquidProjectTitle({ children, accent }: { children: React.ReactNode; accent: string }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <span
+      className="relative inline-block cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ filter: hovered ? "url(#fluid-distort-hover)" : "none" }}
+    >
+      <span className="inline-block transition-colors duration-300" style={{ color: hovered ? accent : undefined }}>
+        {children}
+      </span>
+    </span>
+  );
+}
+
 function ProjectCard({ project, index }: { project: (typeof portfolioProjects)[0]; index: number }) {
   const isLarge = project.featured && index % 3 === 0;
   const accent = accentColors[project.category] || "#A78BFA";
@@ -53,14 +70,12 @@ function ProjectCard({ project, index }: { project: (typeof portfolioProjects)[0
             <ProjectMockup projectSlug={project.slug} category={project.category} />
           </CardTilt>
           <div className="absolute top-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ backgroundColor: accent }} />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          {/* Liquid gradient overlay on hover */}
           <motion.div
-            className="absolute right-5 bottom-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.1 }}
-            animate={{ opacity: 0 }}
-            whileInView={{}}
-            style={{ opacity: undefined }}
+            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background: `radial-gradient(circle at 50% 80%, ${accent}15 0%, transparent 60%), linear-gradient(to top, #11111190 0%, transparent 50%)`,
+            }}
           />
           <div className="absolute right-5 bottom-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90">
             <ArrowUpRight className="h-4 w-4 text-white/70" />
@@ -72,7 +87,9 @@ function ProjectCard({ project, index }: { project: (typeof portfolioProjects)[0
             <span className="text-[11px] text-white/10">&middot;</span>
             <span className="text-[11px] text-white/25">{project.year}</span>
           </div>
-          <h3 className="mb-2 text-base font-semibold text-white sm:text-lg">{project.title}</h3>
+          <h3 className="mb-2 text-base font-semibold text-white sm:text-lg">
+            <LiquidProjectTitle accent={accent}>{project.title}</LiquidProjectTitle>
+          </h3>
           <p className="mb-4 text-sm leading-relaxed text-white/35">{project.description}</p>
           <div className="flex flex-wrap gap-1.5">
             {project.technologies.map((t) => (

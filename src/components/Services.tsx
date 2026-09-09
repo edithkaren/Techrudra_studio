@@ -10,6 +10,23 @@ const accentColors = [
   "#FB923C", "#C084FC", "#F87171", "#A78BFA",
 ];
 
+/* Liquid title that warps on hover */
+function LiquidServiceTitle({ children, accent }: { children: React.ReactNode; accent: string }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <span
+      className="relative inline-block cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ filter: hovered ? "url(#fluid-distort-hover)" : "none" }}
+    >
+      <span className="inline-block transition-all duration-300" style={{ color: hovered ? accent : undefined }}>
+        {children}
+      </span>
+    </span>
+  );
+}
+
 function ServiceCard({
   service,
   index,
@@ -29,20 +46,25 @@ function ServiceCard({
           onClick={onClick}
           className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] p-6 text-left transition-all duration-300 hover:border-white/[0.12] hover:bg-[#141414] sm:p-8"
         >
-          {/* Animated glow on hover */}
+          {/* Liquid blob glow on hover */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{ background: `radial-gradient(circle at 50% 0%, ${accent}08 0%, transparent 60%)` }}
-          />
-          {/* Top accent bar */}
-          <div
-            className="absolute top-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full"
+            className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
             style={{ backgroundColor: accent }}
+          />
+          {/* Top accent bar — liquid morphs in */}
+          <motion.div
+            className="absolute top-0 left-0 h-[2px]"
+            style={{ backgroundColor: accent }}
+            initial={{ width: "0%" }}
+            whileHover={{ width: "100%" }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
           />
           <span className="mb-4 text-xs font-bold tracking-widest" style={{ color: accent }}>
             {service.number}
           </span>
-          <h3 className="mb-3 text-lg font-semibold text-white sm:text-xl">{service.title}</h3>
+          <h3 className="mb-3 text-lg font-semibold text-white sm:text-xl">
+            <LiquidServiceTitle accent={accent}>{service.title}</LiquidServiceTitle>
+          </h3>
           <p className="mb-6 flex-1 text-sm leading-relaxed text-white/40">{service.summary}</p>
           <div className="flex items-center justify-between">
             <div className="flex flex-wrap gap-1.5">
@@ -87,14 +109,16 @@ function ServiceModal({
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 20, scale: 0.98 }}
-        transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+        initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(6px)" }}
+        transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
         className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-white/[0.08] bg-[#111111] p-8 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={onClose} className="absolute right-6 top-6 text-white/30 transition-colors hover:text-white/70" aria-label="Close">
+        {/* Liquid blob accent in modal */}
+        <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full opacity-20 blur-3xl" style={{ backgroundColor: accent }} />
+        <button onClick={onClose} className="absolute right-6 top-6 z-10 text-white/30 transition-colors hover:text-white/70" aria-label="Close">
           <X className="h-5 w-5" />
         </button>
         <span className="text-xs font-bold tracking-widest" style={{ color: accent }}>{service.number}</span>
@@ -142,6 +166,12 @@ export default function Services() {
 
   return (
     <section id="services" className="relative bg-[#0A0A0A] px-6 py-24 sm:py-32 lg:px-10">
+      {/* Liquid background blobs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ filter: "url(#liquid-morph)" }}>
+        <div className="absolute top-20 left-[10%] h-64 w-64 rounded-full bg-[#A78BFA]/[0.03]" />
+        <div className="absolute bottom-20 right-[15%] h-48 w-48 rounded-full bg-[#60A5FA]/[0.03]" />
+      </div>
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mb-14 max-w-2xl">
           <ScrollReveal>

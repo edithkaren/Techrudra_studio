@@ -616,7 +616,13 @@ export default function Hero() {
           className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[80px]"
         >
           We build{" "}
-          <span className="relative inline-block">
+          <span
+            className="relative inline-block cursor-pointer"
+            style={{
+              filter: isScrambling ? "url(#fluid-distort-hover)" : "url(#fluid-distort)",
+              transition: "filter 0.3s ease",
+            }}
+          >
             <span className="text-[#A78BFA]">{scrambledWord}</span>
             <TypingCursor />
           </span>

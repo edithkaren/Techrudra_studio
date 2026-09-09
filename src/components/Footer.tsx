@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/data/site";
 import { services } from "@/data/services";
@@ -17,14 +18,41 @@ const socialLinks = [
   { label: "YouTube", href: siteConfig.social.youtube },
 ];
 
+/* Liquid footer link with fluid distortion */
+function LiquidFooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a
+      href={href}
+      className="group inline-flex items-center text-sm text-white/35 transition-colors hover:text-white"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <span
+        className="transition-all duration-300"
+        style={{
+          filter: hovered ? "url(#fluid-distort-hover)" : "none",
+          color: hovered ? "#A78BFA" : undefined,
+        }}
+      >
+        {children}
+      </span>
+      <span className="ml-0 h-px w-0 bg-[#A78BFA] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
+    </a>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/[0.06] bg-[#0A0A0A] px-6 pt-16 pb-8 lg:px-10">
-      {/* Subtle gradient orb */}
-      <div className="pointer-events-none absolute -bottom-40 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full opacity-20 blur-3xl" style={{ background: "radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%)" }} />
+      {/* Liquid blob accents */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ filter: "url(#liquid-morph)" }}>
+        <div className="absolute -bottom-40 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-[#A78BFA]/[0.04]" />
+        <div className="absolute top-10 right-[10%] h-48 w-48 rounded-full bg-[#60A5FA]/[0.03]" />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        {/* Large animated statement */}
+        {/* Large animated statement with liquid distortion */}
         <div className="mb-14">
           <ScrollReveal>
             <p className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
@@ -62,17 +90,11 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {footerNav.map((l) => (
                   <li key={l.href}>
-                    <a href={l.href} className="group inline-flex text-sm text-white/35 transition-colors hover:text-white">
-                      {l.label}
-                      <span className="ml-0 h-px w-0 bg-[#A78BFA] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
-                    </a>
+                    <LiquidFooterLink href={l.href}>{l.label}</LiquidFooterLink>
                   </li>
                 ))}
                 <li>
-                  <a href="/booking" className="group inline-flex text-sm text-white/35 transition-colors hover:text-white">
-                    Book a Session
-                    <span className="ml-0 h-px w-0 bg-[#A78BFA] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
-                  </a>
+                  <LiquidFooterLink href="/booking">Book a Session</LiquidFooterLink>
                 </li>
               </ul>
             </div>
@@ -84,10 +106,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {services.slice(0, 6).map((s) => (
                   <li key={s.id}>
-                    <a href="#services" className="group inline-flex text-sm text-white/35 transition-colors hover:text-white">
-                      {s.title}
-                      <span className="ml-0 h-px w-0 bg-[#A78BFA] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
-                    </a>
+                    <LiquidFooterLink href="#services">{s.title}</LiquidFooterLink>
                   </li>
                 ))}
               </ul>

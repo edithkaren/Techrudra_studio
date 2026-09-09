@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const items = [
@@ -10,6 +11,26 @@ const Dot = () => (
   <span className="mx-3 inline-block h-1 w-1 rounded-full bg-white/10" />
 );
 
+/* Liquid text that distorts on hover */
+function LiquidMarqueeItem({ children }: { children: React.ReactNode }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <span
+      className="whitespace-nowrap text-sm font-medium tracking-wide select-none transition-colors"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        filter: hovered ? "url(#fluid-distort-hover)" : "none",
+        color: hovered ? "rgba(167,139,250,0.6)" : "rgba(255,255,255,0.15)",
+        transform: hovered ? "scale(1.05)" : "scale(1)",
+        transition: "all 0.3s ease",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
 function MarqueeRow({ direction }: { direction: "left" | "right" }) {
   const repeated = [...items, ...items, ...items];
   return (
@@ -21,12 +42,7 @@ function MarqueeRow({ direction }: { direction: "left" | "right" }) {
       >
         {repeated.map((item, i) => (
           <span key={`${item}-${i}`} className="flex items-center">
-            <motion.span
-              className="whitespace-nowrap text-sm font-medium tracking-wide text-white/15 select-none transition-colors"
-              whileHover={{ color: "rgba(167,139,250,0.6)" }}
-            >
-              {item}
-            </motion.span>
+            <LiquidMarqueeItem>{item}</LiquidMarqueeItem>
             <Dot />
           </span>
         ))}
