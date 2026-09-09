@@ -19,7 +19,7 @@ export default function ParticleRing({
   particleCount = 800,
   radiusX = 420,
   radiusY = 140,
-  speed = 0.0004,
+  speed = 0.0012,
   color = "167,139,250",
 }: ParticleRingProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,9 +35,9 @@ export default function ParticleRing({
       p[i6] = Math.random() * Math.PI * 2; // angle
       p[i6 + 1] = (Math.random() - 0.5) * 40; // radius offset (spread)
       p[i6 + 2] = (Math.random() - 0.5) * 30; // z offset
-      p[i6 + 3] = 0.4 + Math.random() * 1.8; // size
-      p[i6 + 4] = 0.15 + Math.random() * 0.85; // brightness
-      p[i6 + 5] = 0.7 + Math.random() * 0.6; // speed multiplier
+      p[i6 + 3] = 0.5 + Math.random() * 2.2; // size (bigger)
+      p[i6 + 4] = 0.35 + Math.random() * 0.65; // brightness (brighter min)
+      p[i6 + 5] = 0.8 + Math.random() * 0.7; // speed multiplier (faster)
     }
     // Add dense clusters — brighter, bigger particles at specific arc positions
     const clusterPositions = [0, Math.PI * 0.6, Math.PI * 1.2, Math.PI * 1.7];
@@ -49,9 +49,9 @@ export default function ParticleRing({
         p[i6] = cp + (Math.random() - 0.5) * 0.3;
         p[i6 + 1] = (Math.random() - 0.5) * 20;
         p[i6 + 2] = (Math.random() - 0.5) * 15;
-        p[i6 + 3] = 1.0 + Math.random() * 2.5;
-        p[i6 + 4] = 0.5 + Math.random() * 0.5;
-        p[i6 + 5] = 0.5 + Math.random() * 0.4;
+        p[i6 + 3] = 1.2 + Math.random() * 3.0; // even bigger clusters
+        p[i6 + 4] = 0.7 + Math.random() * 0.3; // super bright clusters
+        p[i6 + 5] = 0.7 + Math.random() * 0.5; // faster clusters
       }
     }
     particlesRef.current = p;
@@ -129,26 +129,40 @@ export default function ParticleRing({
 
         if (alpha < 0.02) continue;
 
-        // Draw particle with glow
-        ctx.globalAlpha = alpha * 0.15;
+        // Wide outer glow
+        ctx.globalAlpha = alpha * 0.12;
+        ctx.fillStyle = `rgba(${color},${alpha * 0.8})`;
+        ctx.beginPath();
+        ctx.arc(px, py, drawSize * 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Medium glow
+        ctx.globalAlpha = alpha * 0.35;
         ctx.fillStyle = `rgba(${color},${alpha})`;
         ctx.beginPath();
         ctx.arc(px, py, drawSize * 3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Core particle
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = `rgba(${color},${Math.min(alpha * 1.5, 1)})`;
+        // Core particle (bright)
+        ctx.globalAlpha = Math.min(alpha * 2, 1);
+        ctx.fillStyle = `rgba(255,255,255,${Math.min(alpha * 0.8, 0.9)})`;
         ctx.beginPath();
-        ctx.arc(px, py, drawSize, 0, Math.PI * 2);
+        ctx.arc(px, py, drawSize * 0.7, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Colored core ring
+        ctx.globalAlpha = Math.min(alpha * 1.8, 1);
+        ctx.fillStyle = `rgba(${color},${Math.min(alpha * 2, 1)})`;
+        ctx.beginPath();
+        ctx.arc(px, py, drawSize * 1.1, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // Draw connecting glow lines between nearby particles (sparse)
-      ctx.globalAlpha = 0.03;
-      ctx.strokeStyle = `rgba(${color},0.15)`;
-      ctx.lineWidth = 0.5;
-      for (let i = 0; i < indices.length; i += 12) {
+      // Draw connecting glow lines between nearby particles
+      ctx.globalAlpha = 0.06;
+      ctx.strokeStyle = `rgba(${color},0.25)`;
+      ctx.lineWidth = 0.6;
+      for (let i = 0; i < indices.length; i += 8) {
         const a = indices[i];
         const a6 = a * 6;
         const aAngle = p[a6] + t * p[a6 + 5];
@@ -171,6 +185,15 @@ export default function ParticleRing({
         }
       }
 
+      // Ambient center glow behind the ring
+      const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, rx * 0.6);
+      grd.addColorStop(0, `rgba(${color},0.06)`);
+      grd.addColorStop(0.5, `rgba(${color},0.02)`);
+      grd.addColorStop(1, 'transparent');
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, w, h);
+
       ctx.globalAlpha = 1;
       animRef.current = requestAnimationFrame(draw);
     };
@@ -187,7 +210,7 @@ export default function ParticleRing({
     <canvas
       ref={canvasRef}
       className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
-      style={{ opacity: 0.85 }}
+      style={{ opacity: 1 }}
     />
   );
 }

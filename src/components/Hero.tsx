@@ -592,10 +592,10 @@ export default function Hero() {
       <GradientOrb />
       <ParticleRing
         className="z-[1]"
-        particleCount={900}
+        particleCount={1100}
         radiusX={440}
         radiusY={150}
-        speed={0.00035}
+        speed={0.0018}
         color="167,139,250"
       />
       <EnergyRings />
