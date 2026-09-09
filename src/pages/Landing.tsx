@@ -6,10 +6,14 @@ import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/motion/CustomCursor";
+import ScrollProgress from "@/components/motion/ScrollProgress";
 
 export default function Landing() {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
+      <ScrollProgress />
+      <CustomCursor />
       <Navbar />
       <main>
         <Hero />

@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { portfolioProjects } from "@/data/portfolio";
 import ProjectMockup from "@/components/ProjectMockup";
+import ScrollReveal from "@/components/motion/ScrollReveal";
 
 const accentColors: Record<string, string> = {
   Websites: "#A78BFA",
@@ -25,23 +26,12 @@ export default function FeaturedShowcase() {
     <section ref={containerRef} className="relative overflow-hidden bg-[#0A0A0A] px-6 py-24 sm:py-32 lg:px-10">
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mb-16 max-w-2xl">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]"
-          >
-            Featured Work
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
-          >
-            Our best projects, up close
-          </motion.h2>
+          <ScrollReveal>
+            <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Featured Work</span>
+          </ScrollReveal>
+          <ScrollReveal variant="fadeUp" delay={0.1}>
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Our best projects, up close</h2>
+          </ScrollReveal>
         </div>
 
         <div className="space-y-32">
