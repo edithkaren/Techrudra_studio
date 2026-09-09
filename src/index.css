@@ -42,47 +42,47 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Techrudra.Studio — warm base, bold colorful accents */
+/* Techrudra.Studio — dark premium agency theme */
 :root {
   --radius: 0.625rem;
-  --background: #FAF8F5;
-  --foreground: #1C1917;
-  --card: #FFFFFF;
-  --card-foreground: #1C1917;
-  --popover: #FFFFFF;
-  --popover-foreground: #1C1917;
-  --primary: #6C3AED;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F0EDE8;
-  --secondary-foreground: #1C1917;
-  --muted: #F0EDE8;
-  --muted-foreground: #78716C;
-  --accent: #FB923C;
-  --accent-foreground: #FFFFFF;
+  --background: #0A0A0A;
+  --foreground: #F0F0F0;
+  --card: #141414;
+  --card-foreground: #F0F0F0;
+  --popover: #141414;
+  --popover-foreground: #F0F0F0;
+  --primary: #A78BFA;
+  --primary-foreground: #0A0A0A;
+  --secondary: #1A1A1A;
+  --secondary-foreground: #F0F0F0;
+  --muted: #1A1A1A;
+  --muted-foreground: #888888;
+  --accent: #A78BFA;
+  --accent-foreground: #0A0A0A;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #E7E5E4;
-  --input: #E7E5E4;
-  --ring: #6C3AED;
-  --chart-1: #6C3AED;
-  --chart-2: #3B82F6;
-  --chart-3: #EC4899;
+  --border: #222222;
+  --input: #222222;
+  --ring: #A78BFA;
+  --chart-1: #A78BFA;
+  --chart-2: #60A5FA;
+  --chart-3: #F472B6;
   --chart-4: #FB923C;
-  --chart-5: #14B8A6;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #1C1917;
-  --sidebar-primary: #6C3AED;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F0EDE8;
-  --sidebar-accent-foreground: #1C1917;
-  --sidebar-border: #E7E5E4;
-  --sidebar-ring: #6C3AED;
-  --studio-cream: #FAF8F5;
-  --studio-warm: #F5F0EB;
-  --studio-violet: #6C3AED;
-  --studio-blue: #3B82F6;
-  --studio-pink: #EC4899;
+  --chart-5: #2DD4BF;
+  --sidebar: #0A0A0A;
+  --sidebar-foreground: #F0F0F0;
+  --sidebar-primary: #A78BFA;
+  --sidebar-primary-foreground: #0A0A0A;
+  --sidebar-accent: #1A1A1A;
+  --sidebar-accent-foreground: #F0F0F0;
+  --sidebar-border: #222222;
+  --sidebar-ring: #A78BFA;
+  --studio-cream: #0A0A0A;
+  --studio-warm: #111111;
+  --studio-violet: #A78BFA;
+  --studio-blue: #60A5FA;
+  --studio-pink: #F472B6;
   --studio-orange: #FB923C;
-  --studio-teal: #14B8A6;
+  --studio-teal: #2DD4BF;
 }
 
 .dark {
@@ -124,7 +124,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
   button:not([disabled]),
   [role="button"]:not([disabled]) {
@@ -134,30 +134,48 @@
 
 @layer utilities {
   .text-gradient-violet {
-    background: linear-gradient(135deg, #6C3AED, #3B82F6);
+    background: linear-gradient(135deg, #A78BFA, #60A5FA);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .text-gradient-warm {
-    background: linear-gradient(135deg, #FB923C, #EC4899);
+    background: linear-gradient(135deg, #FB923C, #F472B6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .bg-gradient-brand {
-    background: linear-gradient(135deg, #6C3AED, #3B82F6, #14B8A6);
+    background: linear-gradient(135deg, #A78BFA, #60A5FA, #2DD4BF);
   }
   .bg-gradient-warm {
-    background: linear-gradient(135deg, #FB923C, #EC4899);
+    background: linear-gradient(135deg, #FB923C, #F472B6);
   }
   .bg-gradient-cool {
-    background: linear-gradient(135deg, #3B82F6, #6C3AED);
+    background: linear-gradient(135deg, #60A5FA, #A78BFA);
   }
   .bg-gradient-mesh {
     background:
-      radial-gradient(at 20% 80%, rgba(108, 58, 237, 0.08) 0%, transparent 50%),
-      radial-gradient(at 80% 20%, rgba(251, 146, 60, 0.06) 0%, transparent 50%),
-      radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
+      radial-gradient(at 20% 80%, rgba(167, 139, 250, 0.06) 0%, transparent 50%),
+      radial-gradient(at 80% 20%, rgba(251, 146, 60, 0.04) 0%, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(96, 165, 250, 0.03) 0%, transparent 60%);
+  }
+  .bg-dark-base {
+    background: #0A0A0A;
+  }
+  .bg-dark-card {
+    background: #141414;
+  }
+  .border-dark {
+    border-color: #222222;
+  }
+  .text-white-primary {
+    color: #F0F0F0;
+  }
+  .text-white-secondary {
+    color: #888888;
+  }
+  .text-white-tertiary {
+    color: #555555;
   }
 }

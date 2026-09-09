@@ -36,21 +36,21 @@ function DashboardVisual({ accent }: { accent: string }) {
     <svg viewBox="0 0 800 500" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="dash-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#F8F7FF" />
-          <stop offset="100%" stopColor="#EEEAFF" />
+          <stop offset="0%" stopColor="#0D0D0D" />
+          <stop offset="100%" stopColor="#111111" />
         </linearGradient>
       </defs>
       <rect width="800" height="500" fill="url(#dash-bg)" />
       {/* Sidebar */}
-      <rect x="0" y="0" width="180" height="500" fill="#FAFAFA" />
+      <rect x="0" y="0" width="180" height="500" fill="#141414" />
       <rect x="20" y="24" width="80" height="10" rx="5" fill={accent} opacity="0.8" />
       <rect x="20" y="56" width="140" height="8" rx="4" fill="#E5E5E5" />
       <rect x="20" y="80" width="120" height="8" rx="4" fill="#F0F0F0" />
       <rect x="20" y="104" width="130" height="8" rx="4" fill="#F0F0F0" />
       <rect x="20" y="128" width="100" height="8" rx="4" fill="#F0F0F0" />
       {/* Top bar */}
-      <rect x="200" y="20" width="200" height="12" rx="6" fill="#1C1917" opacity="0.1" />
-      <circle cx="750" cy="26" r="14" fill={accent} opacity="0.2" />
+      <rect x="200" y="20" width="200" height="12" rx="6" fill="white" opacity="0.06" />
+      <circle cx="750" cy="26" r="14" fill={accent} opacity="0.3" />
       {/* Cards row */}
       {[
         { x: 200, y: 60, w: 180, h: 90, label: "Revenue", value: "$48.2K", change: "+12.5%" },
@@ -59,14 +59,14 @@ function DashboardVisual({ accent }: { accent: string }) {
       ].map((c, i) => (
         <g key={i}>
           <rect x={c.x} y={c.y} width={c.w} height={c.h} rx="12" fill="white" />
-          <rect x={c.x + 16} y={c.y + 16} width="60" height="8" rx="4" fill="#CCCCCC" />
-          <rect x={c.x + 16} y={c.y + 36} width="80" height="16" rx="4" fill="#1C1917" opacity="0.7" />
-          <rect x={c.x + 16} y={c.y + 60} width="40" height="8" rx="4" fill="#10B981" opacity="0.6" />
+          <rect x={c.x + 16} y={c.y + 16} width="60" height="8" rx="4" fill="white" opacity="0.15" />
+          <rect x={c.x + 16} y={c.y + 36} width="80" height="16" rx="4" fill="white" opacity="0.5" />
+          <rect x={c.x + 16} y={c.y + 60} width="40" height="8" rx="4" fill="#2DD4BF" opacity="0.6" />
         </g>
       ))}
       {/* Chart area */}
-      <rect x="200" y="170" width="580" height="200" rx="12" fill="white" />
-      <rect x="220" y="190" width="100" height="10" rx="5" fill="#1C1917" opacity="0.08" />
+      <rect x="200" y="170" width="580" height="200" rx="12" fill="#141414" />
+      <rect x="220" y="190" width="100" height="10" rx="5" fill="white" opacity="0.06" />
       {/* Chart bars */}
       {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
         <rect
@@ -77,15 +77,15 @@ function DashboardVisual({ accent }: { accent: string }) {
           height={Math.sin(i * 0.8 + 1) * 60 + 40}
           rx="6"
           fill={accent}
-          opacity={0.15 + (i % 3) * 0.1}
+          opacity={0.25 + (i % 3) * 0.15}
         />
       ))}
       {/* Bottom table */}
-      <rect x="200" y="390" width="580" height="90" rx="12" fill="white" />
-      <rect x="220" y="410" width="100" height="8" rx="4" fill="#E5E5E5" />
-      <rect x="220" y="430" width="540" height="6" rx="3" fill="#F5F5F5" />
-      <rect x="220" y="444" width="540" height="6" rx="3" fill="#F5F5F5" />
-      <rect x="220" y="458" width="540" height="6" rx="3" fill="#F5F5F5" />
+      <rect x="200" y="390" width="580" height="90" rx="12" fill="#141414" />
+      <rect x="220" y="410" width="100" height="8" rx="4" fill="white" opacity="0.1" />
+      <rect x="220" y="430" width="540" height="6" rx="3" fill="white" opacity="0.04" />
+      <rect x="220" y="444" width="540" height="6" rx="3" fill="white" opacity="0.04" />
+      <rect x="220" y="458" width="540" height="6" rx="3" fill="white" opacity="0.04" />
     </svg>
   );
 }
@@ -375,16 +375,16 @@ function SocialVisual({ accent }: { accent: string }) {
 /* ── Device frames ─────────────────────────────────────────────── */
 function BrowserFrame({ children, title }: { children: React.ReactNode; title: string }) {
   return (
-    <div className="rounded-2xl border border-stone-200/60 bg-white shadow-2xl shadow-stone-900/[0.08] overflow-hidden">
+    <div className="rounded-2xl border border-white/[0.06] bg-[#111111] shadow-2xl overflow-hidden">
       {/* Browser chrome */}
-      <div className="flex items-center gap-2 border-b border-stone-100 bg-stone-50/80 px-4 py-2.5">
+      <div className="flex items-center gap-2 border-b border-white/[0.06] bg-[#0D0D0D] px-4 py-2.5">
         <div className="flex gap-1.5">
           <div className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
           <div className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
           <div className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
         </div>
         <div className="mx-auto flex-1 text-center">
-          <div className="mx-auto flex h-6 max-w-xs items-center rounded-md bg-white px-3 text-[10px] text-stone-400 border border-stone-100">
+          <div className="mx-auto flex h-6 max-w-xs items-center rounded-md bg-white/[0.05] px-3 text-[10px] text-white/30 border border-white/[0.06]">
             {title.toLowerCase().replace(/\s/g, "")}.com
           </div>
         </div>
@@ -398,10 +398,10 @@ function BrowserFrame({ children, title }: { children: React.ReactNode; title: s
 function PhoneFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto max-w-[280px]">
-      <div className="rounded-[2rem] border-4 border-stone-800 bg-stone-800 p-2 shadow-2xl shadow-stone-900/20">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-white">
+      <div className="rounded-[2rem] border-4 border-[#222] bg-[#1A1A1A] p-2 shadow-2xl">
+        <div className="relative overflow-hidden rounded-[1.5rem] bg-[#0D0D0D]">
           {/* Notch */}
-          <div className="absolute top-0 left-1/2 z-10 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-stone-800" />
+          <div className="absolute top-0 left-1/2 z-10 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-[#222]" />
           <div className="aspect-[9/19] w-full">{children}</div>
         </div>
       </div>
@@ -413,14 +413,14 @@ function LaptopFrame({ children, title }: { children: React.ReactNode; title: st
   return (
     <div className="relative mx-auto max-w-2xl">
       {/* Screen */}
-      <div className="rounded-t-2xl border-4 border-stone-700 bg-stone-700 pb-1 pt-1 shadow-2xl shadow-stone-900/20">
+      <div className="rounded-t-2xl border-4 border-[#333] bg-[#222] pb-1 pt-1 shadow-2xl">
         <div className="overflow-hidden rounded-t-xl">{children}</div>
       </div>
       {/* Base */}
-      <div className="h-4 rounded-b-2xl bg-gradient-to-b from-stone-600 to-stone-700" />
-      <div className="mx-auto h-2 w-32 rounded-b-xl bg-stone-600" />
+      <div className="h-4 rounded-b-2xl bg-gradient-to-b from-[#2A2A2A] to-[#222]" />
+      <div className="mx-auto h-2 w-32 rounded-b-xl bg-[#1A1A1A]" />
       {/* Label */}
-      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-stone-900 px-3 py-1 text-[10px] font-medium text-white/80">
+      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1A1A1A] border border-white/[0.06] px-3 py-1 text-[10px] font-medium text-white/60">
         {title}
       </div>
     </div>

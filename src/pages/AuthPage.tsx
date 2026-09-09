@@ -113,14 +113,14 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FAF8F5] px-4">
-      <Card className="min-w-[360px] max-w-[420px] border-stone-200 shadow-lg shadow-stone-900/[0.04]">
+    <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+      <Card className="min-w-[360px] max-w-[420px] border-white/[0.06] bg-[#111] shadow-lg">
         {step === "signIn" ? (
           <>
             <CardHeader className="text-center">
               <a
                 href="/"
-                className="mb-2 block text-lg font-bold text-stone-900 hover:text-[#6C3AED] transition-colors"
+                className="mb-2 block text-lg font-bold text-white hover:text-[#A78BFA] transition-colors"
               >
                 {siteConfig.name}
               </a>
@@ -137,12 +137,12 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
               <CardContent>
                 <div className="relative flex items-center gap-2">
                   <div className="relative flex-1">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-stone-400" />
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-white/25" />
                     <Input
                       name="email"
                       placeholder="name@example.com"
                       type="email"
-                      className="border-stone-200 pl-9 focus:border-[#6C3AED]"
+                      className="border-white/[0.08] bg-white/[0.03] pl-9 focus:border-[#A78BFA] text-white placeholder:text-white/20"
                       disabled={isLoading}
                       required
                     />
@@ -151,7 +151,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                     type="submit"
                     size="icon"
                     disabled={isLoading}
-                    className="bg-[#6C3AED] hover:bg-[#5B2ED4]"
+                    className="bg-[#A78BFA] hover:bg-[#C4B5FD] text-black"
                   >
                     {isLoading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -167,10 +167,10 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                 <div className="mt-4">
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                      <span className="w-full border-t border-stone-200" />
+                      <span className="w-full border-t border-white/[0.06]" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-white px-2 text-stone-400">
+                      <span className="bg-[#111] px-2 text-white/25">
                         Or
                       </span>
                     </div>
@@ -179,7 +179,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                   <Button
                     type="button"
                     variant="outline"
-                    className="mt-4 w-full border-stone-200"
+                    className="mt-4 w-full border-white/[0.08] text-white/60"
                     onClick={handleGuestLogin}
                     disabled={isLoading}
                   >
@@ -234,11 +234,11 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                     {error}
                   </p>
                 )}
-                <p className="mt-4 text-center text-sm text-stone-500">
+                <p className="mt-4 text-center text-sm text-white/35">
                   Didn&apos;t receive a code?{" "}
                   <Button
                     variant="link"
-                    className="h-auto p-0 text-[#6C3AED]"
+                    className="h-auto p-0 text-[#A78BFA]"
                     onClick={() => setStep("signIn")}
                   >
                     Try again
@@ -277,10 +277,10 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
           </>
         )}
 
-        <div className="rounded-b-lg border-t border-stone-200 bg-stone-50 px-6 py-4 text-center text-xs text-stone-400">
+        <div className="rounded-b-lg border-t border-white/[0.06] bg-white/[0.02] px-6 py-4 text-center text-xs text-white/25">
           <a
             href="/"
-            className="font-medium text-[#6C3AED] hover:text-[#5B2ED4] transition-colors"
+            className="font-medium text-[#A78BFA] hover:text-[#C4B5FD] transition-colors"
           >
             {siteConfig.name}
           </a>

@@ -9,11 +9,11 @@ import {
 import ProjectMockup from "@/components/ProjectMockup";
 
 const accentColors: Record<string, string> = {
-  Websites: "#6C3AED",
-  AI: "#3B82F6",
+  Websites: "#A78BFA",
+  AI: "#60A5FA",
   Branding: "#FB923C",
-  Video: "#EF4444",
-  Marketing: "#14B8A6",
+  Video: "#F87171",
+  Marketing: "#2DD4BF",
 };
 
 function FilterPill({
@@ -30,8 +30,8 @@ function FilterPill({
       onClick={onClick}
       className={`whitespace-nowrap rounded-full border px-4 py-1.5 text-xs font-medium transition-all duration-300 ${
         active
-          ? "border-[#6C3AED] bg-[#6C3AED] text-white"
-          : "border-stone-200 bg-white text-stone-500 hover:border-stone-300 hover:text-stone-700"
+          ? "border-[#A78BFA] bg-[#A78BFA] text-black"
+          : "border-white/10 bg-white/[0.03] text-white/40 hover:border-white/20 hover:text-white/60"
       }`}
     >
       {label}
@@ -47,7 +47,7 @@ function ProjectCard({
   index: number;
 }) {
   const isLarge = project.featured && index % 3 === 0;
-  const accent = accentColors[project.category] || "#6C3AED";
+  const accent = accentColors[project.category] || "#A78BFA";
 
   return (
     <motion.div
@@ -56,14 +56,13 @@ function ProjectCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className={`group relative overflow-hidden rounded-2xl border border-stone-200/80 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-stone-300 hover:shadow-2xl hover:shadow-stone-900/[0.08] ${
+      className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] transition-all duration-300 hover:border-white/[0.12] hover:bg-[#141414] ${
         isLarge ? "sm:col-span-2 sm:row-span-2" : ""
       }`}
     >
       <a href={`/portfolio/${project.slug}`} className="block">
-        {/* Mockup visual */}
         <div
-          className={`relative overflow-hidden bg-stone-50/50 ${
+          className={`relative overflow-hidden bg-[#0D0D0D] ${
             isLarge ? "p-6 sm:p-8" : "p-4 sm:p-5"
           }`}
         >
@@ -77,22 +76,18 @@ function ProjectCard({
             />
           </motion.div>
 
-          {/* Accent stripe */}
           <div
-            className="absolute top-0 left-0 h-1 w-0 transition-all duration-500 group-hover:w-full"
+            className="absolute top-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full"
             style={{ backgroundColor: accent }}
           />
 
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          {/* Arrow */}
-          <div className="absolute right-5 bottom-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90">
-            <ArrowUpRight className="h-4 w-4 text-stone-700" />
+          <div className="absolute right-5 bottom-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90">
+            <ArrowUpRight className="h-4 w-4 text-white/70" />
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-5 sm:p-6">
           <div className="mb-2 flex items-center gap-2">
             <span
@@ -101,20 +96,20 @@ function ProjectCard({
             >
               {project.category}
             </span>
-            <span className="text-[11px] text-stone-300">&middot;</span>
-            <span className="text-[11px] text-stone-400">{project.year}</span>
+            <span className="text-[11px] text-white/10">&middot;</span>
+            <span className="text-[11px] text-white/25">{project.year}</span>
           </div>
-          <h3 className="mb-2 text-base font-semibold text-stone-900 sm:text-lg">
+          <h3 className="mb-2 text-base font-semibold text-white sm:text-lg">
             {project.title}
           </h3>
-          <p className="mb-4 text-sm leading-relaxed text-stone-500">
+          <p className="mb-4 text-sm leading-relaxed text-white/35">
             {project.description}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {project.technologies.map((t) => (
               <span
                 key={t}
-                className="rounded-full bg-stone-100/80 px-2.5 py-0.5 text-[11px] font-medium text-stone-500"
+                className="rounded-full bg-white/[0.05] px-2.5 py-0.5 text-[11px] font-medium text-white/30"
               >
                 {t}
               </span>
@@ -135,15 +130,14 @@ export default function Portfolio() {
       : portfolioProjects.filter((p) => p.category === active);
 
   return (
-    <section id="portfolio" className="px-6 py-24 sm:py-32 lg:px-10">
+    <section id="portfolio" className="bg-[#0A0A0A] px-6 py-24 sm:py-32 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        {/* Section header */}
         <div className="mb-10 max-w-2xl">
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#6C3AED]"
+            className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]"
           >
             Portfolio
           </motion.span>
@@ -152,13 +146,12 @@ export default function Portfolio() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
           >
             Selected work
           </motion.h2>
         </div>
 
-        {/* Filters */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -176,7 +169,6 @@ export default function Portfolio() {
           ))}
         </motion.div>
 
-        {/* Grid */}
         <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (
