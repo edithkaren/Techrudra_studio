@@ -4,6 +4,8 @@ import { ArrowUpRight, X, ArrowRight } from "lucide-react";
 import { services, type Service } from "@/data/services";
 import CardTilt from "@/components/motion/CardTilt";
 import ScrollReveal from "@/components/motion/ScrollReveal";
+import KineticText from "@/components/motion/KineticText";
+import FluidSectionDivider from "@/components/motion/FluidSectionDivider";
 
 const accentColors = [
   "#A78BFA", "#60A5FA", "#2DD4BF", "#F472B6",
@@ -178,7 +180,12 @@ export default function Services() {
             <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Services</span>
           </ScrollReveal>
           <ScrollReveal variant="fadeUp" delay={0.1}>
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">What we can build for you</h2>
+            <KineticText
+              text="What we can build for you"
+              as="h2"
+              speed="medium"
+              className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
           </ScrollReveal>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

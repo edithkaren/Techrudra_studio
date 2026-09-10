@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
 import AnimatedText from "@/components/motion/AnimatedText";
+import KineticText from "@/components/motion/KineticText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
 import ParticleRing from "@/components/ParticleRing";
@@ -636,11 +637,13 @@ export default function Hero() {
             <TypingCursor />
           </span>
           <br />
-          <AnimatedText
+          <br />
+          <KineticText
             text="mobile experiences"
-            className="inline"
+            as="span"
+            speed="medium"
             delay={0.5}
-            staggerDelay={0.04}
+            className="text-[#A78BFA] text-4xl font-medium sm:text-5xl md:text-6xl lg:text-[80px] tracking-tight"
           />
         </motion.h1>
 

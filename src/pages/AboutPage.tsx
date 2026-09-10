@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import AnimatedCounter from "@/components/motion/AnimatedCounter";
+import KineticText from "@/components/motion/KineticText";
+import CardTilt from "@/components/motion/CardTilt";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -123,7 +125,7 @@ export default function AboutPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
               <motion.p variants={fadeUp} custom={0} className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Our Story</motion.p>
               <motion.h2 variants={fadeUp} custom={1} className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
-                Built at the intersection of <span className="text-gradient-violet">code, AI & creativity</span>
+                <KineticText text="Built at the intersection of code, AI & creativity" as="span" speed="medium" className="" />
               </motion.h2>
               <motion.p variants={fadeUp} custom={2} className="mt-6 max-w-lg text-lg leading-relaxed text-white/40">
                 Techrudra.Studio was founded on a simple belief: the best digital products don't come from siloed teams — they come from a single creative technologist who can design, build, automate, and grow everything in one cohesive vision.
@@ -160,11 +162,14 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger} className="mb-14 max-w-2xl">
             <motion.p variants={fadeUp} custom={0} className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Capabilities</motion.p>
-            <motion.h2 variants={fadeUp} custom={1} className="text-3xl font-bold tracking-tight text-white md:text-4xl">Everything your brand needs, in one studio</motion.h2>
+            <motion.h2 variants={fadeUp} custom={1} className="text-3xl font-bold tracking-tight text-white md:text-4xl">
+              <KineticText text="Everything your brand needs, in one studio" as="span" speed="medium" className="" />
+            </motion.h2>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={stagger} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {capabilities.map((cap) => (
-              <motion.div key={cap.title} variants={scaleIn} className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] p-7 transition-all duration-300 hover:border-white/[0.12]">
+              <CardTilt maxTilt={4} scale={1.02} glarePosition="top-right">
+                <motion.div key={cap.title} variants={scaleIn} className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] p-7 transition-all duration-300 hover:border-white/[0.12]">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl" style={{ backgroundColor: `${cap.color}12` }}>
                   <cap.icon className="h-5 w-5" style={{ color: cap.color }} />
                 </div>
@@ -172,6 +177,7 @@ export default function AboutPage() {
                 <p className="text-sm leading-relaxed text-white/35">{cap.description}</p>
                 <div className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ backgroundColor: cap.color }} />
               </motion.div>
+              </CardTilt>
             ))}
           </motion.div>
         </div>
@@ -186,13 +192,15 @@ export default function AboutPage() {
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={stagger} className="grid gap-6 sm:grid-cols-2">
             {values.map((val) => (
-              <motion.div key={val.title} variants={scaleIn} className="rounded-2xl border border-white/[0.06] bg-[#111111] p-8 transition-all duration-300 hover:border-white/[0.12]">
+              <CardTilt maxTilt={4} scale={1.02} glarePosition="center" glareColor="rgba(167,139,250,0.18)">
+                <motion.div key={val.title} variants={scaleIn} className="rounded-2xl border border-white/[0.06] bg-[#111111] p-8 transition-all duration-300 hover:border-white/[0.12]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#A78BFA]/10">
                   <val.icon className="h-5 w-5 text-[#A78BFA]" />
                 </div>
                 <h3 className="mb-2 text-lg font-semibold text-white">{val.title}</h3>
                 <p className="text-sm leading-relaxed text-white/35">{val.body}</p>
               </motion.div>
+              </CardTilt>
             ))}
           </motion.div>
         </div>
@@ -214,11 +222,13 @@ export default function AboutPage() {
               { step: "05", title: "Launch", desc: "Thorough QA, performance optimization, and a smooth deployment — zero surprises on launch day." },
               { step: "06", title: "Grow", desc: "Ongoing marketing, SEO, content, and automation that compound over time and drive real business results." },
             ].map((item) => (
-              <motion.div key={item.step} variants={scaleIn} className="rounded-2xl border border-white/[0.06] bg-[#111111] p-7 transition-all duration-300 hover:border-white/[0.12]">
+              <CardTilt key={item.step} maxTilt={3} scale={1.02} glarePosition="top-left">
+                <motion.div variants={scaleIn} className="rounded-2xl border border-white/[0.06] bg-[#111111] p-7 transition-all duration-300 hover:border-white/[0.12]">
                 <span className="text-4xl font-bold text-white/[0.06]">{item.step}</span>
                 <h3 className="mt-2 text-lg font-semibold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/35">{item.desc}</p>
-              </motion.div>
+                </motion.div>
+              </CardTilt>
             ))}
           </motion.div>
         </div>

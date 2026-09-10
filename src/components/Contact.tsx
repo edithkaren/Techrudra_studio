@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import ScrollReveal from "@/components/motion/ScrollReveal";
+import KineticText from "@/components/motion/KineticText";
 import MagneticButton from "@/components/motion/MagneticButton";
 
 const projectTypes = [
@@ -38,10 +39,12 @@ export default function Contact() {
               <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Contact</span>
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.1}>
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Have an idea?<br />
-                <span className="text-gradient-violet">Let&apos;s make it real.</span>
-              </h2>
+              <KineticText
+                text="Have an idea? Let&apos;s make it real."
+                as="h2"
+                speed="medium"
+                className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              />
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.2}>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-white/40">

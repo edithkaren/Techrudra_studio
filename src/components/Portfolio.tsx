@@ -9,7 +9,7 @@ import {
 import ProjectMockup from "@/components/ProjectMockup";
 import CardTilt from "@/components/motion/CardTilt";
 import ScrollReveal from "@/components/motion/ScrollReveal";
-
+import KineticText from "@/components/motion/KineticText";
 const accentColors: Record<string, string> = {
   Websites: "#A78BFA", AI: "#60A5FA", Branding: "#FB923C",
   Video: "#F87171", Marketing: "#2DD4BF",
@@ -114,7 +114,12 @@ export default function Portfolio() {
             <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Portfolio</span>
           </ScrollReveal>
           <ScrollReveal variant="fadeUp" delay={0.1}>
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Selected work</h2>
+            <KineticText
+              text="Selected work"
+              as="h2"
+              speed="medium"
+              className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
           </ScrollReveal>
         </div>
         <ScrollReveal variant="fadeUp" delay={0.15}>

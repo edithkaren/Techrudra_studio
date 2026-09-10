@@ -10,6 +10,7 @@ import CustomCursor from "@/components/motion/CustomCursor";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import LiquidFilters from "@/components/liquid/LiquidFilters";
 import LiquidDivider from "@/components/liquid/LiquidDivider";
+import FluidSectionDivider from "@/components/motion/FluidSectionDivider";
 
 export default function Landing() {
   return (
@@ -22,11 +23,11 @@ export default function Landing() {
         <Hero />
         <Marquee />
         <FeaturedShowcase />
-        <LiquidDivider color="#0A0A0A" height={60} />
+        <FluidSectionDivider h={72} accent="#A78BFA" bg="#0A0A0A" layers={3} className="overflow-hidden" />
         <Services />
-        <LiquidDivider color="#0A0A0A" height={60} flip />
+        <FluidSectionDivider h={64} accent="#A78BFA" bg="#0A0A0A" layers={2} flip />
         <Portfolio />
-        <LiquidDivider color="#0A0A0A" height={50} />
+        <FluidSectionDivider h={56} accent="#A78BFA" bg="#0A0A0A" layers={1} />
         <Contact />
       </main>
       <Footer />
