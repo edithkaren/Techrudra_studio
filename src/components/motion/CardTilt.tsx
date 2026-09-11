@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 
 interface CardTiltProps {
@@ -6,13 +6,9 @@ interface CardTiltProps {
   className?: string;
   maxTilt?: number;
   scale?: number;
-  /** Where to place the glare (corner or edge) */
   glarePosition?: "top-left" | "top-right" | "center" | "sweep";
-  /** Glare color (must include alpha for blend) */
   glareColor?: string;
-  /** Glare opacity max */
   glareOpacity?: number;
-  /** Whether glare is enabled */
   withGlare?: boolean;
 }
 
@@ -67,7 +63,6 @@ export default function CardTilt({
     >
       {withGlare && (
         <>
-          {/* ── Soft fluid shimmer glare (cursor-follows) ─────── */}
           {glarePosition === "top-right" && (
             <div
               className="pointer-events-none absolute left-0 right-0 top-0 h-[30%] -translate-x-1/2 -translate-y-1/2"
@@ -86,7 +81,6 @@ export default function CardTilt({
                   transform: "translateX(-50%)",
                 }}
               />
-              {/* Secondary tighter glare */}
               <div
                 className="absolute left-1/2 top-0 h-full w-1/3 rounded-full blur-[20px] opacity-60"
                 style={{
@@ -132,8 +126,7 @@ export default function CardTilt({
             <div
               className="pointer-events-none absolute inset-0"
               style={{
-                background:
-                  `radial-gradient(circle at ${mouse.x * 100}% ${mouse.y * 100}%, ${glareColor} 0%, transparent 50%)`,
+                background: `radial-gradient(circle at ${mouse.x * 100}% ${mouse.y * 100}%, ${glareColor} 0%, transparent 50%)`,
                 opacity: 0.7,
               }}
             />

@@ -1,55 +1,57 @@
-import { useRef, useState, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState, type AnchorHTMLAttributes } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-interface MagneticButtonProps {
-  children: ReactNode;
-  className?: string;
+interface MagneticButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "ref"> {
+  href: string;
   strength?: number;
-  href?: string;
-  onClick?: () => void;
+  className?: string;
 }
 
 export default function MagneticButton({
-  children,
-  className = "",
-  strength = 0.35,
   href,
-  onClick,
+  strength = 0.35,
+  className = "",
+  children,
+  ...props
 }: MagneticButtonProps) {
-  const ref = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const ref = useRef<HTMLAnchorElement>(null);
+  const mouseX = useMotionValue(-999);
+  const mouseY = useMotionValue(-999);
 
-  const handleMouse = (e: React.MouseEvent) => {
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 30 });
+
+  const transformX = useTransform(springX, [-1, 1], [-30 * strength, 30 * strength]);
+  const transformY = useTransform(springY, [-1, 1], [-20 * strength, 20 * strength]);
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!ref.current) return;
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    const x = (clientX - centerX) * strength;
-    const y = (clientY - centerY) * strength;
-    setPosition({ x, y });
+    const rect = ref.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    mouseX.set((e.clientX - cx) / (rect.width / 2));
+    mouseY.set((e.clientY - cy) / (rect.height / 2));
   };
 
-  const reset = () => setPosition({ x: 0, y: 0 });
-
-  const Tag = href ? "a" : "button";
-  const props = href ? { href } : { onClick };
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   return (
-    <motion.div
-      className="inline-block"
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: transformX, y: transformY, display: "inline-flex" }}
+      whileHover={{ scale: isHovered ? 1.02 : 1 }}
+      whileTap={{ scale: 0.98 }}
+      {...props}
     >
-      <Tag
-        ref={ref as never}
-        className={className}
-        {...props}
-      >
-        {children}
-      </Tag>
-    </motion.div>
+      {children}
+    </motion.a>
   );
 }

@@ -29,30 +29,33 @@ function FeaturedProject({
     offset: ["start end", "end start"],
   });
 
-  // Mockup parallax — moves up faster than scroll (overshoots)
-  const mockupY = useTransform(scrollYProgress, [0, 1], [100, -120]);
-  // Mockup scale — starts slightly small, grows to 1, then shrinks slightly at exit
+  const mockupY = useTransform(scrollYProgress, [0, 1], [120, -200]);
   const mockupScale = useTransform(
     scrollYProgress,
     [0, 0.2, 0.5, 0.8, 1],
-    [0.92, 1, 1.02, 1, 0.97]
+    [0.9, 1, 1.04, 1, 0.94]
   );
-  // Mockup subtle rotation on scroll
-  const mockupRotate = useTransform(scrollYProgress, [0, 0.5, 1], [isReversed ? 2 : -2, 0, isReversed ? -1 : 1]);
-  // Mockup opacity — fades in and out at edges
+  const mockupRotate = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [isReversed ? 3 : -3, 0, isReversed ? -2 : 2]
+  );
   const mockupOpacity = useTransform(
     scrollYProgress,
-    [0, 0.15, 0.85, 1],
+    [0, 0.12, 0.85, 1],
+    [0, 1, 1, 0.2]
+  );
+
+  const textY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.14, 0.78, 1],
     [0, 1, 1, 0.3]
   );
 
-  // Text parallax — slower, stays grounded
-  const textY = useTransform(scrollYProgress, [0, 1], [40, -30]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.15, 0.8, 1], [0, 1, 1, 0.5]);
-
-  // Background glow orb — parallax with different speed
-  const glowY = useTransform(scrollYProgress, [0, 1], [60, -80]);
-  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.1, 0.8]);
+  const glowY = useTransform(scrollYProgress, [0, 1], [80, -140]);
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.5, 1.3, 0.7]);
+  const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.25, 0.55, 0.15]);
 
   return (
     <div
@@ -61,7 +64,6 @@ function FeaturedProject({
         isReversed ? "lg:[direction:rtl]" : ""
       }`}
     >
-      {/* Text side */}
       <motion.div
         style={{ y: textY, opacity: textOpacity }}
         className={isReversed ? "lg:[direction:ltr]" : ""}
@@ -101,28 +103,23 @@ function FeaturedProject({
         </a>
       </motion.div>
 
-      {/* Mockup side with rich parallax */}
-      <div
-        className={`relative ${isReversed ? "lg:[direction:ltr]" : ""}`}
-      >
-        {/* Background glow orb — different parallax speed */}
+      <div className={`relative ${isReversed ? "lg:[direction:ltr]" : ""}`}>
         <motion.div
-          className="pointer-events-none absolute inset-0 -m-16"
+          className="pointer-events-none absolute inset-0 -m-20"
           style={{
             y: glowY,
             scale: glowScale,
-            opacity: 0.3,
+            opacity: glowOpacity,
           }}
         >
           <div
             className="h-full w-full rounded-full blur-3xl"
             style={{
-              background: `radial-gradient(circle, ${accent}15 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${accent}20 0%, transparent 70%)`,
             }}
           />
         </motion.div>
 
-        {/* The mockup itself */}
         <motion.div
           style={{
             y: mockupY,
@@ -130,7 +127,7 @@ function FeaturedProject({
             rotate: mockupRotate,
             opacity: mockupOpacity,
           }}
-          transition={{ type: "spring", stiffness: 200, damping: 30 }}
+          transition={{ type: "spring", stiffness: 220, damping: 28 }}
           className="relative z-10"
         >
           <ProjectMockup
@@ -139,20 +136,19 @@ function FeaturedProject({
           />
         </motion.div>
 
-        {/* Floating accent decoration */}
         <motion.div
-          className="absolute -right-4 -bottom-4 z-20 h-20 w-20 rounded-2xl opacity-20 blur-sm"
+          className="absolute -right-6 -bottom-6 z-20 h-24 w-24 rounded-2xl opacity-30 blur-sm"
           style={{
             backgroundColor: accent,
-            y: useTransform(scrollYProgress, [0, 1], [20, -40]),
-            rotate: useTransform(scrollYProgress, [0, 1], [12, -8]),
+            y: useTransform(scrollYProgress, [0, 1], [24, -60]),
+            rotate: useTransform(scrollYProgress, [0, 1], [14, -10]),
           }}
         />
         <motion.div
-          className="absolute -left-3 top-8 z-20 h-12 w-12 rounded-full opacity-10 blur-sm"
+          className="absolute -left-4 top-10 z-20 h-14 w-14 rounded-full opacity-15 blur-sm"
           style={{
             backgroundColor: accent,
-            y: useTransform(scrollYProgress, [0, 1], [-15, 25]),
+            y: useTransform(scrollYProgress, [0, 1], [-20, 30]),
           }}
         />
       </div>
@@ -179,7 +175,7 @@ export default function FeaturedShowcase() {
           </ScrollReveal>
         </div>
 
-        <div className="space-y-32">
+        <div className="space-y-36">
           {featured.map((project, idx) => (
             <ScrollReveal key={project.id} variant="fadeUp" delay={0.05}>
               <FeaturedProject project={project} index={idx} />

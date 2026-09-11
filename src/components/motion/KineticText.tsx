@@ -1,11 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-/**
- * KineticText — text that slides up from an invisible clipping boundary
- * using clip-path, with an elastic cubic-bezier easing.
- * Each word/line reveals independently on viewport entry.
- */
 interface KineticTextProps {
   text: string;
   as?: "h1" | "h2" | "h3" | "p" | "span" | "div";
@@ -17,12 +12,6 @@ interface KineticTextProps {
   style?: React.CSSProperties;
 }
 
-// When used inside an <h1>/<h2>/<p>, the clip-path reveal still works
-// because each word is wrapped in a motion.span inside the parent.
-// The `as` prop is kept for consumers that want a semantic wrapper,
-// but the actual reveal element stays a <span> to keep clip-path reliable.
-
-// Elastic cubic-bezier expressed as FRM easing array [x1, y1, x2, y2]
 const EASING_ELASTIC = [0.68, -0.55, 0.265, 1.55] as const;
 
 const SPEEDS = {
@@ -30,8 +19,6 @@ const SPEEDS = {
   medium: { duration: 0.9, stagger: 0.08 },
   fast: { duration: 0.55, stagger: 0.05 },
 };
-
-const ALLOWED_TAGS = new Set(["h1", "h2", "h3", "p", "span", "div", "strong", "b"]);
 
 export default function KineticText({
   text,
@@ -74,10 +61,7 @@ export default function KineticText({
               hidden: { clipPath: "inset(100% 0 0 0)" },
               visible: {
                 clipPath: "inset(0% 0 0 0)",
-                transition: {
-                  duration,
-                  ease: EASING_ELASTIC,
-                },
+                transition: { duration, ease: EASING_ELASTIC },
               },
             }}
           >
@@ -91,10 +75,6 @@ export default function KineticText({
   );
 }
 
-/**
- * KineticTextLine — single line reveal (children-ready).
- * Pass any inline-span children and they reveal with clip-path + elastic.
- */
 interface KineticTextLineProps {
   children: React.ReactNode;
   className?: string;

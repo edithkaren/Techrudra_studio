@@ -1,41 +1,37 @@
-import { type ReactNode } from "react";
-import { motion, type Variants } from "framer-motion";
-
-type RevealVariant = "fadeUp" | "fadeDown" | "fadeLeft" | "fadeRight" | "scale" | "blur";
+import { useRef, useEffect, useState, type ReactNode } from "react";
+import { motion } from "framer-motion";
 
 interface ScrollRevealProps {
   children: ReactNode;
-  variant?: RevealVariant;
+  variant?: "fadeUp" | "blur" | "fadeIn";
   delay?: number;
-  duration?: number;
   className?: string;
-  once?: boolean;
 }
 
-const variants: Record<RevealVariant, Variants> = {
+const variants = {
   fadeUp: {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0 },
-  },
-  fadeDown: {
-    hidden: { opacity: 0, y: -40 },
-    visible: { opacity: 1, y: 0 },
-  },
-  fadeLeft: {
-    hidden: { opacity: 0, x: -40 },
-    visible: { opacity: 1, x: 0 },
-  },
-  fadeRight: {
-    hidden: { opacity: 0, x: 40 },
-    visible: { opacity: 1, x: 0 },
-  },
-  scale: {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1 },
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
+    }),
   },
   blur: {
-    hidden: { opacity: 0, filter: "blur(10px)" },
-    visible: { opacity: 1, filter: "blur(0px)" },
+    hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" },
+    visible: (i: number) => ({
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.8, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
+    }),
+  },
+  fadeIn: {
+    hidden: { opacity: 0 },
+    visible: (i: number) => ({
+      opacity: 1,
+      transition: { duration: 0.6, delay: i * 0.1, ease: "easeOut" },
+    }),
   },
 };
 
@@ -43,20 +39,44 @@ export default function ScrollReveal({
   children,
   variant = "fadeUp",
   delay = 0,
-  duration = 0.6,
   className = "",
-  once = true,
 }: ScrollRevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIndex((idx) => idx + 1);
+            setInView(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "-40px 0px" }
+    );
+
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const v = variants[variant];
+
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: "-80px" }}
-      variants={variants[variant]}
-      transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <div ref={ref} className={className}>
+      <motion.div
+        className="w-full"
+        variants={v}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        custom={delay}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }

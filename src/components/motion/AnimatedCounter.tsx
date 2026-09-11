@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: number;
   suffix?: string;
   prefix?: string;
   duration?: number;
-  className?: string;
   color?: string;
+  className?: string;
+  ease?: string;
+  decimals?: number;
 }
 
 export default function AnimatedCounter({
@@ -15,30 +17,46 @@ export default function AnimatedCounter({
   suffix = "",
   prefix = "",
   duration = 2000,
-  className = "",
   color,
+  className = "",
+  ease = "easeOut",
+  decimals = 0,
 }: AnimatedCounterProps) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
   const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!inView) return;
-    let startTime: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * value));
-      if (progress < 1) requestAnimationFrame(step);
+    const start = 0;
+    const startTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = ease === "easeOut"
+        ? 1 - Math.pow(1 - progress, 3)
+        : ease === "easeIn"
+          ? Math.pow(progress, 3)
+          : progress;
+      const current = start + (value - start) * eased;
+      setCount(parseFloat(current.toFixed(decimals)));
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
     };
-    requestAnimationFrame(step);
-  }, [inView, value, duration]);
+
+    requestAnimationFrame(animate);
+  }, [value, duration, ease, decimals]);
 
   return (
     <span ref={ref} className={className} style={color ? { color } : undefined}>
-      {prefix}{count}{suffix}
+      {prefix}
+      <motion.span
+        className="tabular-nums"
+        initial={false}
+        animate={{ innerText: count }}
+        transition={{ duration, ease }}
+      />
+      {suffix}
     </span>
   );
 }

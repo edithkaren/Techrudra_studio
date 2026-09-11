@@ -1,54 +1,59 @@
-import { useState, useRef, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface LiquidTextProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
-  as?: "span" | "h1" | "h2" | "h3" | "p" | "a";
-  href?: string;
+  accent?: string;
+  filterId?: string;
 }
 
-/**
- * Text that warps into a fluid / ink-in-water shape on hover.
- * Uses two SVG filters toggled via CSS class for the distortion.
- * On hover, text morphs with turbulence noise — like red ink flowing in water.
- */
 export default function LiquidText({
   children,
   className = "",
-  as: Tag = "span",
-  href,
+  accent = "#A78BFA",
+  filterId = "fluid-text-hover",
 }: LiquidTextProps) {
   const [hovered, setHovered] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <motion.div
-      ref={ref}
-      className={`inline-block ${className}`}
+    <span
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ filter: hovered ? "url(#fluid-distort-hover)" : "url(#fluid-distort)" }}
-      animate={{
-        scale: hovered ? 1.02 : 1,
-      }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className={`relative inline-block cursory-pointer ${className}`}
     >
-      <Tag
-        href={href}
-        className="relative inline-block cursor-pointer"
+      <svg
+        className="pointer-events-none absolute inset-0 h-0 w-0 overflow-hidden"
+        aria-hidden
+        focusable={false}
+      >
+        <defs>
+          <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.025"
+              numOctaves="2"
+              seed={2}
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale={hovered ? 18 : 0}
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+      <span
+        style={{
+          filter: hovered ? `url(#${filterId})` : "none",
+          transition: "filter 0.35s ease",
+          color: hovered ? accent : undefined,
+        }}
       >
         {children}
-        {/* Underline that morphs on hover */}
-        <motion.span
-          className="absolute -bottom-0.5 left-0 h-[1px] bg-current"
-          animate={{
-            width: hovered ? "100%" : "0%",
-            opacity: hovered ? 0.6 : 0,
-          }}
-          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-        />
-      </Tag>
-    </motion.div>
+      </span>
+    </span>
   );
 }
