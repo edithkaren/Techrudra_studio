@@ -5,6 +5,7 @@ import KineticText from "@/components/motion/KineticText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
 import ParticleRing from "@/components/ParticleRing";
+import AstraBackground from "@/components/AstraBackground";
 
 const words = [
   "native",
@@ -587,10 +588,10 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0A0A] px-6"
     >
-      {/* Background layers */}
-      <MouseGradient />
-      <AnimatedGrid />
-      <GradientOrb />
+      {/* Astra-style ambient background */}
+      <AstraBackground />
+
+      {/* Particle ring — sits above Astra bg, behind content */}
       <ParticleRing
         className="z-[1]"
         particleCount={1100}

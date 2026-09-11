@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import AstraBackground from "@/components/AstraBackground";
 import Marquee from "@/components/Marquee";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
 import Services from "@/components/Services";
@@ -17,6 +18,7 @@ export default function Landing() {
     <div className="min-h-screen bg-[#0A0A0A]">
       <LiquidFilters />
       <ScrollProgress />
+      <AstraBackground />
       <CustomCursor />
       <Navbar />
       <main>
