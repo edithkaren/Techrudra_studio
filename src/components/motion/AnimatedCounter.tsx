@@ -50,12 +50,9 @@ export default function AnimatedCounter({
   return (
     <span ref={ref} className={className} style={color ? { color } : undefined}>
       {prefix}
-      <motion.span
-        className="tabular-nums"
-        initial={false}
-        animate={{ innerText: count }}
-        transition={{ duration, ease }}
-      />
+      <span className="tabular-nums">
+        {count}
+      </span>
       {suffix}
     </span>
   );

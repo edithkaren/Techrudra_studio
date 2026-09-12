@@ -20,15 +20,12 @@ export default function FluidSectionDivider({
 }: FluidSectionDividerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-  const opacity = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  }).opacity;
+  const { scrollY } = useScroll();
 
   const waveLayers = Array.from({ length: layers }, (_, i) => {
     const seed = i + 1;
     const wave1 = useTransform(
-      opacity,
+      scrollY,
       [0, 1],
       [
         `M0,120 C${180 + seed * 20},120 ${360 + seed * 20},120 ${540 + seed * 20},120 C${720 + seed * 20},120 ${900 + seed * 20},120 ${1080 + seed * 20},120 C${1260 + seed * 20},120 1440,120 1440,120 L1440,120 L0,120 Z`,
@@ -36,7 +33,7 @@ export default function FluidSectionDivider({
       ]
     );
     const wave2 = useTransform(
-      opacity,
+      scrollY,
       [0, 1],
       [
         `M0,120 C${200 + seed * 10},120 ${400 + seed * 10},120 ${600 + seed * 10},120 C${800 + seed * 10},120 ${1000 + seed * 10},120 ${1200 + seed * 10},120 L1440,120 L0,120 Z`,
@@ -83,7 +80,7 @@ export default function FluidSectionDivider({
               className="pointer-events-none"
               d="M0,120 C200,120 400,120 600,120 C800,120 1000,120 1200,120 L1440,120 L0,120 Z"
               fill="rgba(10,10,10,0.9)"
-              animate={inView ? wave2 : wave2}
+              animate={inView ? wave1 : wave1}
               transition={{ duration: 1.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
             />
           ))}
@@ -102,7 +99,7 @@ export default function FluidSectionDivider({
                 }
           }
           animate={{
-            opacity: inView ? [0.2, 0.9, 0.2] : [0.2, 0.2],
+            opacity: inView ? 0.5 : 0.2,
           }}
           transition={{
             duration: 2.4,

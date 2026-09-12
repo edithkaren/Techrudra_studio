@@ -24,26 +24,30 @@ export default function ParticleRing({
   const ringRef = useRef<SVGSVGElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    mouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    mouseRef.current.active = true;
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    mouseRef.current.active = false;
+  const handleMouseMove = useCallback(() => {
+    // handled in useEffect via window listener
   }, []);
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
+    const handleMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      mouseRef.current.active = true;
     };
-  }, [handleMouseMove, handleMouseLeave]);
+
+    const handleLeave = () => {
+      mouseRef.current.active = false;
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseleave", handleLeave);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
 
   const particles = Array.from({ length: particleCount }, (_, i) => {
     const t = Math.random();
@@ -78,8 +82,6 @@ export default function ParticleRing({
       ref={containerRef}
       className={`pointer-events-none ${className}`}
       style={{ position: "absolute", inset: 0 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       <motion.svg
         ref={ringRef}

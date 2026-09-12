@@ -1,10 +1,11 @@
-import { useRef, useState, type AnchorHTMLAttributes } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-interface MagneticButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "ref"> {
+interface MagneticButtonProps {
   href: string;
   strength?: number;
   className?: string;
+  children: React.ReactNode;
 }
 
 export default function MagneticButton({
@@ -12,7 +13,6 @@ export default function MagneticButton({
   strength = 0.35,
   className = "",
   children,
-  ...props
 }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const mouseX = useMotionValue(-999);
@@ -49,7 +49,6 @@ export default function MagneticButton({
       style={{ x: transformX, y: transformY, display: "inline-flex" }}
       whileHover={{ scale: isHovered ? 1.02 : 1 }}
       whileTap={{ scale: 0.98 }}
-      {...props}
     >
       {children}
     </motion.a>

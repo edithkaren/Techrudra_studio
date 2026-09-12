@@ -63,7 +63,7 @@ export default function Contact() {
           </div>
 
           {/* Right: form */}
-          <ScrollReveal variant="fadeRight" delay={0.15}>
+          <ScrollReveal variant="fadeUp" delay={0.15}>
             {submitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -115,18 +115,17 @@ export default function Contact() {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <MagneticButton
-                    strength={0.2}
+                  <button
+                    type="submit"
+                    disabled={loading}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-colors duration-300 hover:bg-white/90 disabled:opacity-60"
                   >
-                    <button type="submit" disabled={loading} className="contents">
-                      {loading ? (
-                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/20 border-t-black" />
-                      ) : (
-                        <>Send Project Inquiry <ArrowRight className="h-4 w-4" /></>
-                      )}
-                    </button>
-                  </MagneticButton>
+                    {loading ? (
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/20 border-t-black" />
+                    ) : (
+                      <>Send Project Inquiry <ArrowRight className="h-4 w-4" /></>
+                    )}
+                  </button>
                 </div>
               </form>
             )}

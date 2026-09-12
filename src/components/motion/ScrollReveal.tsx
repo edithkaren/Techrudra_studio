@@ -8,31 +8,37 @@ interface ScrollRevealProps {
   className?: string;
 }
 
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 30 } as const,
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+};
+
+const blurVariants = {
+  hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" } as const,
+  visible: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+};
+
+const fadeInVariants = {
+  hidden: { opacity: 0 } as const,
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
 const variants = {
-  fadeUp: {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
-    }),
-  },
-  blur: {
-    hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0px)",
-      transition: { duration: 0.8, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
-    }),
-  },
-  fadeIn: {
-    hidden: { opacity: 0 },
-    visible: (i: number) => ({
-      opacity: 1,
-      transition: { duration: 0.6, delay: i * 0.1, ease: "easeOut" },
-    }),
-  },
+  fadeUp: fadeUpVariants,
+  blur: blurVariants,
+  fadeIn: fadeInVariants,
 };
 
 export default function ScrollReveal({
@@ -64,7 +70,7 @@ export default function ScrollReveal({
     return () => observer.disconnect();
   }, []);
 
-  const v = variants[variant];
+  const v = variants[variant] as Record<string, unknown>;
 
   return (
     <div ref={ref} className={className}>
