@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -8,34 +8,34 @@ interface ScrollRevealProps {
   className?: string;
 }
 
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: 30 } as const,
+const fadeUpVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] as const },
+    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
-const blurVariants = {
-  hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" } as const,
+const blurVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" },
   visible: {
     opacity: 1,
     scale: 1,
     filter: "blur(0px)",
-    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
-const fadeInVariants = {
-  hidden: { opacity: 0 } as const,
+const fadeInVariants: Variants = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: { duration: 0.6, ease: "easeOut" },
   },
 };
 
-const variants = {
+const variantsMap: Record<NonNullable<ScrollRevealProps["variant"]>, Variants> = {
   fadeUp: fadeUpVariants,
   blur: blurVariants,
   fadeIn: fadeInVariants,
@@ -49,7 +49,8 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-  const [index, setIndex] = useState(0);
+
+  const resolvedVariant: NonNullable<ScrollRevealProps["variant"]> = variant;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -57,7 +58,6 @@ export default function ScrollReveal({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIndex((idx) => idx + 1);
             setInView(true);
             observer.unobserve(entry.target);
           }
@@ -70,13 +70,11 @@ export default function ScrollReveal({
     return () => observer.disconnect();
   }, []);
 
-  const v = variants[variant] as Record<string, unknown>;
-
   return (
     <div ref={ref} className={className}>
       <motion.div
         className="w-full"
-        variants={v}
+        variants={variantsMap[resolvedVariant]}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         custom={delay}

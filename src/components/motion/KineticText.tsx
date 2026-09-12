@@ -116,3 +116,69 @@ export function KineticTextLine({
     </motion.span>
   );
 }
+
+interface KineticTextMaskProps {
+  lines: React.ReactNode[];
+  className?: string;
+  delay?: number;
+  once?: boolean;
+  speed?: "slow" | "medium" | "fast";
+  style?: React.CSSProperties;
+}
+
+export function KineticTextMask({
+  lines,
+  className = "",
+  delay = 0,
+  once = true,
+  speed = "medium",
+  style,
+}: KineticTextMaskProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once, margin: "-40px 0px" });
+  const { duration, stagger } = SPEEDS[speed];
+  const reveal = inView ? "visible" : "hidden";
+
+  return (
+    <div ref={ref} style={style} className={className}>
+      <motion.div
+        initial="hidden"
+        animate={reveal}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: { staggerChildren: stagger, delayChildren: delay },
+          },
+        }}
+      >
+        {lines.map((line, i) => (
+          <motion.div
+            key={i}
+            className="overflow-hidden"
+            variants={{
+              hidden: { height: 0, opacity: 0 },
+              visible: {
+                height: "auto",
+                opacity: 1,
+                transition: { duration: duration * 0.8, ease: EASING_ELASTIC },
+              },
+            }}
+          >
+            <motion.span
+              variants={{
+                hidden: { clipPath: "inset(100% 0 0 0)" },
+                visible: {
+                  clipPath: "inset(0% 0 0 0)",
+                  transition: { duration, ease: EASING_ELASTIC },
+                },
+              }}
+              className="block"
+            >
+              {line}
+            </motion.span>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}

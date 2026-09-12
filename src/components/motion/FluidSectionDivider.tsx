@@ -1,5 +1,7 @@
-import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect, useState, useMemo } from "react";
+import { motion } from "framer-motion";
+
+type WaveMode = "morph" | "ripple";
 
 interface FluidSectionDividerProps {
   h?: number;
@@ -7,6 +9,7 @@ interface FluidSectionDividerProps {
   bg?: string;
   layers?: number;
   flip?: boolean;
+  mode?: WaveMode;
   className?: string;
 }
 
@@ -16,32 +19,41 @@ export default function FluidSectionDivider({
   bg = "#0A0A0A",
   layers = 2,
   flip = false,
+  mode = "morph",
   className = "",
 }: FluidSectionDividerProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const { scrollY } = useScroll();
+  const [key, setKey] = useState(0);
 
-  const waveLayers = Array.from({ length: layers }, (_, i) => {
-    const seed = i + 1;
-    const wave1 = useTransform(
-      scrollY,
-      [0, 1],
-      [
-        `M0,120 C${180 + seed * 20},120 ${360 + seed * 20},120 ${540 + seed * 20},120 C${720 + seed * 20},120 ${900 + seed * 20},120 ${1080 + seed * 20},120 C${1260 + seed * 20},120 1440,120 1440,120 L1440,120 L0,120 Z`,
-        `M0,120 C${180 + seed * 20},${60 + seed * 10} ${360 + seed * 20},${160 - seed * 10} ${540 + seed * 20},${100 + seed * 20} C${720 + seed * 20},${40 - seed * 20} ${900 + seed * 20},${160 + seed * 10} ${1080 + seed * 20},${100 - seed * 10} C${1260 + seed * 20},${40 + seed * 20} 1440,120 1440,120 L1440,120 L0,120 Z`,
-      ]
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setKey((k) => k + 1);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "-40px 0px" }
     );
-    const wave2 = useTransform(
-      scrollY,
-      [0, 1],
-      [
-        `M0,120 C${200 + seed * 10},120 ${400 + seed * 10},120 ${600 + seed * 10},120 C${800 + seed * 10},120 ${1000 + seed * 10},120 ${1200 + seed * 10},120 L1440,120 L0,120 Z`,
-        `M0,120 C${200 + seed * 10},${160 - seed * 20} ${400 + seed * 10},${80 + seed * 20} ${600 + seed * 10},${140 - seed * 10} C${800 + seed * 10},${200 - seed * 10} ${1000 + seed * 10},${80 + seed * 10} ${1200 + seed * 10},${140 + seed * 20} L1440,120 L0,120 Z`,
-      ]
-    );
-    return { seed, wave1, wave2 };
-  });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const layersMeta = useMemo(
+    () =>
+      Array.from({ length: layers }, (_, i) => {
+        const seed = i + 1;
+        const baseA = `M0,120 C${180 + seed * 20},120 ${360 + seed * 20},120 ${540 + seed * 20},120 C${720 + seed * 20},120 ${900 + seed * 20},120 ${1080 + seed * 20},120 C${1260 + seed * 20},120 1440,120 1440,120 L1440,120 L0,120 Z`;
+        const baseB = `M0,120 C${180 + seed * 20},${60 + seed * 10} ${360 + seed * 20},${160 - seed * 10} ${540 + seed * 20},${100 + seed * 20} C${720 + seed * 20},${40 - seed * 20} ${900 + seed * 20},${160 + seed * 10} ${1080 + seed * 20},${100 - seed * 10} C${1260 + seed * 20},${40 + seed * 20} 1440,120 1440,120 L1440,120 L0,120 Z`;
+        const overlayA = `M0,120 C${200 + seed * 10},120 ${400 + seed * 10},120 ${600 + seed * 10},120 C${800 + seed * 10},120 ${1000 + seed * 10},120 ${1200 + seed * 10},120 L1440,120 L0,120 Z`;
+        const overlayB = `M0,120 C${200 + seed * 10},${160 - seed * 20} ${400 + seed * 10},${80 + seed * 20} ${600 + seed * 10},${140 - seed * 10} C${800 + seed * 10},${200 - seed * 10} ${1000 + seed * 10},${80 + seed * 10} ${1200 + seed * 10},${140 + seed * 20} L1440,120 L0,120 Z`;
+        return { seed, baseA, baseB, overlayA, overlayB };
+      }),
+    [layers]
+  );
 
   return (
     <div
@@ -59,34 +71,47 @@ export default function FluidSectionDivider({
         />
 
         <svg
+          key={`svg-${key}`}
           className="absolute bottom-0 h-32 w-full fill-[${bg}]"
           preserveAspectRatio="none"
           viewBox="0 0 1440 120"
           style={{ height: "120px" }}
         >
-          {waveLayers.map(({ seed, wave1, wave2 }) => (
+          {layersMeta.map((layer) => (
             <motion.path
-              key={seed}
+              key={`base-${layer.seed}-${key}`}
               className="pointer-events-none"
-              d="M0,120 C180,120 360,120 540,120 C720,120 900,120 1080,120 C1260,120 1440,120 1440,120 L1440,120 L0,120 Z"
+              d={layer.baseA}
               fill={bg}
-              animate={inView ? wave1 : wave1}
-              transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
+              animate={{ d: [layer.baseA, layer.baseB, layer.baseA] }}
+              transition={{
+                duration: 1.4,
+                ease: [0.25, 0.1, 0.25, 1],
+                repeat: 1,
+                repeatType: "reverse",
+              }}
             />
           ))}
-          {waveLayers.map(({ seed, wave1, wave2 }) => (
+          {layersMeta.map((layer) => (
             <motion.path
-              key={`b-${seed}`}
+              key={`overlay-${layer.seed}-${key}`}
               className="pointer-events-none"
-              d="M0,120 C200,120 400,120 600,120 C800,120 1000,120 1200,120 L1440,120 L0,120 Z"
+              d={layer.overlayA}
               fill="rgba(10,10,10,0.9)"
-              animate={inView ? wave1 : wave1}
-              transition={{ duration: 1.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+              animate={{ d: [layer.overlayA, layer.overlayB, layer.overlayA] }}
+              transition={{
+                duration: mode === "ripple" ? 1.8 : 1.6,
+                ease: [0.25, 0.1, 0.25, 1],
+                repeat: 1,
+                repeatType: "reverse",
+                delay: mode === "ripple" ? 0.1 * layer.seed : 0.2,
+              }}
             />
           ))}
         </svg>
 
         <motion.div
+          key={`g-${key}`}
           className="pointer-events-none absolute bottom-0 left-0 right-0 h-1"
           style={
             flip
@@ -98,12 +123,10 @@ export default function FluidSectionDivider({
                   background: `linear-gradient(90deg, transparent, ${accent}80, ${accent}40, transparent)`,
                 }
           }
-          animate={{
-            opacity: inView ? 0.5 : 0.2,
-          }}
+          initial={{ opacity: 0.2 }}
+          animate={{ opacity: 0.5 }}
           transition={{
             duration: 2.4,
-            repeat: inView ? Infinity : 0,
             ease: "easeInOut",
           }}
         />

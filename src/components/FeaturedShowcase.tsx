@@ -134,9 +134,7 @@ function FeaturedProject({
             projectSlug={project.slug}
             category={project.category}
           />
-        </motion.div>
-
-        <motion.div
+        </motion.div>          <motion.div
           className="absolute -right-6 -bottom-6 z-20 h-24 w-24 rounded-2xl opacity-30 blur-sm"
           style={{
             backgroundColor: accent,
@@ -149,6 +147,16 @@ function FeaturedProject({
           style={{
             backgroundColor: accent,
             y: useTransform(scrollYProgress, [0, 1], [-20, 30]),
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 60%)",
+            y: useTransform(scrollYProgress, [0, 0.5, 1], [40, -20, 60]),
+            scale: useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.1, 0.9]),
+            opacity: useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 0.6, 0.4, 0]),
           }}
         />
       </div>
