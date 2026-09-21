@@ -12,7 +12,6 @@ import ScrollProgress from "@/components/motion/ScrollProgress";
 import LiquidFilters from "@/components/liquid/LiquidFilters";
 import LiquidDivider from "@/components/liquid/LiquidDivider";
 import FluidSectionDivider from "@/components/motion/FluidSectionDivider";
-import ParticleRing from "@/components/motion/ParticleRing";
 import LiquidBlob from "@/components/liquid/LiquidBlob";
 import KineticText from "@/components/motion/KineticText";
 import CardTilt from "@/components/motion/CardTilt";
