@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
 
 // --- Neon trail types ---
 interface TrailPoint {
@@ -57,12 +56,6 @@ function spawnParticle(
 }
 
 export default function CustomCursor() {
-  // --- Spring cursor ring / dot ---
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  const springX = useSpring(cursorX, { stiffness: 500, damping: 28 });
-  const springY = useSpring(cursorY, { stiffness: 500, damping: 28 });
-  const [hovering, setHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
 
   // --- Canvas trail refs ---
@@ -102,8 +95,6 @@ export default function CustomCursor() {
 
     // --- Mouse move handler ---
     const move = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
       addPoint(e.clientX, e.clientY);
     };
 
@@ -111,34 +102,18 @@ export default function CustomCursor() {
     const touchMove = (e: TouchEvent) => {
       if (e.touches && e.touches.length > 0) {
         e.preventDefault();
-        cursorX.set(e.touches[0].clientX);
-        cursorY.set(e.touches[0].clientY);
         addPoint(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
     const touchStart = (e: TouchEvent) => {
       if (e.touches && e.touches.length > 0) {
-        cursorX.set(e.touches[0].clientX);
-        cursorY.set(e.touches[0].clientY);
         addPoint(e.touches[0].clientX, e.touches[0].clientY);
       }
-    };
-
-    // --- Hover listeners ---
-    const addHoverListeners = () => {
-      document
-        .querySelectorAll("a, button, [data-cursor-hover]")
-        .forEach((el) => {
-          el.addEventListener("mouseenter", () => setHovering(true));
-          el.addEventListener("mouseleave", () => setHovering(false));
-        });
     };
 
     window.addEventListener("mousemove", move);
     window.addEventListener("touchmove", touchMove, { passive: false });
     window.addEventListener("touchstart", touchStart, { passive: true });
-    const interval = setInterval(addHoverListeners, 2000);
-    addHoverListeners();
 
     // --- Canvas render loop ---
     const canvas = canvasRef.current;
@@ -245,7 +220,6 @@ export default function CustomCursor() {
         window.removeEventListener("touchstart", touchStart);
         window.removeEventListener("resize", checkMobile);
         window.removeEventListener("resize", resizeCanvas);
-        clearInterval(interval);
       };
     }
 
@@ -254,50 +228,16 @@ export default function CustomCursor() {
       window.removeEventListener("touchmove", touchMove);
       window.removeEventListener("touchstart", touchStart);
       window.removeEventListener("resize", checkMobile);
-      clearInterval(interval);
     };
-  }, [cursorX, cursorY, addPoint]);
+  }, [addPoint]);
 
   if (isMobile) return null;
 
   return (
-    <>
-      {/* Neon canvas trail */}
-      <canvas
-        ref={canvasRef}
-        className="pointer-events-none fixed inset-0 z-[9998]"
-        style={{ display: "block" }}
-      />
-      {/* Outer ring */}
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999] rounded-full border border-white/20 mix-blend-difference"
-        style={{
-          x: springX,
-          y: springY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          width: hovering ? 56 : 32,
-          height: hovering ? 56 : 32,
-          opacity: 1,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      />
-      {/* Inner dot */}
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999] h-1.5 w-1.5 rounded-full bg-white mix-blend-difference"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: hovering ? 0 : 1,
-          opacity: hovering ? 0 : 0.8,
-        }}
-      />
-    </>
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none fixed inset-0 z-[9998]"
+      style={{ display: "block" }}
+    />
   );
 }
