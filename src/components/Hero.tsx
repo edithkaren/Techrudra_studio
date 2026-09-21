@@ -4,7 +4,6 @@ import AnimatedText from "@/components/motion/AnimatedText";
 import KineticText from "@/components/motion/KineticText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
-import ParticleRing from "@/components/ParticleRing";
 import AstraBackground from "@/components/AstraBackground";
 
 const words = [
@@ -591,15 +590,6 @@ export default function Hero() {
       {/* Astra-style ambient background */}
       <AstraBackground />
 
-      {/* Particle ring — sits above Astra bg, behind content */}
-      <ParticleRing
-        className="z-[1]"
-        particleCount={1100}
-        radiusX={440}
-        radiusY={150}
-        speed={0.0018}
-        color="167,139,250"
-      />
       <EnergyRings />
       <FloatingGeometry />
       <Particles />
