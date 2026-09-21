@@ -25,7 +25,6 @@ export default function Landing() {
       <LiquidFilters />
       <ScrollProgress />
       <AstraBackground />
-      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
