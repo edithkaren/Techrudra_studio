@@ -5,6 +5,7 @@ import KineticText from "@/components/motion/KineticText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
 import AstraBackground from "@/components/AstraBackground";
+import StrokeText from "@/components/StrokeText";
 
 const words = [
   "native",
@@ -629,13 +630,23 @@ export default function Hero() {
           </span>
           <br />
           <br />
-          <KineticText
-            text="mobile experiences"
-            as="span"
-            speed="medium"
-            delay={0.5}
-            className="text-[#A78BFA] text-4xl font-medium sm:text-5xl md:text-6xl lg:text-[80px] tracking-tight"
-          />
+          <span className="block">
+            <StrokeText
+              text="mobile experiences"
+              strokeColor="#A78BFA"
+              fillColor="#FFFFFF"
+              strokeWidth={1.2}
+              drawDuration={1.4}
+              fillDelay={0.15}
+              stagger={0.04}
+              ease="power2.out"
+              trigger="mount"
+              fillMode="wipe"
+              fontSize={96}
+              fontWeight={700}
+              letterSpacing={-3}
+            />
+          </span>
         </motion.h1>
 
         <ScrollReveal variant="fadeUp" delay={0.6}>
