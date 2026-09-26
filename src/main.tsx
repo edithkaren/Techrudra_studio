@@ -15,7 +15,6 @@ const Landing = lazy(() => import("./pages/Landing.tsx"));
 const AuthPage = lazy(() => import("./pages/AuthPage.tsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
 const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail.tsx"));
-const ProjectsRedirect = lazy(() => import("./pages/ProjectsRedirect.tsx"));
 const BookingPage = lazy(() => import("./pages/BookingPage.tsx"));
 const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
@@ -138,8 +137,6 @@ createRoot(document.getElementById("root")!).render(
                 }
               />
               <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
-              <Route path="/projects/:slug" element={<PortfolioDetail />} />
-              <Route path="/projects" element={<ProjectsRedirect />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/booking" element={<BookingPage />} />
               <Route path="*" element={<NotFound />} />
