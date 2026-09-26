@@ -111,14 +111,14 @@ export default function Portfolio() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 max-w-2xl">
           <ScrollReveal>
-            <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Portfolio</span>
+            <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Selected Work</span>
           </ScrollReveal>
           <ScrollReveal variant="fadeUp" delay={0.1}>
             <KineticText
-              text="Selected work"
+              text="A collection of products, experiments and digital experiences I've built."
               as="h2"
               speed="medium"
-              className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              className="text-2xl font-bold tracking-tight text-white sm:text-3xl"
             />
           </ScrollReveal>
         </div>

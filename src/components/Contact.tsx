@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import KineticText from "@/components/motion/KineticText";
-import MagneticButton from "@/components/motion/MagneticButton";
+import AvailabilityBadge from "@/components/AvailabilityBadge";
+import { siteConfig } from "@/data/site";
 
 const projectTypes = [
   "Website", "AI Chatbot", "AI Application", "Automation", "UI/UX",
@@ -13,6 +14,8 @@ const projectTypes = [
 const budgetRanges = [
   "Under $1,000", "$1,000 – $5,000", "$5,000 – $15,000", "$15,000 – $50,000", "$50,000+",
 ];
+
+const timelines = ["ASAP", "1–2 Weeks", "1 Month", "1–3 Months", "Flexible"];
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -32,15 +35,15 @@ export default function Contact() {
       <div className="pointer-events-none absolute top-1/2 right-0 h-[400px] w-[400px] -translate-y-1/2 rounded-full opacity-15 blur-3xl" style={{ background: "radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%)" }} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-16 lg:grid-cols-2">
+        <div className="grid gap-16 lg:grid-cols-5">
           {/* Left: copy */}
-          <div>
+          <div className="lg:col-span-2">
             <ScrollReveal>
               <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Contact</span>
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.1}>
               <KineticText
-                text="Have an idea? Let&apos;s make it real."
+                text="Let's build something together."
                 as="h2"
                 speed="medium"
                 className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
@@ -48,14 +51,21 @@ export default function Contact() {
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.2}>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-white/40">
-                Whether you need a website, an AI tool, a brand overhaul, a video,
-                or a full marketing strategy — drop us a message and we&apos;ll
-                get back to you within 24 hours.
+                Have an idea, product, automation or brand that needs to become real?
+                Drop a message and I&apos;ll get back to you within 24 hours.
               </p>
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.3}>
-              <div className="mt-8 flex flex-col gap-3">
-                <a href="/booking" className="inline-flex items-center gap-2 text-sm font-medium text-[#A78BFA] transition-colors hover:text-[#C4B5FD]">
+              <div className="mt-8">
+                <AvailabilityBadge variant="card" className="max-w-sm" />
+              </div>
+            </ScrollReveal>
+            <ScrollReveal variant="fadeUp" delay={0.4}>
+              <div className="mt-6 flex flex-col gap-3">
+                <a href={`mailto:${siteConfig.email}`} className="inline-flex items-center gap-2 text-sm font-medium text-[#A78BFA] transition-colors hover:text-[#C4B5FD]">
+                  {siteConfig.email}
+                </a>
+                <a href="/booking" className="inline-flex items-center gap-2 text-sm font-medium text-white/40 transition-colors hover:text-white/70">
                   Or book a session directly <ArrowRight className="h-3.5 w-3.5" />
                 </a>
               </div>
@@ -63,7 +73,7 @@ export default function Contact() {
           </div>
 
           {/* Right: form */}
-          <ScrollReveal variant="fadeUp" delay={0.15}>
+          <ScrollReveal variant="fadeUp" delay={0.15} className="lg:col-span-3">
             {submitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -81,7 +91,7 @@ export default function Contact() {
                 onSubmit={handleSubmit}
                 className="rounded-3xl border border-white/[0.06] bg-[#111111] p-6 sm:p-8"
               >
-                <div className="grid gap-5">
+                <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label htmlFor="name" className="mb-1.5 block text-xs font-medium text-white/40">Name</label>
                     <input id="name" name="name" required placeholder="Your name"
@@ -90,6 +100,11 @@ export default function Contact() {
                   <div>
                     <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-white/40">Email</label>
                     <input id="email" name="email" type="email" required placeholder="you@company.com"
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA] focus:bg-white/[0.05]" />
+                  </div>
+                  <div>
+                    <label htmlFor="company" className="mb-1.5 block text-xs font-medium text-white/40">Company <span className="text-white/20">(optional)</span></label>
+                    <input id="company" name="company" placeholder="Company / brand"
                       className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA] focus:bg-white/[0.05]" />
                   </div>
                   <div>
@@ -109,8 +124,16 @@ export default function Contact() {
                     </select>
                   </div>
                   <div>
+                    <label htmlFor="timeline" className="mb-1.5 block text-xs font-medium text-white/40">Timeline</label>
+                    <select id="timeline" name="timeline"
+                      className="w-full appearance-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors focus:border-[#A78BFA]">
+                      <option value="" className="bg-[#111111]">Select timeline</option>
+                      {timelines.map((t) => <option key={t} value={t} className="bg-[#111111]">{t}</option>)}
+                    </select>
+                  </div>
+                  <div className="sm:col-span-2">
                     <label htmlFor="message" className="mb-1.5 block text-xs font-medium text-white/40">Project Details</label>
-                    <textarea id="message" name="message" rows={4} required placeholder="Tell us about your project, goals, and timeline…"
+                    <textarea id="message" name="message" rows={4} required placeholder="Tell me about your project, goals, and what success looks like…"
                       className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA]" />
                   </div>
                 </div>

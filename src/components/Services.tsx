@@ -177,15 +177,20 @@ export default function Services() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mb-14 max-w-2xl">
           <ScrollReveal>
-            <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Services</span>
+            <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-[#A78BFA]">Service Experience</span>
           </ScrollReveal>
           <ScrollReveal variant="fadeUp" delay={0.1}>
             <KineticText
-              text="What we can build for you"
+              text="What I can build for you"
               as="h2"
               speed="medium"
               className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
             />
+          </ScrollReveal>
+          <ScrollReveal variant="fadeUp" delay={0.2}>
+            <p className="mt-4 text-sm leading-relaxed text-white/40">
+              Click any service to see exactly what's delivered, the tools involved and how we'd work together.
+            </p>
           </ScrollReveal>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

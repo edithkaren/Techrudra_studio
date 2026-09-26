@@ -3,21 +3,28 @@ import Hero from "@/components/Hero";
 import AstraBackground from "@/components/AstraBackground";
 import Marquee from "@/components/Marquee";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
-import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
+import Services from "@/components/Services";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/motion/CustomCursor";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import LiquidFilters from "@/components/liquid/LiquidFilters";
-import LiquidDivider from "@/components/liquid/LiquidDivider";
 import FluidSectionDivider from "@/components/motion/FluidSectionDivider";
-import LiquidBlob from "@/components/liquid/LiquidBlob";
 import KineticText from "@/components/motion/KineticText";
-import CardTilt from "@/components/motion/CardTilt";
-import LiquidText from "@/components/liquid/LiquidText";
-import AnimatedCounter from "@/components/motion/AnimatedCounter";
-import HomeLiquidMotion from "@/components/HomeLiquidMotion";
+import ScrollReveal from "@/components/motion/ScrollReveal";
+import {
+  WhatIBuild,
+  ProblemSolution,
+  ProcessTimeline,
+  BuildInPublicSection,
+  Toolbox,
+  WhyMe,
+  MetricsBand,
+  WhoIBuildFor,
+  TrustSection,
+} from "@/components/HomeSections";
+import { CreativeLab, ServiceSelector } from "@/components/CreativeLab";
+import ProjectBrief from "@/components/ProjectBrief";
 
 export default function Landing() {
   return (
@@ -27,16 +34,34 @@ export default function Landing() {
       <AstraBackground />
       <Navbar />
       <main>
+        {/* ── DISCOVER ─────────────────────────────────────────── */}
         <Hero />
-        <HomeLiquidMotion />
-
         <Marquee />
+
+        {/* ── UNDERSTAND ───────────────────────────────────────── */}
+        <WhatIBuild />
+        <ProblemSolution />
+
+        {/* ── TRUST ────────────────────────────────────────────── */}
         <FeaturedShowcase />
-        <FluidSectionDivider h={72} accent="#A78BFA" bg="#0A0A0A" layers={3} className="overflow-hidden" />
-        <Services />
         <FluidSectionDivider h={64} accent="#A78BFA" bg="#0A0A0A" layers={2} flip />
         <Portfolio />
-        <FluidSectionDivider h={56} accent="#A78BFA" bg="#0A0A0A" layers={1} />
+        <MetricsBand />
+
+        {/* ── EXPLORE ──────────────────────────────────────────── */}
+        <ProcessTimeline />
+        <FluidSectionDivider h={56} accent="#A78BFA" bg="#0A0A0A" layers={2} />
+        <Services />
+        <ServiceSelector />
+        <CreativeLab />
+        <BuildInPublicSection />
+        <Toolbox />
+        <WhyMe />
+        <WhoIBuildFor />
+        <TrustSection />
+
+        {/* ── CONTACT ──────────────────────────────────────────── */}
+        <ProjectBrief />
         <Contact />
       </main>
       <Footer />

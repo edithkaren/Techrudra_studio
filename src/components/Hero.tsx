@@ -5,17 +5,11 @@ import KineticText from "@/components/motion/KineticText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
 import AstraBackground from "@/components/AstraBackground";
+import AvailabilityBadge from "@/components/AvailabilityBadge";
+import HeroVisual from "@/components/HeroVisual";
+import { heroRotatingWords } from "@/data/homepage";
 
-const words = [
-  "native",
-  "bold",
-  "premium",
-  "intelligent",
-  "creative",
-  "dynamic",
-  "stunning",
-  "powerful",
-];
+const words = heroRotatingWords;
 const WORD_INTERVAL = 2800;
 const SCRAMBLE_DURATION = 600;
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -585,7 +579,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0A0A] px-6"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0A0A] px-6 pb-24"
     >
       {/* Astra-style ambient background */}
       <AstraBackground />
@@ -603,10 +597,13 @@ export default function Hero() {
         className="relative z-10 mx-auto max-w-5xl text-center"
         style={{ y: contentY, opacity: contentOpacity }}
       >
-        <ScrollReveal variant="blur" delay={0.1}>
-          <p className="mb-8 text-xs font-medium uppercase tracking-[0.3em] text-white/30">
-            Techrudra.Studio
-          </p>
+        <ScrollReveal variant="blur" delay={0.05}>
+          <div className="flex flex-col items-center gap-3">
+            <AvailabilityBadge />
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              Currently accepting selected freelance projects
+            </p>
+          </div>
         </ScrollReveal>
 
         {/* Main headline */}
@@ -614,9 +611,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[80px]"
+          className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[68px]"
         >
-          We build{" "}
+          I{" "}
           <span
             className="relative inline-block cursor-pointer"
             style={{
@@ -628,31 +625,24 @@ export default function Hero() {
             <TypingCursor />
           </span>
           <br />
+          DIGITAL EXPERIENCES
           <br />
-          <KineticText
-            text="mobile experiences"
-            as="span"
-            speed="medium"
-            delay={0.5}
-            className="text-[#A78BFA] text-4xl font-medium sm:text-5xl md:text-6xl lg:text-[80px] tracking-tight"
-          />
+          <span className="bg-gradient-to-r from-white via-white/90 to-white/60 bg-clip-text text-transparent">
+            THAT MOVE BUSINESSES FORWARD.
+          </span>
         </motion.h1>
 
         <ScrollReveal variant="fadeUp" delay={0.6}>
-          <p className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-white/40 sm:text-lg">
-            Native iOS, cross-platform apps, creative animations, product
-            design, and high-converting landing pages.
+          <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-white/40 sm:text-lg">
+            Full-stack websites, AI systems, automation, UI/UX, creative design,
+            video and digital growth — built to turn ideas into real products.
           </p>
         </ScrollReveal>
 
-        <ScrollReveal variant="fadeUp" delay={0.7}>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-white/25">
-            <span>Native mobile development</span>
-            <span className="text-white/10">·</span>
-            <span>Mobile motion design</span>
-            <span className="text-white/10">·</span>
-            <span>UI/UX and landing pages</span>
-          </div>
+        <ScrollReveal variant="fadeUp" delay={0.65}>
+          <p className="mt-4 text-xs font-medium tracking-[0.25em] text-white/25 uppercase">
+            Remote • Worldwide
+          </p>
         </ScrollReveal>
 
         {/* CTAs */}
@@ -662,7 +652,7 @@ export default function Hero() {
               href="#contact"
               className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-all duration-300 hover:bg-white/90 hover:shadow-[0_0_30px_rgba(167,139,250,0.2)]"
             >
-              Book a call
+              Start a Project
               <motion.span
                 className="inline-block"
                 animate={{ x: [0, 3, 0] }}
@@ -676,11 +666,18 @@ export default function Hero() {
               strength={0.25}
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-7 py-3 text-sm font-medium text-white/70 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(167,139,250,0.1)]"
             >
-              See work
+              Explore My Work
             </MagneticButton>
           </div>
         </ScrollReveal>
       </motion.div>
+
+      {/* Interactive visual */}
+      <ScrollReveal variant="fadeUp" delay={0.9}>
+        <div className="relative z-[5] -mt-4 mb-8 w-full px-6">
+          <HeroVisual />
+        </div>
+      </ScrollReveal>
 
       {/* Trust bar */}
       <motion.div
