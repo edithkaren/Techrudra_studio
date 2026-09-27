@@ -6,7 +6,7 @@ import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import CustomCursor from "./components/motion/CustomCursor";
+import SplashCursor from "./components/SplashCursor";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import "./index.css";
 
@@ -144,7 +144,7 @@ createRoot(document.getElementById("root")!).render(
           </Suspense>
         </BrowserRouter>
         <Toaster />
-        <CustomCursor />
+        <SplashCursor RAINBOW_MODE={false} COLOR="#A78BFA" />
       </ConvexAuthProvider>
     </RootErrorBoundary>
   </StrictMode>,
