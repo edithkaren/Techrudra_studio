@@ -27,8 +27,8 @@ const accentToColor = (rgb: [number, number, number]) => [
 export function buildHubs(radius: number): Hub[] {
   return cities.map((city) => ({
     city,
-    pos: latLngToPos(city.lat, city.lng, radius),
-    color: [city.accent[0] / 255, city.accent[1] / 255, city.accent[2] / 255],
+    pos: latLngToPos(city.lat, city.lng, radius) as [number, number, number],
+    color: [city.accent[0] / 255, city.accent[1] / 255, city.accent[2] / 255] as [number, number, number],
   }));
 }
 
@@ -46,8 +46,8 @@ export function buildArcs(hubs: Hub[]): Arc[] {
       arcs.push({
         start: a,
         end: b,
-        color: accentToColor(a.city.accent),
-        pos: a.pos,
+        color: accentToColor(a.city.accent) as [number, number, number],
+        pos: a.pos as [number, number, number],
       });
     }
   }

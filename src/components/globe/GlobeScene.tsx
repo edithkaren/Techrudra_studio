@@ -1,33 +1,7 @@
 import { useEffect, useMemo, useCallback, useState, useRef } from "react";
-import {
-  Vector3,
-  SphereGeometry,
-  Quaternion,
-  Mesh,
-  MeshBasicMaterial,
-  Raycaster,
-  BackSide,
-  AdditiveBlending,
-  Color,
-  FogExp2,
-} from "three";
-import {
-  extend,
-  useThree,
-  Canvas,
-  useFrame,
-  ThreeEvent,
-  RawShaderMaterial,
-} from "@react-three/fiber";
-import {
-  OrbitControls,
-  Sky,
-  Stars,
-  ContactShadows,
-  Environment,
-  Float,
-  Grid,
-} from "@react-three/drei";
+import { Vector3, SphereGeometry, Mesh, MeshBasicMaterial, Raycaster, BackSide, AdditiveBlending, Color, FogExp2 } from "three";
+import { extend, useThree, Canvas, useFrame, ThreeEvent, RawShaderMaterial as R3FRawShaderMaterial } from "@react-three/fiber";
+import { OrbitControls, Sky, Stars, ContactShadows, Environment, Float, Grid } from "@react-three/drei";
 import { cities, latLngToPos, type City } from "./GlobeData";
 import { buildHubs, buildArcs } from "./GlobeCities";
 import { buildLandPositions } from "./GlobeLand";
@@ -63,7 +37,7 @@ declare global {
   }
 }
 
-const dotGridMaterial = new RawShaderMaterial({
+const dotGridMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uNodeColor: { value: new Vector3(0, 0, 0) },
@@ -122,7 +96,7 @@ const dotGridMaterial = new RawShaderMaterial({
   `,
 });
 
-const energyWavesMaterial = new RawShaderMaterial({
+const energyWavesMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -164,7 +138,7 @@ const energyWavesMaterial = new RawShaderMaterial({
   `,
 });
 
-const scanStrokeMaterial = new RawShaderMaterial({
+const scanStrokeMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uProgress: { value: 0.6 },
     uSpeed: { value: 0.05 },
@@ -201,7 +175,7 @@ const scanStrokeMaterial = new RawShaderMaterial({
   `,
 });
 
-const rippleRingMaterial = new RawShaderMaterial({
+const rippleRingMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uCenter: { value: new Vector3(0, 0, 0) },
@@ -243,7 +217,7 @@ const rippleRingMaterial = new RawShaderMaterial({
   `,
 });
 
-const cityNodeMaterial = new RawShaderMaterial({
+const cityNodeMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -284,7 +258,7 @@ const cityNodeMaterial = new RawShaderMaterial({
   `,
 });
 
-const arcStripMaterial = new RawShaderMaterial({
+const arcStripMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -325,7 +299,7 @@ const arcStripMaterial = new RawShaderMaterial({
   `,
 });
 
-const orbitRingMaterial = new RawShaderMaterial({
+const orbitRingMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -359,7 +333,7 @@ const orbitRingMaterial = new RawShaderMaterial({
   `,
 });
 
-const glowSphereMaterial = new RawShaderMaterial({
+const glowSphereMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -389,7 +363,7 @@ const glowSphereMaterial = new RawShaderMaterial({
   `,
 });
 
-const labelSphereMaterial = new RawShaderMaterial({
+const labelSphereMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -411,7 +385,7 @@ const labelSphereMaterial = new RawShaderMaterial({
   `,
 });
 
-const labelsMaterial = new RawShaderMaterial({
+const labelsMaterial = new R3FRawShaderMaterial({
   uniforms: {
     uTime: { value: 0 },
     uColor: { value: new Vector3(0, 0, 0) },
@@ -433,37 +407,27 @@ const labelsMaterial = new RawShaderMaterial({
   `,
 });
 
-// ── Globe core component. ────────────────────────────────────────────────────────
-
-// ── Globe core component. ────────────────────────────────────────────────────────
 const GlobeScene = () => {
   const { camera, mouse } = useThree();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Build data once.
   const hubs = useMemo(() => buildHubs(1.0), []);
   const arcs = useMemo(() => buildArcs(hubs), [hubs]);
-  const landPositions = useMemo(() => buildLandPositions(1.0), []);
 
-  // Cursor parallax offsets.
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
-
-  // Ripple state.
   const [ripple, setRipple] = useState<{ center: [number, number, number]; radius: number } | null>(null);
 
-  // Update uniform arrays whenever data changes.
   useEffect(() => {
     const nodes: [number, number, number][] = [];
     const colors: [number, number, number][] = [];
     const radii: [number, number, number][] = [];
     for (const h of hubs) {
-      nodes.push(h.pos);
-      colors.push([h.color[0] / 255, h.color[1] / 255, h.color[2] / 255]);
+      nodes.push(h.pos as [number, number, number]);
+      colors.push([h.color[0] / 255, h.color[1] / 255, h.color[2] / 255] as [number, number, number]);
       radii.push(0.016 / 1.0);
     }
-    GLOBAL_NODES.value = nodes as any as [number, number, number][];
-    GLOBAL_NODE_COLORS.value = colors as any as [number, number, number][];
-    GLOBAL_NODE_RADII.value = radii as any as [number, number, number];
+    GLOBAL_NODES.value = nodes;
+    GLOBAL_NODE_COLORS.value = colors;
+    GLOBAL_NODE_RADII.value = radii;
   }, [hubs]);
 
   useEffect(() => {
@@ -471,20 +435,19 @@ const GlobeScene = () => {
     const colors: [number, number, number][] = [];
     const particles: [number, number, number][] = [];
     for (const a of arcs) {
-      positions.push(a.start.pos, a.end.pos);
-      colors.push(a.color, a.color);
-      particles.push(a.start.pos, a.end.pos);
+      positions.push(a.start.pos as [number, number, number], a.end.pos as [number, number, number]);
+      colors.push(a.color as [number, number, number], a.color as [number, number, number]);
+      particles.push(a.start.pos as [number, number, number], a.end.pos as [number, number, number]);
     }
-    GLOBAL_ARCS.value = positions as any as [number, number, number][];
-    GLOBAL_ARC_COLORS.value = colors as any as [number, number, number][];
-    GLOBAL_ARC_PARTICLES.value = particles as any as [number, number, number][];
+    GLOBAL_ARCS.value = positions;
+    GLOBAL_ARC_COLORS.value = colors;
+    GLOBAL_ARC_PARTICLES.value = particles;
   }, [arcs]);
 
-  // Raycast with the mouse to place ripples.
   const handlePointerDown = useCallback((e: ThreeEvent<MouseEvent>) => {
     const raycaster = new Raycaster();
     const ptr = e.point;
-    raycaster.setFromCamera(new Vector3(ptr.x, ptr.y, 0.5), camera as any);
+    raycaster.setFromCamera(new Vector3(ptr.x, ptr.y, 0.5) as any, camera as any);
     const intersects = raycaster.intersectObject(new Mesh(new SphereGeometry(0.1), new MeshBasicMaterial({ transparent: true })) as any);
     if (intersects.length > 0) {
       const hit = intersects[0].point as [number, number, number];
@@ -500,17 +463,16 @@ const GlobeScene = () => {
     const t = GLOBAL_TIME.value + dt;
     GLOBAL_TIME.value = t;
 
-    // Sun direction for day/night shading.
     const sun = new Vector3(0.35, 0.8, 0.4).normalize();
-    GLOBAL_SUN.value = [sun.x, sun.y, sun.z] as [number, number, number];
+    GLOBAL_SUN.value = [sun.x, sun.y, sun.z];
 
-    // Cursor parallax.
     const mx = mouse.x;
     const my = mouse.y;
-    GLOBAL_PARALLAX.x = mx * 0.04;
-    GLOBAL_PARALLAX.y = -my * 0.04;
+    const parallaxX = mx * 0.04;
+    const parallaxY = -my * 0.04;
+    GLOBAL_PARALLAX.x = parallaxX;
+    GLOBAL_PARALLAX.y = parallaxY;
 
-    // Ripple animation.
     if (ripple) {
       const r = ripple.radius + dt * 1.6;
       setRipple({ center: ripple.center, radius: r });
@@ -522,11 +484,9 @@ const GlobeScene = () => {
 
   return (
     <>
-      {/* Ambient starfield + sky. */}
       <Stars radius={2.5} depth={1.5} count={6000} factor={4} saturation={8} fade speed={0.4} />
       <Sky distance={4.5} sunPosition={[0.35, 0.8, 0.4]} inclination={0.45} azimuth={0.2} />
 
-      {/* Ground grid for shadow context. */}
       <Grid args={[2.4, 60]} position={[0, -0.25, 0]} />
       <ContactShadows
         position={[0, -0.25, 0]}
@@ -536,9 +496,7 @@ const GlobeScene = () => {
         resolution={256}
       />
 
-      {/* ── Globe planet ── */}
       <group position={[0, 0, 0]}>
-        {/* Atmosphere glow. */}
         <Float
           speed={1.2}
           rotationIntensity={0.2}
@@ -547,25 +505,16 @@ const GlobeScene = () => {
         >
           <mesh
             geometry={new SphereGeometry(1.01, 64, 64)}
-            material={{
-              color: 0x0a0a1a,
-              side: BackSide,
-              depthWrite: false,
-              transparent: true,
-              opacity: 0.35,
-              blending: AdditiveBlending,
-            } as any}
+            material={{ color: 0x0a0a1a, side: BackSide, depthWrite: false, transparent: true, opacity: 0.35, blending: AdditiveBlending }}
           />
         </Float>
 
-        {/* Land dot matrix. */}
         <dotGrid
           time={GLOBAL_TIME}
           sunDirection={GLOBAL_SUN}
           background={[0.01, 0.01, 0.02]}
         />
 
-        {/* City hubs. */}
         {hubs.map((h) => (
           <cityNode
             key={h.city.id}
@@ -576,7 +525,6 @@ const GlobeScene = () => {
           />
         ))}
 
-        {/* Orbit rings. */}
         <orbitRing
           radius={1.25}
           speed={1.2}
@@ -595,7 +543,6 @@ const GlobeScene = () => {
           rotation={[0.5, 0, 0]}
         />
 
-        {/* Arc strips (all arcs). */}
         {arcs.map((a, i) => (
           <arcStrip
             key={i}
@@ -607,7 +554,6 @@ const GlobeScene = () => {
           />
         ))}
 
-        {/* Energy-wave bands. */}
         <energyWaves
           color={[167, 139, 250]}
           time={GLOBAL_TIME}
@@ -622,7 +568,6 @@ const GlobeScene = () => {
           scale={0.6}
         />
 
-        {/* Scan stroke (horizontal parallaxing line). */}
         <scanStroke
           color={[167, 139, 250]}
           time={GLOBAL_TIME}
@@ -632,7 +577,6 @@ const GlobeScene = () => {
         />
       </group>
 
-      {/* ── Ripple ring emitter on click. ── */}
       {ripple && (
         <rippleRing
           center={ripple.center}
@@ -643,7 +587,6 @@ const GlobeScene = () => {
         />
       )}
 
-      {/* ── HUD / labels. ── */}
       <group position={[0, 0, 1.5]}>
         <labelSphere
           color={[167, 139, 250]}
@@ -660,62 +603,6 @@ const GlobeScene = () => {
   );
 };
 
-// ── Globe wrapper. ──────────────────────────────────────────────────────────────
-const handlePointerDown = useCallback((e: ThreeEvent<MouseEvent>) => {
-  const raycaster = new Raycaster();
-  const ptr = e.point;
-  raycaster.setFromCamera(new Vector3(ptr.x, ptr.y, 0.5), camera as any);
-  const intersects = raycaster.intersectObject(new Mesh(new SphereGeometry(0.1), new MeshBasicMaterial({ transparent: true })) as any);
-  if (intersects.length > 0) {
-    const hit = intersects[0].point as [number, number, number];
-    const cam = (camera as any).position as [number, number, number];
-    const dir = [hit[0] - cam[0], hit[1] - cam[1], hit[2] - cam[2]] as [number, number, number];
-    const len = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2]);
-    const pushed = [hit[0] + (dir[0] / len) * 0.15, hit[1] + (dir[1] / len) * 0.15, hit[2] + (dir[2] / len) * 0.15] as [number, number, number];
-    setRipple({ center: pushed, radius: 0.05 });
-  }
-}, []);  <Canvas
-    shadows
-    dpr={[1, 2]}
-    gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-    camera={{ position: [0, 0, 2.2], fov: 45 }}
-    onPointerDown={handlePointerDown}
-  >
-    <OrbitControls
-      enableZoom={false}
-      enablePan={false}
-      autoRotate={true}
-      autoRotateSpeed={0.6}
-      minPolarAngle={0.15}
-      maxPolarAngle={1.4}
-      minDistance={1.6}
-      maxDistance={2.8}
-      target={[0, 0, 0]}
-    />
-    <ambientLight intensity={0.12} />
-    <pointLight position={[0.35, 0.8, 0.4]} intensity={1.2} />
-    <spotLight
-      position={[0.35, 0.8, 0.4]}
-      angle={0.25}
-      penumbra={0.5}
-      intensity={0.8}
-    />
-    <GlobeScene />
-    <Environment preset="night" />
-  </Canvas>
-);
-
-const GlobeCanvas = () => <GlobeScene />;
-
-
-const GlobeCanvas = () => <GlobeScene />;
-
-export interface GlobeProps {
-  hubs?: City[];
-  arcs?: any[];
-  reducedMotion?: boolean;
-}
-
-export default function Globe({ reducedMotion = false }: GlobeProps) {
-  return <GlobeCanvas />;
+export default function Globe() {
+  return <GlobeScene />;
 }

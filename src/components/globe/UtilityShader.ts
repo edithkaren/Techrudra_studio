@@ -10,47 +10,43 @@ export class UniformState<T> {
 }
 
 /**
- * A Float32Array subclass that exposes indexed .x() / .y() / .z() helpers for
- * reading/writing a per-node (or per-city) 3-component vector.
+ * A plain 3-component vector stored as a [number, number, number] tuple.
+ * Kept free of Float32Array subclasses and accessors so the project's
+ * erasableSyntaxOnly tsconfig stays happy.
  */
-export class Float32State extends Float32Array {
-  constructor(public value: number[]) {
-    super(value.length / 3);
-    this.set(value);
-  }
+export class Vector3State {
+  constructor(
+    public readonly values: [number, number, number]
+  ) {}
 
-  get x(i: number) { return this[i * 3]; }
-  set x(i: number, v: number) { this[i * 3] = v; }
+  get x(): number { return this.values[0]; }
+  set x(v: number) { this.values[0] = v; }
 
-  get y(i: number) { return this[i * 3 + 1]; }
-  set y(i: number, v: number) { this[i * 3 + 1] = v; }
+  get y(): number { return this.values[1]; }
+  set y(v: number) { this.values[1] = v; }
 
-  get z(i: number) { return this[i * 3 + 2]; }
-  set z(i: number, v: number) { this[i * 3 + 2] = v; }
+  get z(): number { return this.values[2]; }
+  set z(v: number) { this.values[2] = v; }
 }
 
 /**
- * One vector (x, y, z) exposed as a uniform.
+ * One [number, number, number] tuple exposed as a uniform value.
  */
-export class Vector3State extends Float32State {
-  constructor(x: number, y: number, z: number) {
-    super([x, y, z]);
-  }
-  get value(): [number, number, number] { return [this.x(0), this.y(0), this.z(0)]; }
-  set value(v: [number, number, number]) { this.x(0, v[0]); this.y(0, v[1]); this.z(0, v[2]); }
+export class Tuple3State<T = [number, number, number]> {
+  constructor(public value: T) {}
 }
 
 // ── Globally shared uniform state (updated from useFrame) ────────────────────────
 export const GLOBAL_TIME = new UniformState(0);
-export const GLOBAL_SUN = new UniformState([0.35, 0.8, 0.4]);
-export const GLOBAL_NODES = new UniformState<[number, number, number][]>([]);
-export const GLOBAL_NODE_COLORS = new UniformState<[number, number, number][]>([]);
-export const GLOBAL_NODE_RADII = new UniformState<[number, number, number]>([0, 0, 0]);
-export const GLOBAL_ARCS = new UniformState<[number, number, number][]>([]);
-export const GLOBAL_ARC_COLORS = new UniformState<[number, number, number][]>([]);
-export const GLOBAL_ARC_PARTICLES = new UniformState<[number, number, number][]>([]);
-export const GLOBAL_RIPPLE = new UniformState<{ center: [number, number, number]; radius: number } | null>(null);
-export const GLOBAL_PARALLAX = new Vector3State(0, 0, 0);
+export const GLOBAL_SUN = new Tuple3State([0.35, 0.8, 0.4]);
+export const GLOBAL_NODES = new Tuple3State<[number, number, number][]>([]);
+export const GLOBAL_NODE_COLORS = new Tuple3State<[number, number, number][]>([]);
+export const GLOBAL_NODE_RADII = new Tuple3State<[number, number, number]>([0, 0, 0]);
+export const GLOBAL_ARCS = new Tuple3State<[number, number, number][]>([]);
+export const GLOBAL_ARC_COLORS = new Tuple3State<[number, number, number][]>([]);
+export const GLOBAL_ARC_PARTICLES = new Tuple3State<[number, number, number][]>([]);
+export const GLOBAL_RIPPLE = new Tuple3State<{ center: [number, number, number]; radius: number } | null>(null);
+export const GLOBAL_PARALLAX = new Vector3State([0, 0, 0]);
 
 /**
  * Project a 3D point onto the camera's view plane using the camera's forward

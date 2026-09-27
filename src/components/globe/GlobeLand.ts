@@ -1,5 +1,5 @@
+import landData from "./110m_land.json";
 import { feature, mesh } from "topojson-client";
-import landData from "./110m_land.json" with { type: "json" };
 
 /** A single land polygon vertex in 3D. */
 export type LandVertex = { x: number; y: number; z: number };
@@ -20,7 +20,7 @@ function to3d(lat: number, lng: number, radius: number): [number, number, number
  * The scale is chosen so the land roughly fills a unit sphere.
  */
 export function buildLandPositions(radius: number) {
-  const meshData = mesh(landData, landData.objects.land) as number[][];
+  const meshData = mesh(landData, landData.objects.land) as unknown as number[][][];
   const positions: LandVertex[] = [];
 
   for (let i = 0; i < meshData.length; i += 2) {
@@ -36,5 +36,7 @@ export function buildLandPositions(radius: number) {
   return positions;
 }
 
-/** Lat/lng of every 110m land corner, for reprojection inside the vertex shader. */
+/**
+ * Lat/lng of every 110m land corner, for reprojection inside the vertex shader.
+ */
 export const landCorners = landData.objects.land.arcs[0];
