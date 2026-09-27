@@ -7,11 +7,9 @@ import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/motion/CustomCursor";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import LiquidFilters from "@/components/liquid/LiquidFilters";
 import FluidSectionDivider from "@/components/motion/FluidSectionDivider";
-import HomeLiquidMotion from "@/components/HomeLiquidMotion";
 
 export default function Landing() {
   return (
@@ -19,11 +17,9 @@ export default function Landing() {
       <LiquidFilters />
       <ScrollProgress />
       <AstraBackground />
-      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
-        <HomeLiquidMotion />
 
         <Marquee />
         <FeaturedShowcase />
