@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { siteConfig } from "@/data/site";
 import { services } from "@/data/services";
 import ScrollReveal from "@/components/motion/ScrollReveal";
+import Logo from "@/components/Logo";
 
 const footerNav = [
   { label: "Home", href: "#home" },
@@ -79,7 +80,11 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <ScrollReveal variant="fadeUp" delay={0.1}>
             <div>
-              <p className="mb-3 text-base font-bold text-white">{siteConfig.name}</p>
+              <Logo size="lg" className="mb-4" />
+              <div
+                className="mb-3 h-px w-16"
+                style={{ background: "linear-gradient(90deg, #A78BFA, #60A5FA, transparent)" }}
+              />
               <p className="text-sm leading-relaxed text-white/35">{siteConfig.description}</p>
             </div>
           </ScrollReveal>

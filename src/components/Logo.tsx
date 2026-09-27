@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { siteConfig } from "@/data/site";
@@ -10,18 +10,32 @@ interface LogoProps {
   size?: LogoSize;
 }
 
-const SIZE_STYLES: Record<
-  LogoSize,
-  { tile: string; mark: string; text: string }
-> = {
-  sm: { tile: "h-8 w-8", mark: "text-[10px]", text: "text-sm" },
-  md: { tile: "h-9 w-9", mark: "text-[11px]", text: "text-base" },
-  lg: { tile: "h-11 w-11", mark: "text-[13px]", text: "text-lg" },
+const SIZE_STYLES: Record<LogoSize, { tile: string; mono: string; text: string }> = {
+  sm: { tile: "h-8 w-8", mono: "w-[18px]", text: "text-sm" },
+  md: { tile: "h-9 w-9", mono: "w-[21px]", text: "text-base" },
+  lg: { tile: "h-11 w-11", mono: "w-[26px]", text: "text-lg" },
 };
+
+/* Custom geometric "TR" monogram — the brand mark letterforms */
+const MONO_T =
+  "M0.5 4 H16.5 V6.9 H10.15 V20 H6.85 V6.9 H0.5 Z";
+const MONO_R =
+  "M19.5 4 H27.2 C30.9 4 33 6.1 33 9.3 C33 11.8 31.6 13.6 29.4 14.3 L33.4 20 H29.8 L26.1 14.6 H22.7 V20 H19.5 Z M22.7 6.8 V11.9 H26.9 C28.7 11.9 29.8 10.9 29.8 9.3 C29.8 7.8 28.7 6.8 26.9 6.8 Z";
+const SPARK =
+  "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
 
 export default function Logo({ className = "", size = "md" }: LogoProps) {
   const [hovered, setHovered] = useState(false);
   const s = SIZE_STYLES[size];
+  const rawId = useId();
+  const uid = rawId.replace(/:/g, "");
+  const monoGradId = `logo-mono-${uid}`;
+  const orbitGradId = `logo-orbit-${uid}`;
+
+  /* Brand lockup: "Techrudra" + gradient ".Studio" */
+  const dotIndex = siteConfig.name.indexOf(".");
+  const brandName = dotIndex > 0 ? siteConfig.name.slice(0, dotIndex) : siteConfig.name;
+  const brandTail = dotIndex > 0 ? siteConfig.name.slice(dotIndex) : "";
 
   const handleClick = (e: React.MouseEvent) => {
     // Already home: smooth-scroll to top instead of a no-op navigation.
@@ -44,29 +58,34 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
         aria-label={siteConfig.name}
         className="group flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA]/60"
       >
-        {/* ── Icon mark ─────────────────────────────────────────── */}
+        {/* ── Brand mark ──────────────────────────────────────────── */}
         <div className={`relative ${s.tile}`}>
-          {/* Soft glow halo */}
+          {/* Persistent ambient glow — the "highlight" halo */}
           <motion.div
-            className="absolute -inset-1 rounded-2xl"
+            className="absolute -inset-1.5 rounded-2xl"
             style={{
               background:
-                "radial-gradient(circle at 30% 30%, rgba(167,139,250,0.55), transparent 65%)",
+                "radial-gradient(circle at 30% 25%, rgba(167,139,250,0.65), rgba(96,165,250,0.28) 45%, transparent 72%)",
               filter: "blur(9px)",
             }}
             animate={{
-              opacity: hovered ? 0.85 : 0.4,
-              scale: hovered ? 1.2 : 1,
+              opacity: hovered ? 1 : [0.45, 0.72, 0.45],
+              scale: hovered ? 1.18 : 1,
             }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
+            transition={{
+              opacity: hovered
+                ? { duration: 0.3 }
+                : { duration: 3.4, repeat: Infinity, ease: "easeInOut" },
+              scale: { type: "spring", stiffness: 300, damping: 20 },
+            }}
           />
 
-          {/* Rotating gradient orbit ring + comet head */}
+          {/* Orbit ring with comet head */}
           <motion.svg
-            className="absolute -inset-1.5"
+            className="absolute -inset-1"
             viewBox="0 0 44 44"
             fill="none"
-            animate={{ rotate: 360, opacity: hovered ? 1 : 0.55 }}
+            animate={{ rotate: 360, opacity: hovered ? 1 : 0.5 }}
             transition={{
               rotate: {
                 duration: hovered ? 2.4 : 9,
@@ -79,21 +98,21 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             <circle
               cx="22"
               cy="22"
-              r="20"
-              stroke="url(#logo-orbit)"
-              strokeWidth="1.6"
+              r="20.5"
+              stroke={`url(#${orbitGradId})`}
+              strokeWidth="1.5"
               strokeLinecap="round"
-              strokeDasharray="58 68"
+              strokeDasharray="50 79"
             />
             <circle
               cx="22"
-              cy="2"
-              r="2.1"
+              cy="1.5"
+              r="2"
               fill="#F472B6"
               style={{ filter: "drop-shadow(0 0 4px rgba(244,114,182,0.9))" }}
             />
             <defs>
-              <linearGradient id="logo-orbit" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id={orbitGradId} x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%" stopColor="#A78BFA" />
                 <stop offset="55%" stopColor="#60A5FA" />
                 <stop offset="100%" stopColor="#F472B6" />
@@ -101,62 +120,126 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             </defs>
           </motion.svg>
 
-          {/* Liquid glass tile */}
+          {/* Gradient-bordered dark glass tile */}
           <motion.div
-            className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-xl bg-[length:600%_600%] bg-gradient-to-br from-[#A78BFA] via-[#60A5FA] to-[#F472B6] shadow-lg shadow-[#A78BFA]/25"
-            animate={{
-              borderRadius: ["12px", "7px", "17px", "10px", "12px"],
-              scale: hovered ? 1.08 : 1,
-            }}
-            transition={{
-              borderRadius: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
-              scale: { type: "spring", stiffness: 320, damping: 18 },
-            }}
+            className="absolute inset-0 rounded-[11px] bg-gradient-to-br from-[#A78BFA] via-[#60A5FA] to-[#F472B6] p-px shadow-lg shadow-[#A78BFA]/30"
+            animate={{ scale: hovered ? 1.06 : 1 }}
+            transition={{ type: "spring", stiffness: 320, damping: 18 }}
           >
-            {/* Shimmer sweep */}
-            <motion.div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0.12) 58%, transparent 72%)",
-                backgroundSize: "220% 220%",
-              }}
-              animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
-              transition={{
-                duration: 2.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                repeatType: "mirror",
-              }}
-            />
-            {/* Glass highlight */}
             <div
-              className="absolute inset-0"
+              className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[10px]"
               style={{
                 background:
-                  "radial-gradient(circle at 25% 22%, rgba(255,255,255,0.4) 0%, transparent 45%)",
+                  "linear-gradient(140deg, #1A1A24 0%, #0D0D12 62%)",
               }}
-            />
+            >
+              {/* Inner top-light glass sheen */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 25% 18%, rgba(255,255,255,0.16) 0%, transparent 55%)",
+                }}
+              />
+              {/* Shimmer sweep */}
+              <motion.div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(105deg, transparent 32%, rgba(255,255,255,0.4) 48%, rgba(255,255,255,0.1) 58%, transparent 72%)",
+                  backgroundSize: "220% 220%",
+                }}
+                animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                transition={{
+                  duration: 3.4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatType: "mirror",
+                }}
+              />
+              {/* Custom TR monogram */}
+              <svg
+                viewBox="0 0 36 24"
+                className={`relative z-10 ${s.mono}`}
+                style={{
+                  filter: "drop-shadow(0 0 6px rgba(167,139,250,0.7))",
+                }}
+                aria-hidden="true"
+              >
+                <defs>
+                  <linearGradient
+                    id={monoGradId}
+                    x1="0"
+                    y1="0"
+                    x2="36"
+                    y2="24"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0%" stopColor="#FFFFFF" />
+                    <stop offset="100%" stopColor="#CDBBFF" />
+                  </linearGradient>
+                </defs>
+                <path d={MONO_T} fill={`url(#${monoGradId})`} />
+                <path
+                  d={MONO_R}
+                  fill={`url(#${monoGradId})`}
+                  fillRule="evenodd"
+                />
+              </svg>
+            </div>
           </motion.div>
 
-          {/* Monogram */}
-          <span
-            className={`relative z-10 flex h-full w-full items-center justify-center font-black tracking-tight text-white ${s.mark}`}
-            style={{
-              textShadow:
-                "0 1px 2px rgba(0,0,0,0.35), 0 0 14px rgba(167,139,250,0.55)",
+          {/* Sparkle accent */}
+          <motion.svg
+            viewBox="0 0 10 10"
+            className="absolute -top-1 -right-1 z-20 h-2.5 w-2.5"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7], rotate: [0, 18, 0] }}
+            transition={{
+              duration: 2.6,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
+            aria-hidden="true"
           >
-            TR
-          </span>
+            <path
+              d={SPARK}
+              fill="#F472B6"
+              style={{ filter: "drop-shadow(0 0 3px rgba(244,114,182,0.95))" }}
+            />
+          </motion.svg>
         </div>
 
-        {/* ── Wordmark ──────────────────────────────────────────── */}
+        {/* ── Wordmark lockup ─────────────────────────────────────── */}
         <span
-          className={`relative inline-block font-black tracking-tight ${s.text}`}
+          className={`relative inline-flex flex-col font-black leading-none tracking-tight ${s.text}`}
         >
-          <span className="relative z-10 text-white">{siteConfig.name}</span>
-          {/* Gradient sweep overlay on hover */}
+          <span className="relative z-10 inline-flex items-baseline">
+            <span className="text-white">{brandName}</span>
+            {/* Always-on animated gradient suffix = the brand highlight */}
+            <motion.span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, #A78BFA, #60A5FA, #F472B6, #A78BFA)",
+                backgroundSize: "220% 100%",
+              }}
+              animate={{
+                backgroundPosition: hovered
+                  ? ["0% 50%", "100% 50%"]
+                  : "0% 50%",
+              }}
+              transition={{
+                backgroundPosition: {
+                  duration: 2.4,
+                  repeat: hovered ? Infinity : 0,
+                  ease: "linear",
+                },
+              }}
+            >
+              {brandTail}
+            </motion.span>
+          </span>
+          {/* Gradient sweep overlay across the full wordmark on hover */}
           <motion.span
             aria-hidden="true"
             className="absolute inset-0 z-20 bg-clip-text text-transparent"
@@ -183,7 +266,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
           >
             {siteConfig.name}
           </motion.span>
-          {/* Animated gradient underline */}
+          {/* Animated gradient underline on hover */}
           <motion.span
             aria-hidden="true"
             className="absolute -bottom-1 left-0 h-[2px] w-full origin-left rounded-full"
