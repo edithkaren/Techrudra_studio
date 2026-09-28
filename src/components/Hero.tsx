@@ -5,6 +5,7 @@ import KineticText from "@/components/motion/KineticText";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
 import AstraBackground from "@/components/AstraBackground";
+import NebulaBackground from "@/components/NebulaBackground";
 import StrokeText from "@/components/StrokeText";
 
 const words = [
@@ -554,6 +555,9 @@ export default function Hero() {
     >
       {/* Astra-style ambient background */}
       <AstraBackground />
+
+      {/* Cinematic nebula clouds — slow drift/morph, ambient only */}
+      <NebulaBackground />
 
       <EnergyRings />
       <FloatingGeometry />

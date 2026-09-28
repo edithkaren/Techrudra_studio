@@ -1,0 +1,184 @@
+/* Cinematic nebula background — large, extremely soft violet / indigo / blue
+   clouds drifting over the dark base. Pure CSS: no JS, no mouse interaction.
+   Animates only transform + opacity (GPU-friendly): 60–92s drift/morph loops
+   with subtle 8–12s brightness pulses. Honors prefers-reduced-motion. */
+
+.nebula-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nebula {
+  position: absolute;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ── Cloud palettes (softness comes from long gradient tails) ───── */
+
+.nebula--violet {
+  top: -30%;
+  left: -24%;
+  width: 95vmax;
+  height: 72vmax;
+  background: radial-gradient(
+    closest-side,
+    rgba(167, 139, 250, 0.3) 0%,
+    rgba(129, 140, 248, 0.12) 36%,
+    rgba(99, 102, 241, 0.05) 60%,
+    transparent 78%
+  );
+  animation:
+    nebula-drift-a 72s ease-in-out -10s infinite alternate,
+    nebula-pulse 10s ease-in-out -2s infinite;
+}
+
+.nebula--indigo {
+  top: 38%;
+  left: 56%;
+  width: 95vmax;
+  height: 78vmax;
+  background: radial-gradient(
+    closest-side,
+    rgba(99, 102, 241, 0.26) 0%,
+    rgba(79, 70, 229, 0.1) 40%,
+    rgba(59, 130, 246, 0.04) 64%,
+    transparent 80%
+  );
+  animation:
+    nebula-drift-b 86s ease-in-out -30s infinite alternate,
+    nebula-pulse 8s ease-in-out -5s infinite;
+}
+
+.nebula--blue {
+  top: -38%;
+  left: 52%;
+  width: 85vmax;
+  height: 64vmax;
+  background: radial-gradient(
+    closest-side,
+    rgba(59, 130, 246, 0.22) 0%,
+    rgba(99, 102, 241, 0.08) 42%,
+    transparent 76%
+  );
+  animation:
+    nebula-drift-c 78s ease-in-out -46s infinite alternate,
+    nebula-pulse 12s ease-in-out -7s infinite;
+}
+
+.nebula--deep {
+  top: 52%;
+  left: -26%;
+  width: 90vmax;
+  height: 70vmax;
+  background: radial-gradient(
+    closest-side,
+    rgba(76, 29, 149, 0.3) 0%,
+    rgba(30, 27, 75, 0.12) 44%,
+    transparent 78%
+  );
+  animation:
+    nebula-drift-d 92s ease-in-out -20s infinite alternate,
+    nebula-pulse 9s ease-in-out -3.5s infinite;
+}
+
+/* Wide, ultra-faint band behind the headline for depth */
+.nebula--band {
+  top: 18%;
+  left: -12%;
+  width: 124%;
+  height: 64%;
+  background: radial-gradient(
+    ellipse closest-side,
+    rgba(129, 140, 248, 0.1) 0%,
+    rgba(167, 139, 250, 0.05) 45%,
+    rgba(30, 27, 75, 0.03) 70%,
+    transparent 85%
+  );
+  animation:
+    nebula-drift-band 80s ease-in-out -58s infinite alternate,
+    nebula-pulse 12s ease-in-out -1s infinite;
+}
+
+/* ── Drift keyframes (transform only) ───────────────────────────── */
+/* `infinite alternate` + ease-in-out = seamless, velocity-smooth
+   ping-pong drift; scale changes double as the "morph". */
+
+@keyframes nebula-drift-a {
+  from {
+    transform: translate3d(-2.5%, 1.5%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5%, -1%, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(3.5%, -2.5%, 0) scale(0.96);
+  }
+}
+
+@keyframes nebula-drift-b {
+  from {
+    transform: translate3d(2%, -2%, 0) scale(1.06);
+  }
+  50% {
+    transform: translate3d(-1%, 1.5%, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(-3%, 3%, 0) scale(1.02);
+  }
+}
+
+@keyframes nebula-drift-c {
+  from {
+    transform: translate3d(-3%, -1%, 0) scale(0.97);
+  }
+  50% {
+    transform: translate3d(0.5%, 2%, 0) scale(1.06);
+  }
+  to {
+    transform: translate3d(3%, -2%, 0) scale(1);
+  }
+}
+
+@keyframes nebula-drift-d {
+  from {
+    transform: translate3d(1.5%, 2.5%, 0) scale(1.04);
+  }
+  50% {
+    transform: translate3d(-1.5%, -1%, 0) scale(0.96);
+  }
+  to {
+    transform: translate3d(-3%, 1.5%, 0) scale(1.05);
+  }
+}
+
+@keyframes nebula-drift-band {
+  from {
+    transform: translate3d(-2%, 0.5%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2.5%, -1%, 0) scale(1.09);
+  }
+}
+
+/* ── Brightness pulses (8–12s, phase-offset per cloud) ──────────── */
+
+@keyframes nebula-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Static, calm variant for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nebula {
+    animation: none;
+    opacity: 0.8;
+  }
+}

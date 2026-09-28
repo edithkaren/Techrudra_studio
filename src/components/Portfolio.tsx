@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -14,6 +14,9 @@ import {
 } from "@/data/portfolio";
 import ProjectMockup from "@/components/ProjectMockup";
 import CardTilt from "@/components/motion/CardTilt";
+import { ParticleCard, GlobalSpotlight } from "@/components/MagicBento";
+
+const VIOLET_RGB = "167, 139, 250"; // #A78BFA — theme accent for MagicBento effects
 
 const accentColors: Record<string, string> = {
   Websites: "#A78BFA", AI: "#60A5FA", Branding: "#FB923C",
@@ -210,10 +213,19 @@ function ProjectCard({
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
       exit={choreo.exitCard}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] transition-[border-color,box-shadow] duration-500 hover:border-white/[0.12] hover:shadow-2xl hover:shadow-[#A78BFA]/[0.04] ${
+      className={`magic-bento-card magic-bento-card--border-glow group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] transition-[border-color,box-shadow] duration-500 hover:border-white/[0.12] hover:shadow-2xl hover:shadow-[#A78BFA]/[0.04] ${
         isLarge ? "sm:col-span-2 sm:row-span-2" : ""
       }`}
     >
+      <ParticleCard
+        className="block h-full w-full"
+        glowColor={VIOLET_RGB}
+        particleCount={12}
+        enableTilt
+        maxTilt={3}
+        enableMagnetism
+        clickEffect
+      >
       <a href={`/portfolio/${project.slug}`} className="block">
         <motion.div
           variants={choreo.media}
@@ -253,6 +265,7 @@ function ProjectCard({
           </motion.div>
         </div>
       </a>
+      </ParticleCard>
     </motion.div>
   );
 }
@@ -261,6 +274,7 @@ export default function Portfolio() {
   const [active, setActive] = useState<PortfolioCategory>("All");
   const reduce = useReducedMotion() ?? false;
   const choreo = useMemo(() => buildChoreography(reduce), [reduce]);
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const filtered = active === "All" ? portfolioProjects : portfolioProjects.filter((p) => p.category === active);
 
   return (
@@ -316,7 +330,8 @@ export default function Portfolio() {
           ))}
         </motion.div>
 
-        <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div ref={gridRef} layout className="bento-section grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <GlobalSpotlight gridRef={gridRef} glowColor={VIOLET_RGB} spotlightRadius={300} />
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (
               <ProjectCard key={project.id} project={project} index={i} choreo={choreo} />
