@@ -7,6 +7,8 @@ interface ProjectMockupProps {
   category: string;
   device?: DeviceType;
   className?: string;
+  /** Size the mockup to fill a fixed-height parent (equal-height card grids). */
+  fitHeight?: boolean;
 }
 
 const projectVisuals: Record<
@@ -318,9 +320,21 @@ function SocialVisual({ accent }: { accent: string }) {
   );
 }
 
-function BrowserFrame({ children, title }: { children: React.ReactNode; title: string }) {
+function BrowserFrame({
+  children,
+  title,
+  fitHeight = false,
+}: {
+  children: React.ReactNode;
+  title: string;
+  fitHeight?: boolean;
+}) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[#111111] shadow-2xl overflow-hidden">
+    <div
+      className={`rounded-2xl border border-white/[0.06] bg-[#111111] shadow-2xl overflow-hidden ${
+        fitHeight ? "w-[94%]" : "w-full"
+      }`}
+    >
       <div className="flex items-center gap-2 border-b border-white/[0.06] bg-[#0D0D0D] px-4 py-2.5">
         <div className="flex gap-1.5">
           <div className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
@@ -339,22 +353,48 @@ function BrowserFrame({ children, title }: { children: React.ReactNode; title: s
   );
 }
 
-function PhoneFrame({ children }: { children: React.ReactNode }) {
+function PhoneFrame({
+  children,
+  fitHeight = false,
+}: {
+  children: React.ReactNode;
+  fitHeight?: boolean;
+}) {
   return (
-    <div className="mx-auto max-w-[280px]">
-      <div className="rounded-[2rem] border-4 border-[#222] bg-[#1A1A1A] p-2 shadow-2xl">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-[#0D0D0D]">
+    <div
+      className={
+        fitHeight
+          ? "flex h-full w-full items-center justify-center"
+          : "mx-auto w-full max-w-[280px]"
+      }
+    >
+      {/* fitHeight: stretch to the parent height, width follows the 9/19 ratio.
+          Default: width-driven (max 280px), height follows the ratio. */}
+      <div
+        className={`rounded-[2rem] border-4 border-[#222] bg-[#1A1A1A] p-2 shadow-2xl ${
+          fitHeight ? "aspect-[9/19] w-auto self-stretch" : "w-full"
+        }`}
+      >
+        <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#0D0D0D]">
           <div className="absolute top-0 left-1/2 z-10 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-[#222]" />
-          <div className="aspect-[9/19] w-full">{children}</div>
+          {children}
         </div>
       </div>
     </div>
   );
 }
 
-function LaptopFrame({ children, title }: { children: React.ReactNode; title: string }) {
+function LaptopFrame({
+  children,
+  title,
+  fitHeight = false,
+}: {
+  children: React.ReactNode;
+  title: string;
+  fitHeight?: boolean;
+}) {
   return (
-    <div className="relative mx-auto max-w-2xl">
+    <div className={`relative mx-auto ${fitHeight ? "w-[80%]" : "max-w-2xl"}`}>
       <div className="rounded-t-2xl border-4 border-[#333] bg-[#222] pb-1 pt-1 shadow-2xl">
         <div className="overflow-hidden rounded-t-xl">{children}</div>
       </div>
@@ -382,6 +422,7 @@ export default function ProjectMockup({
   projectSlug,
   category,
   device,
+  fitHeight,
   className = "",
 }: ProjectMockupProps) {
   const config = projectVisuals[projectSlug] || {
@@ -404,12 +445,12 @@ export default function ProjectMockup({
   );
 
   if (effectiveDevice === "phone") {
-    return <PhoneFrame>{mockup}</PhoneFrame>;
+    return <PhoneFrame fitHeight={fitHeight}>{mockup}</PhoneFrame>;
   }
   if (effectiveDevice === "laptop") {
-    return <LaptopFrame title={config.title}>{mockup}</LaptopFrame>;
+    return <LaptopFrame title={config.title} fitHeight={fitHeight}>{mockup}</LaptopFrame>;
   }
-  return <BrowserFrame title={config.title}>{mockup}</BrowserFrame>;
+  return <BrowserFrame title={config.title} fitHeight={fitHeight}>{mockup}</BrowserFrame>;
 }
 
 export { projectVisuals };

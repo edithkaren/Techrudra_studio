@@ -201,7 +201,6 @@ function ProjectCard({
   index: number;
   choreo: Choreo;
 }) {
-  const isLarge = project.featured && index % 3 === 0;
   const accent = accentColors[project.category] || "#A78BFA";
 
   return (
@@ -213,9 +212,7 @@ function ProjectCard({
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
       exit={choreo.exitCard}
-      className={`magic-bento-card magic-bento-card--border-glow group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] transition-[border-color,box-shadow] duration-500 hover:border-white/[0.12] hover:shadow-2xl hover:shadow-[#A78BFA]/[0.04] ${
-        isLarge ? "sm:col-span-2 sm:row-span-2" : ""
-      }`}
+      className="magic-bento-card magic-bento-card--border-glow group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111] transition-[border-color,box-shadow] duration-500 hover:border-white/[0.12] hover:shadow-2xl hover:shadow-[#A78BFA]/[0.04]"
     >
       <ParticleCard
         className="block h-full w-full"
@@ -226,14 +223,14 @@ function ProjectCard({
         enableMagnetism
         clickEffect
       >
-      <a href={`/portfolio/${project.slug}`} className="block">
+      <a href={`/portfolio/${project.slug}`} className="flex h-full flex-col">
         <motion.div
           variants={choreo.media}
-          className={`relative overflow-hidden bg-[#0D0D0D] ${isLarge ? "p-6 sm:p-8" : "p-4 sm:p-5"}`}
+          className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#0D0D0D] p-4 sm:p-5"
         >
-          <motion.div variants={choreo.mock} className="will-change-transform">
-            <CardTilt maxTilt={3} scale={1.01}>
-              <ProjectMockup projectSlug={project.slug} category={project.category} />
+          <motion.div variants={choreo.mock} className="flex h-full w-full items-center justify-center will-change-transform">
+            <CardTilt maxTilt={3} scale={1.01} className="h-full w-full">
+              <ProjectMockup projectSlug={project.slug} category={project.category} fitHeight />
             </CardTilt>
           </motion.div>
           <div className="absolute top-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ backgroundColor: accent }} />
@@ -248,7 +245,7 @@ function ProjectCard({
             <ArrowUpRight className="h-4 w-4 text-white/70" />
           </div>
         </motion.div>
-        <div className="p-5 sm:p-6">
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
           <motion.div variants={choreo.item} className="mb-2 flex items-center gap-2">
             <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: accent }}>{project.category}</span>
             <span className="text-[11px] text-white/10">&middot;</span>
@@ -257,8 +254,8 @@ function ProjectCard({
           <motion.h3 variants={choreo.item} className="mb-2 text-base font-semibold text-white sm:text-lg">
             <LiquidProjectTitle accent={accent}>{project.title}</LiquidProjectTitle>
           </motion.h3>
-          <motion.p variants={choreo.item} className="mb-4 text-sm leading-relaxed text-white/35">{project.description}</motion.p>
-          <motion.div variants={choreo.tags} className="flex flex-wrap gap-1.5">
+          <motion.p variants={choreo.item} className="mb-4 line-clamp-3 text-sm leading-relaxed text-white/35">{project.description}</motion.p>
+          <motion.div variants={choreo.tags} className="mt-auto flex flex-wrap gap-1.5">
             {project.technologies.map((t) => (
               <motion.span key={t} variants={choreo.tag} className="rounded-full bg-white/[0.05] px-2.5 py-0.5 text-[11px] font-medium text-white/30">{t}</motion.span>
             ))}
@@ -330,7 +327,7 @@ export default function Portfolio() {
           ))}
         </motion.div>
 
-        <motion.div ref={gridRef} layout className="bento-section grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div ref={gridRef} layout className="bento-section grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <GlobalSpotlight gridRef={gridRef} glowColor={VIOLET_RGB} spotlightRadius={300} />
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (
