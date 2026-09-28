@@ -505,42 +505,6 @@ function NoiseOverlay() {
   );
 }
 
-/* ── Bottom liquid edge ────────────────────────────────────────── */
-function LiquidEdge() {
-  return (
-    <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 overflow-hidden">
-      <motion.svg
-        viewBox="0 0 1440 120"
-        className="absolute bottom-0 w-full"
-        preserveAspectRatio="none"
-        style={{ height: "120px" }}
-      >
-        <motion.path
-          d="M0,60 C180,90 360,30 540,60 C720,90 900,30 1080,60 C1260,90 1440,30 1440,60 L1440,120 L0,120 Z"
-          fill="#0A0A0A"
-          animate={{
-            d: [
-              "M0,60 C180,90 360,30 540,60 C720,90 900,30 1080,60 C1260,90 1440,30 1440,60 L1440,120 L0,120 Z",
-              "M0,70 C180,30 360,80 540,50 C720,80 900,40 1080,70 C1260,30 1440,60 1440,70 L1440,120 L0,120 Z",
-              "M0,55 C180,85 360,35 540,65 C720,85 900,25 1080,55 C1260,85 1440,35 1440,55 L1440,120 L0,120 Z",
-              "M0,60 C180,90 360,30 540,60 C720,90 900,30 1080,60 C1260,90 1440,30 1440,60 L1440,120 L0,120 Z",
-            ],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.svg>
-      {/* Gradient fade */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, transparent 0%, #0A0A0A 100%)",
-        }}
-      />
-    </div>
-  );
-}
-
 /* ── Typing cursor ─────────────────────────────────────────────── */
 function TypingCursor() {
   return (
@@ -597,7 +561,6 @@ export default function Hero() {
       <LightStreaks />
       <CenterPulse />
       <NoiseOverlay />
-      <LiquidEdge />
 
       {/* Content */}
       <motion.div

@@ -8,7 +8,7 @@ const items = [
 ];
 
 const Dot = () => (
-  <span className="mx-3 inline-block h-1 w-1 rounded-full bg-white/10" />
+  <span className="mx-3 inline-block h-1.5 w-1.5 rounded-full bg-[#A78BFA]/70 shadow-[0_0_6px_rgba(167,139,250,0.6)]" />
 );
 
 /* Liquid text that distorts on hover */
@@ -16,13 +16,16 @@ function LiquidMarqueeItem({ children }: { children: React.ReactNode }) {
   const [hovered, setHovered] = useState(false);
   return (
     <span
-      className="whitespace-nowrap text-sm font-medium tracking-wide select-none transition-colors"
+      className="whitespace-nowrap text-base font-semibold tracking-wide select-none transition-colors"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         filter: hovered ? "url(#fluid-distort-hover)" : "none",
-        color: hovered ? "rgba(167,139,250,0.6)" : "rgba(255,255,255,0.15)",
-        transform: hovered ? "scale(1.05)" : "scale(1)",
+        color: hovered ? "#C4B5FD" : "rgba(255,255,255,0.92)",
+        textShadow: hovered
+          ? "0 0 18px rgba(167,139,250,0.75)"
+          : "0 0 12px rgba(167,139,250,0.3)",
+        transform: hovered ? "scale(1.08)" : "scale(1)",
         transition: "all 0.3s ease",
       }}
     >
@@ -53,7 +56,7 @@ function MarqueeRow({ direction }: { direction: "left" | "right" }) {
 
 export default function Marquee() {
   return (
-    <div className="border-y border-white/[0.06] bg-[#0A0A0A] px-6 py-2">
+    <div className="border-y border-white/10 bg-[#0A0A0A] px-6 py-3">
       <div className="mx-auto max-w-7xl">
         <MarqueeRow direction="left" />
         <MarqueeRow direction="right" />
