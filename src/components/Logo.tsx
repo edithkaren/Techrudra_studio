@@ -36,6 +36,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
   const rawId = useId();
   const uid = rawId.replace(/:/g, "");
   const monoGradId = `logo-mono-${uid}`;
+  const monoGlowId = `logo-glow-${uid}`;
   const orbitGradId = `logo-orbit-${uid}`;
 
   /* Brand lockup: "Techrudra" + gradient ".Studio" */
@@ -163,13 +164,17 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                   repeatType: "mirror",
                 }}
               />
-              {/* Interlocked outlined TR monogram */}
+              {/* Interlocked outlined TR monogram — strokes draw in on load,
+                  hollow interior reveals a violet glow on hover ("emergent" effect) */}
               <svg
                 viewBox={MONO_VIEWBOX}
                 fill="none"
                 className={`relative z-10 ${s.mono}`}
                 style={{
-                  filter: "drop-shadow(0 0 6px rgba(167,139,250,0.7))",
+                  filter: hovered
+                    ? "drop-shadow(0 0 8px rgba(167,139,250,0.95)) drop-shadow(0 0 18px rgba(96,165,250,0.45))"
+                    : "drop-shadow(0 0 6px rgba(167,139,250,0.7))",
+                  transition: "filter 0.45s ease",
                 }}
                 aria-hidden="true"
               >
@@ -185,16 +190,47 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                     <stop offset="0%" stopColor="#FFFFFF" />
                     <stop offset="100%" stopColor="#CDBBFF" />
                   </linearGradient>
+                  <linearGradient
+                    id={monoGlowId}
+                    x1="14"
+                    y1="24"
+                    x2="174"
+                    y2="120"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0%" stopColor="#A78BFA" />
+                    <stop offset="55%" stopColor="#60A5FA" />
+                    <stop offset="100%" stopColor="#F472B6" />
+                  </linearGradient>
                 </defs>
                 <g strokeLinecap="round" strokeLinejoin="round">
-                  <g stroke={`url(#${monoGradId})`} strokeWidth={16}>
+                  {/* Hollow core — glows violet on hover */}
+                  <g
+                    stroke={hovered ? `url(#${monoGlowId})` : MONO_INNER}
+                    strokeWidth={7}
+                    style={{ transition: "stroke 0.5s ease" }}
+                  >
                     {MONO_STROKES.map((d) => (
                       <path key={d} d={d} />
                     ))}
                   </g>
-                  <g stroke={MONO_INNER} strokeWidth={7}>
-                    {MONO_STROKES.map((d) => (
-                      <path key={d} d={d} />
+                  {/* Outer strokes — draw themselves in on load */}
+                  <g stroke={`url(#${monoGradId})`} strokeWidth={16}>
+                    {MONO_STROKES.map((d, i) => (
+                      <motion.path
+                        key={d}
+                        d={d}
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={{ pathLength: 1, opacity: 1 }}
+                        transition={{
+                          pathLength: {
+                            duration: 0.9,
+                            delay: 0.15 + i * 0.12,
+                            ease: [0.65, 0, 0.35, 1],
+                          },
+                          opacity: { duration: 0.2, delay: 0.15 + i * 0.12 },
+                        }}
+                      />
                     ))}
                   </g>
                 </g>
