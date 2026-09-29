@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" fill="none">
+  <!-- Techrudra.Studio "TR" interlocked monogram -->
+  <!-- Dark tile -->
+  <rect width="200" height="140" rx="18" fill="#0A0A0A"/>
+
+  <!-- TR letterforms: shared-stroke construction
+       T: crossbar (20,34)-(128,34) + stem x=65
+       R: stem x=120, bowl to x=148, leg to (168,112)
+       Interlock: crossbar passes through R's stem -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer white stroke layer -->
+    <g stroke="#FFFFFF" stroke-width="16">
+      <!-- T crossbar -->
+      <path d="M22 32 H126"/>
+      <!-- T stem -->
+      <path d="M65 32 V112"/>
+      <!-- R stem -->
+      <path d="M120 32 V112"/>
+      <!-- R bowl -->
+      <path d="M120 36 H136 A22 22 0 0 1 136 80 H120"/>
+      <!-- R leg -->
+      <path d="M138 80 L166 112"/>
+    </g>
+    <!-- Inner black stroke layer (creates hollow outline) -->
+    <g stroke="#0A0A0A" stroke-width="7">
+      <path d="M22 32 H126"/>
+      <path d="M65 32 V112"/>
+      <path d="M120 32 V112"/>
+      <path d="M120 36 H136 A22 22 0 0 1 136 80 H120"/>
+      <path d="M138 80 L166 112"/>
+    </g>
+  </g>
+</svg>

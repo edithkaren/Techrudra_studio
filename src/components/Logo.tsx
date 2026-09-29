@@ -16,11 +16,17 @@ const SIZE_STYLES: Record<LogoSize, { tile: string; mono: string; text: string }
   lg: { tile: "h-11 w-11", mono: "w-[26px]", text: "text-lg" },
 };
 
-/* Custom geometric "TR" monogram — the brand mark letterforms */
-const MONO_T =
-  "M0.5 4 H16.5 V6.9 H10.15 V20 H6.85 V6.9 H0.5 Z";
-const MONO_R =
-  "M19.5 4 H27.2 C30.9 4 33 6.1 33 9.3 C33 11.8 31.6 13.6 29.4 14.3 L33.4 20 H29.8 L26.1 14.6 H22.7 V20 H19.5 Z M22.7 6.8 V11.9 H26.9 C28.7 11.9 29.8 10.9 29.8 9.3 C29.8 7.8 28.7 6.8 26.9 6.8 Z";
+/* Interlocked outlined "TR" monogram — T crossbar threads through R's stem,
+   strokes drawn as white outer + dark inner to create the hollow outline effect */
+const MONO_STROKES = [
+  "M22 32 H126", // T crossbar
+  "M65 32 V112", // T stem
+  "M120 32 V112", // R stem
+  "M120 36 H136 A22 22 0 0 1 136 80 H120", // R bowl
+  "M138 80 L166 112", // R leg
+];
+const MONO_VIEWBOX = "14 24 160 96";
+const MONO_INNER = "#0D0D12";
 const SPARK =
   "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
 
@@ -157,9 +163,10 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                   repeatType: "mirror",
                 }}
               />
-              {/* Custom TR monogram */}
+              {/* Interlocked outlined TR monogram */}
               <svg
-                viewBox="0 0 36 24"
+                viewBox={MONO_VIEWBOX}
+                fill="none"
                 className={`relative z-10 ${s.mono}`}
                 style={{
                   filter: "drop-shadow(0 0 6px rgba(167,139,250,0.7))",
@@ -169,22 +176,28 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                 <defs>
                   <linearGradient
                     id={monoGradId}
-                    x1="0"
-                    y1="0"
-                    x2="36"
-                    y2="24"
+                    x1="14"
+                    y1="24"
+                    x2="174"
+                    y2="120"
                     gradientUnits="userSpaceOnUse"
                   >
                     <stop offset="0%" stopColor="#FFFFFF" />
                     <stop offset="100%" stopColor="#CDBBFF" />
                   </linearGradient>
                 </defs>
-                <path d={MONO_T} fill={`url(#${monoGradId})`} />
-                <path
-                  d={MONO_R}
-                  fill={`url(#${monoGradId})`}
-                  fillRule="evenodd"
-                />
+                <g strokeLinecap="round" strokeLinejoin="round">
+                  <g stroke={`url(#${monoGradId})`} strokeWidth={16}>
+                    {MONO_STROKES.map((d) => (
+                      <path key={d} d={d} />
+                    ))}
+                  </g>
+                  <g stroke={MONO_INNER} strokeWidth={7}>
+                    {MONO_STROKES.map((d) => (
+                      <path key={d} d={d} />
+                    ))}
+                  </g>
+                </g>
               </svg>
             </div>
           </motion.div>
