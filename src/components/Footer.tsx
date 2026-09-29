@@ -25,7 +25,7 @@ function LiquidFooterLink({ href, children }: { href: string; children: React.Re
   return (
     <a
       href={href}
-      className="group inline-flex items-center text-sm text-white/35 transition-colors hover:text-white"
+      className="group inline-flex items-center text-sm text-white/55 transition-colors hover:text-white"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -82,16 +82,23 @@ export default function Footer() {
             <div>
               <Logo size="lg" className="mb-4" />
               <div
-                className="mb-3 h-px w-16"
+                className="mb-4 h-px w-20"
                 style={{ background: "linear-gradient(90deg, #A78BFA, #60A5FA, transparent)" }}
               />
-              <p className="text-sm leading-relaxed text-white/35">{siteConfig.description}</p>
+              <p className="mb-5 text-sm leading-relaxed text-white/60">{siteConfig.description}</p>
+              <p className="inline-flex items-center gap-2 rounded-full border border-[#A78BFA]/25 bg-[#A78BFA]/[0.08] px-3.5 py-1.5 text-sm font-medium text-[#CDBBFF]">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A78BFA] opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#A78BFA]" />
+                </span>
+                {siteConfig.email}
+              </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal variant="fadeUp" delay={0.15}>
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/20">Navigation</p>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/45">Navigation</p>
               <ul className="space-y-2.5">
                 {footerNav.map((l) => (
                   <li key={l.href}>
@@ -107,7 +114,7 @@ export default function Footer() {
 
           <ScrollReveal variant="fadeUp" delay={0.2}>
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/20">Services</p>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/45">Services</p>
               <ul className="space-y-2.5">
                 {services.slice(0, 6).map((s) => (
                   <li key={s.id}>
@@ -120,26 +127,25 @@ export default function Footer() {
 
           <ScrollReveal variant="fadeUp" delay={0.25}>
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/20">Connect</p>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/45">Connect</p>
               <ul className="space-y-2.5">
                 {socialLinks.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1 text-sm text-white/35 transition-colors hover:text-white">
+                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1 text-sm text-white/55 transition-colors hover:text-white">
                       {l.label}
                       <span className="translate-x-0 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">↗</span>
                     </a>
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 text-sm text-white/30">{siteConfig.email}</p>
             </div>
           </ScrollReveal>
         </div>
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
-          <p className="text-xs text-white/20">&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <p className="text-xs text-white/20">Designed &amp; built with code, AI &amp; creativity.</p>
+          <p className="text-xs text-white/40">&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+          <p className="text-xs text-white/40">Designed &amp; built with code, AI &amp; creativity.</p>
         </div>
       </div>
     </footer>
