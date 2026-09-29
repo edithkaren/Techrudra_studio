@@ -224,11 +224,14 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                         animate={{ pathLength: 1, opacity: 1 }}
                         transition={{
                           pathLength: {
-                            duration: 0.9,
-                            delay: 0.15 + i * 0.12,
-                            ease: [0.65, 0, 0.35, 1],
+                            duration: 1.8,
+                            delay: 0.35 + i * 0.3,
+                            ease: [0.22, 1, 0.36, 1],
                           },
-                          opacity: { duration: 0.2, delay: 0.15 + i * 0.12 },
+                          opacity: {
+                            duration: 0.6,
+                            delay: 0.35 + i * 0.3,
+                          },
                         }}
                       />
                     ))}
