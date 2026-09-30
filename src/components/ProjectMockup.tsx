@@ -20,14 +20,13 @@ const projectVisuals: Record<
     elements: "dashboard" | "chatbot" | "brand" | "automation" | "video" | "ecommerce" | "search" | "social";
   }
 > = {
-  "meridian-saas": { device: "laptop", title: "Meridian", accent: "#6C3AED", elements: "dashboard" },
-  "novalith-ai-agent": { device: "browser", title: "Novalith", accent: "#3B82F6", elements: "chatbot" },
-  "velvet-studio-branding": { device: "phone", title: "Velvet", accent: "#FB923C", elements: "brand" },
-  "pulse-automation": { device: "browser", title: "Pulse", accent: "#14B8A6", elements: "automation" },
-  "kinetic-product-film": { device: "browser", title: "Kinetic", accent: "#EF4444", elements: "video" },
-  "ostra-ecommerce": { device: "laptop", title: "Ostra", accent: "#8B5CF6", elements: "ecommerce" },
-  "cortex-ai-search": { device: "browser", title: "Cortex", accent: "#3B82F6", elements: "search" },
-  "atelier-social": { device: "phone", title: "Atelier", accent: "#EC4899", elements: "social" },
+  "pg-finder-app": { device: "phone", title: "PG Finder", accent: "#60A5FA", elements: "search" },
+  "shiltr-cafe": { device: "laptop", title: "Shiltr Cafe", accent: "#FB923C", elements: "ecommerce" },
+  "jarvis": { device: "browser", title: "Jarvis", accent: "#3B82F6", elements: "chatbot" },
+  "ultron": { device: "browser", title: "Ultron", accent: "#A78BFA", elements: "chatbot" },
+  "techrudra-studio-website": { device: "laptop", title: "Techrudra Studio", accent: "#6C3AED", elements: "dashboard" },
+  "nexenity-website": { device: "laptop", title: "Nexenity", accent: "#2DD4BF", elements: "dashboard" },
+  "cinematic-website": { device: "browser", title: "Cinematic", accent: "#F87171", elements: "video" },
 };
 
 function DashboardVisual({ accent }: { accent: string }) {

@@ -6,7 +6,7 @@ import {
   type TargetAndTransition,
   type Variants,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe, Github } from "lucide-react";
 import {
   portfolioProjects,
   portfolioCategories,
@@ -229,9 +229,18 @@ function ProjectCard({
           className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#0D0D0D] p-4 sm:p-5"
         >
           <motion.div variants={choreo.mock} className="flex h-full w-full items-center justify-center will-change-transform">
-            <CardTilt maxTilt={3} scale={1.01} className="h-full w-full">
-              <ProjectMockup projectSlug={project.slug} category={project.category} fitHeight />
-            </CardTilt>
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <CardTilt maxTilt={3} scale={1.01} className="h-full w-full">
+                <ProjectMockup projectSlug={project.slug} category={project.category} fitHeight />
+              </CardTilt>
+            )}
           </motion.div>
           <div className="absolute top-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ backgroundColor: accent }} />
           {/* Liquid gradient overlay on hover */}
@@ -255,6 +264,30 @@ function ProjectCard({
             <LiquidProjectTitle accent={accent}>{project.title}</LiquidProjectTitle>
           </motion.h3>
           <motion.p variants={choreo.item} className="mb-4 line-clamp-3 text-sm leading-relaxed text-white/35">{project.description}</motion.p>
+          <motion.div variants={choreo.item} className="mb-4 flex flex-wrap items-center gap-2">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] font-medium text-white/50 transition-colors hover:border-[#A78BFA]/40 hover:text-[#CDBBFF]"
+              >
+                <Globe className="h-3 w-3" /> Live
+              </a>
+            )}
+            {project.repoUrl && (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] font-medium text-white/50 transition-colors hover:border-[#A78BFA]/40 hover:text-[#CDBBFF]"
+              >
+                <Github className="h-3 w-3" /> GitHub
+              </a>
+            )}
+          </motion.div>
           <motion.div variants={choreo.tags} className="mt-auto flex flex-wrap gap-1.5">
             {project.technologies.map((t) => (
               <motion.span key={t} variants={choreo.tag} className="rounded-full bg-white/[0.05] px-2.5 py-0.5 text-[11px] font-medium text-white/30">{t}</motion.span>

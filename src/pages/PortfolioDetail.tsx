@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Globe, Github } from "lucide-react";
 import { portfolioProjects } from "@/data/portfolio";
 import ProjectMockup from "@/components/ProjectMockup";
 import Navbar from "@/components/Navbar";
@@ -136,6 +136,30 @@ export default function PortfolioDetail() {
                 </div>
               </div>
 
+              {(project.liveUrl || project.repoUrl) && (
+                <div className="flex gap-3">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-300 hover:bg-white/90"
+                    >
+                      <Globe className="h-4 w-4" /> View Live
+                    </a>
+                  )}
+                  {project.repoUrl && (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/70 transition-all duration-300 hover:border-[#A78BFA]/40 hover:text-white"
+                    >
+                      <Github className="h-4 w-4" /> GitHub Repo
+                    </a>
+                  )}
+                </div>
+              )}
               <div className="rounded-2xl border border-white/[0.06] bg-[#111111] p-6">
                 <h3 className="mb-4 text-sm font-semibold text-white">Technologies</h3>
                 <div className="flex flex-wrap gap-1.5">
