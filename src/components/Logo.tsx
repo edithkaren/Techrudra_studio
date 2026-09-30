@@ -26,7 +26,7 @@ const MONO_STROKES = [
   "M138 80 L166 112", // R leg
 ];
 const MONO_VIEWBOX = "14 24 160 96";
-const MONO_INNER = "#2A2418";
+const MONO_INNER = "#3A3422";
 const SPARK =
   "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
 
@@ -137,7 +137,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
               className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[10px]"
               style={{
                 background:
-                  "linear-gradient(140deg, #F7F3EA 0%, #EDE6D6 55%, #E4DAC4 100%)",
+                  "linear-gradient(140deg, #FFFDF6 0%, #FAF3E3 55%, #F3E8CF 100%)",
               }}
             >
               {/* Inner top-light glass sheen */}
