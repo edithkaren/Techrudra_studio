@@ -26,7 +26,7 @@ const MONO_STROKES = [
   "M138 80 L166 112", // R leg
 ];
 const MONO_VIEWBOX = "14 24 160 96";
-const MONO_INNER = "#0D0D12";
+const MONO_INNER = "#2A2418";
 const SPARK =
   "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
 
@@ -72,7 +72,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             className="absolute -inset-1.5 rounded-2xl"
             style={{
               background:
-                "radial-gradient(circle at 30% 25%, rgba(167,139,250,0.65), rgba(96,165,250,0.28) 45%, transparent 72%)",
+                "radial-gradient(circle at 30% 25%, rgba(167,139,250,0.55), rgba(212,184,150,0.35) 45%, transparent 72%)",
               filter: "blur(9px)",
             }}
             animate={{
@@ -120,16 +120,16 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             />
             <defs>
               <linearGradient id={orbitGradId} x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#A78BFA" />
-                <stop offset="55%" stopColor="#60A5FA" />
-                <stop offset="100%" stopColor="#F472B6" />
+                <stop offset="0%" stopColor="#8B5CF6" />
+                <stop offset="55%" stopColor="#B49BE8" />
+                <stop offset="100%" stopColor="#D4B896" />
               </linearGradient>
             </defs>
           </motion.svg>
 
           {/* Gradient-bordered dark glass tile */}
           <motion.div
-            className="absolute inset-0 rounded-[11px] bg-gradient-to-br from-[#A78BFA] via-[#60A5FA] to-[#F472B6] p-px shadow-lg shadow-[#A78BFA]/30"
+            className="absolute inset-0 rounded-[11px] bg-gradient-to-br from-[#8B5CF6] via-[#B49BE8] to-[#D4B896] p-px shadow-lg shadow-[#B49BE8]/30"
             animate={{ scale: hovered ? 1.06 : 1 }}
             transition={{ type: "spring", stiffness: 320, damping: 18 }}
           >
@@ -137,7 +137,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
               className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[10px]"
               style={{
                 background:
-                  "linear-gradient(140deg, #1A1A24 0%, #0D0D12 62%)",
+                  "linear-gradient(140deg, #F7F3EA 0%, #EDE6D6 55%, #E4DAC4 100%)",
               }}
             >
               {/* Inner top-light glass sheen */}
@@ -145,7 +145,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                 className="absolute inset-0"
                 style={{
                   background:
-                    "radial-gradient(circle at 25% 18%, rgba(255,255,255,0.16) 0%, transparent 55%)",
+                    "radial-gradient(circle at 25% 18%, rgba(255,255,255,0.85) 0%, transparent 55%)",
                 }}
               />
               {/* Shimmer sweep */}
@@ -172,8 +172,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                 className={`relative z-10 ${s.mono}`}
                 style={{
                   filter: hovered
-                    ? "drop-shadow(0 0 8px rgba(167,139,250,0.95)) drop-shadow(0 0 18px rgba(96,165,250,0.45))"
-                    : "drop-shadow(0 0 6px rgba(167,139,250,0.7))",
+                    ? "drop-shadow(0 0 8px rgba(167,139,250,0.85)) drop-shadow(0 0 18px rgba(212,184,150,0.5))"
+                    : "drop-shadow(0 0 6px rgba(139,92,246,0.55))",
                   transition: "filter 0.45s ease",
                 }}
                 aria-hidden="true"
@@ -187,8 +187,9 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                     y2="120"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop offset="0%" stopColor="#FFFFFF" />
-                    <stop offset="100%" stopColor="#CDBBFF" />
+                    <stop offset="0%" stopColor="#8B5CF6" />
+                    <stop offset="55%" stopColor="#B49BE8" />
+                    <stop offset="100%" stopColor="#B08D57" />
                   </linearGradient>
                   <linearGradient
                     id={monoGlowId}
@@ -199,8 +200,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                     gradientUnits="userSpaceOnUse"
                   >
                     <stop offset="0%" stopColor="#A78BFA" />
-                    <stop offset="55%" stopColor="#60A5FA" />
-                    <stop offset="100%" stopColor="#F472B6" />
+                    <stop offset="55%" stopColor="#D4B896" />
+                    <stop offset="100%" stopColor="#E8C87E" />
                   </linearGradient>
                 </defs>
                 <g strokeLinecap="round" strokeLinejoin="round">
@@ -255,8 +256,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
           >
             <path
               d={SPARK}
-              fill="#F472B6"
-              style={{ filter: "drop-shadow(0 0 3px rgba(244,114,182,0.95))" }}
+              fill="#E8C87E"
+              style={{ filter: "drop-shadow(0 0 3px rgba(232,200,126,0.95))" }}
             />
           </motion.svg>
         </div>
@@ -272,7 +273,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(90deg, #A78BFA, #60A5FA, #F472B6, #A78BFA)",
+                  "linear-gradient(90deg, #8B5CF6, #B49BE8, #D4B896, #8B5CF6)",
                 backgroundSize: "220% 100%",
               }}
               animate={{
@@ -297,7 +298,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             className="absolute inset-0 z-20 bg-clip-text text-transparent"
             style={{
               backgroundImage:
-                "linear-gradient(90deg, #A78BFA, #60A5FA, #F472B6, #A78BFA)",
+                "linear-gradient(90deg, #8B5CF6, #B49BE8, #D4B896, #8B5CF6)",
               backgroundSize: "220% 100%",
             }}
             initial={{ opacity: 0 }}
@@ -323,7 +324,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             aria-hidden="true"
             className="absolute -bottom-1 left-0 h-[2px] w-full origin-left rounded-full"
             style={{
-              background: "linear-gradient(90deg, #A78BFA, #60A5FA, #F472B6)",
+              background: "linear-gradient(90deg, #8B5CF6, #B49BE8, #D4B896)",
             }}
             initial={false}
             animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 0.9 : 0 }}
