@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import ShiltrVisual from "@/components/ShiltrVisual";
 import NexenityVisual from "@/components/NexenityVisual";
+import CinematicVisual from "@/components/CinematicVisual";
 
 type DeviceType = "browser" | "phone" | "laptop";
 
@@ -443,6 +444,10 @@ export default function ProjectMockup({
     ) : projectSlug === "nexenity-website" ? (
       <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
         <NexenityVisual />
+      </motion.div>
+    ) : projectSlug === "cinematic-website" ? (
+      <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
+        <CinematicVisual />
       </motion.div>
     ) : (
       <motion.div
