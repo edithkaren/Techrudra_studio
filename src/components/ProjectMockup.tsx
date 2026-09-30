@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import ShiltrVisual from "@/components/ShiltrVisual";
+import NexenityVisual from "@/components/NexenityVisual";
 
 type DeviceType = "browser" | "phone" | "laptop";
 
@@ -438,6 +439,10 @@ export default function ProjectMockup({
     projectSlug === "shiltr-cafe" ? (
       <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
         <ShiltrVisual />
+      </motion.div>
+    ) : projectSlug === "nexenity-website" ? (
+      <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
+        <NexenityVisual />
       </motion.div>
     ) : (
       <motion.div
