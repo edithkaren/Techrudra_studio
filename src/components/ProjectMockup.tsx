@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import ShiltrVisual from "@/components/ShiltrVisual";
 
 type DeviceType = "browser" | "phone" | "laptop";
 
@@ -433,15 +434,20 @@ export default function ProjectMockup({
   const effectiveDevice = device || config.device;
   const Visual = visuals[config.elements];
 
-  const mockup = (
-    <motion.div
-      className={className}
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-    >
-      <Visual accent={config.accent} />
-    </motion.div>
-  );
+  const mockup =
+    projectSlug === "shiltr-cafe" ? (
+      <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
+        <ShiltrVisual />
+      </motion.div>
+    ) : (
+      <motion.div
+        className={className}
+        whileHover={{ y: -4, scale: 1.01 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        <Visual accent={config.accent} />
+      </motion.div>
+    );
 
   if (effectiveDevice === "phone") {
     return <PhoneFrame fitHeight={fitHeight}>{mockup}</PhoneFrame>;
