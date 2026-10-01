@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { siteConfig } from "@/data/site";
+import DepthText from "@/components/DepthText";
 
 type LogoSize = "sm" | "md" | "lg";
 
@@ -16,16 +17,14 @@ const SIZE_STYLES: Record<LogoSize, { tile: string; mono: string; text: string }
   lg: { tile: "h-11 w-11", mono: "w-[26px]", text: "text-lg" },
 };
 
-/* Interlocked outlined "TR" monogram — T crossbar threads through R's stem,
-   strokes drawn as white outer + dark inner to create the hollow outline effect */
+/* Interlocked outlined "TS" monogram — T crossbar meets a flowing S,
+   strokes drawn as gradient outer + light inner for the engraved outline look */
 const MONO_STROKES = [
-  "M22 32 H126", // T crossbar
-  "M65 32 V112", // T stem
-  "M120 32 V112", // R stem
-  "M120 36 H136 A22 22 0 0 1 136 80 H120", // R bowl
-  "M138 80 L166 112", // R leg
+  "M20 32 H104", // T crossbar
+  "M62 32 V112", // T stem
+  "M148 40 H126 A13 13 0 0 0 126 66 H138 A13 13 0 0 1 138 92 H116", // S curve
 ];
-const MONO_VIEWBOX = "10 20 168 104";
+const MONO_VIEWBOX = "8 22 158 102";
 const MONO_INNER = "#3A3422";
 const SPARK =
   "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
@@ -39,10 +38,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
   const monoGlowId = `logo-glow-${uid}`;
   const orbitGradId = `logo-orbit-${uid}`;
 
-  /* Brand lockup: "Techrudra" + gradient ".Studio" */
-  const dotIndex = siteConfig.name.indexOf(".");
-  const brandName = dotIndex > 0 ? siteConfig.name.slice(0, dotIndex) : siteConfig.name;
-  const brandTail = dotIndex > 0 ? siteConfig.name.slice(dotIndex) : "";
+  /* Brand lockup: "TechRudra Studio" rendered with 3D depth text */
+  const depthFontSize = size === "sm" ? "11px" : size === "lg" ? "19px" : "15px";
 
   const handleClick = (e: React.MouseEvent) => {
     // Already home: smooth-scroll to top instead of a no-op navigation.
@@ -181,10 +178,10 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                 <defs>
                   <linearGradient
                     id={monoGradId}
-                    x1="14"
-                    y1="24"
-                    x2="174"
-                    y2="120"
+                    x1="8"
+                    y1="22"
+                    x2="166"
+                    y2="124"
                     gradientUnits="userSpaceOnUse"
                   >
                     <stop offset="0%" stopColor="#7C3AED" />
@@ -193,10 +190,10 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                   </linearGradient>
                   <linearGradient
                     id={monoGlowId}
-                    x1="14"
-                    y1="24"
-                    x2="174"
-                    y2="120"
+                    x1="8"
+                    y1="22"
+                    x2="166"
+                    y2="124"
                     gradientUnits="userSpaceOnUse"
                   >
                     <stop offset="0%" stopColor="#A78BFA" />
@@ -273,75 +270,23 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
           </motion.svg>
         </div>
 
-        {/* ── Wordmark lockup ─────────────────────────────────────── */}
-        <span
-          className={`relative inline-flex flex-col font-black leading-none tracking-tight ${s.text}`}
-        >
-          <span className="relative z-10 inline-flex items-baseline">
-            <span className="text-white">{brandName}</span>
-            {/* Always-on animated gradient suffix = the brand highlight */}
-            <motion.span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, #8B5CF6, #B49BE8, #D4B896, #8B5CF6)",
-                backgroundSize: "220% 100%",
-              }}
-              animate={{
-                backgroundPosition: hovered
-                  ? ["0% 50%", "100% 50%"]
-                  : "0% 50%",
-              }}
-              transition={{
-                backgroundPosition: {
-                  duration: 2.4,
-                  repeat: hovered ? Infinity : 0,
-                  ease: "linear",
-                },
-              }}
-            >
-              {brandTail}
-            </motion.span>
-          </span>
-          {/* Gradient sweep overlay across the full wordmark on hover */}
-          <motion.span
-            aria-hidden="true"
-            className="absolute inset-0 z-20 bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, #8B5CF6, #B49BE8, #D4B896, #8B5CF6)",
-              backgroundSize: "220% 100%",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: hovered ? 1 : 0,
-              backgroundPosition: hovered
-                ? ["0% 50%", "100% 50%"]
-                : "0% 50%",
-            }}
-            transition={{
-              opacity: { duration: 0.3 },
-              backgroundPosition: {
-                duration: 2.2,
-                repeat: Infinity,
-                ease: "linear",
-              },
-            }}
-          >
-            {siteConfig.name}
-          </motion.span>
-          {/* Animated gradient underline on hover */}
-          <motion.span
-            aria-hidden="true"
-            className="absolute -bottom-1 left-0 h-[2px] w-full origin-left rounded-full"
-            style={{
-              background: "linear-gradient(90deg, #8B5CF6, #B49BE8, #D4B896)",
-            }}
-            initial={false}
-            animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 0.9 : 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </span>
+        {/* ── Wordmark lockup — 3D DepthText ─────────────────── */}
+        <DepthText
+          text={siteConfig.name}
+          layers={10}
+          depth={1.1}
+          faceColor="#FFFFFF"
+          depthColor={hovered ? "#8B5CF6" : "#B49BE8"}
+          tilt={hovered ? 6 : 3.5}
+          pointerTracking
+          smoothing={0.14}
+          perspective={700}
+          autoOrbit
+          orbitSpeed={0.25}
+          fontSize={depthFontSize}
+          fontWeight={900}
+          shadow={false}
+        />
       </Link>
     </motion.div>
   );

@@ -1,38 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <defs>
-    <radialGradient id="trBg" cx="0.32" cy="0.24" r="1">
+    <radialGradient id="tsBg" cx="0.32" cy="0.24" r="1">
       <stop offset="0%" stop-color="#FFFDF6"/>
       <stop offset="48%" stop-color="#FAF3E3"/>
       <stop offset="100%" stop-color="#F0E2C6"/>
     </radialGradient>
-    <linearGradient id="trStroke" x1="22" y1="24" x2="174" y2="120" gradientUnits="userSpaceOnUse">
+    <linearGradient id="tsStroke" x1="8" y1="22" x2="166" y2="124" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#7C3AED"/>
       <stop offset="55%" stop-color="#B49BE8"/>
       <stop offset="100%" stop-color="#B08D57"/>
     </linearGradient>
   </defs>
-  <circle cx="100" cy="100" r="100" fill="url(#trBg)"/>
-  <g stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(13,45)">
+  <circle cx="100" cy="100" r="100" fill="url(#tsBg)"/>
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(21,49) scale(0.79)">
     <g stroke="#D8C49A" stroke-width="16" opacity="0.55" transform="translate(3.5,3.5)">
-      <path d="M22 32 H126"/>
-      <path d="M65 32 V112"/>
-      <path d="M120 32 V112"/>
-      <path d="M120 36 H136 A22 22 0 0 1 136 80 H120"/>
-      <path d="M138 80 L166 112"/>
+      <path d="M20 32 H104"/>
+      <path d="M62 32 V112"/>
+      <path d="M148 40 H126 A13 13 0 0 0 126 66 H138 A13 13 0 0 1 138 92 H116"/>
     </g>
-    <g stroke="url(#trStroke)" stroke-width="16">
-      <path d="M22 32 H126"/>
-      <path d="M65 32 V112"/>
-      <path d="M120 32 V112"/>
-      <path d="M120 36 H136 A22 22 0 0 1 136 80 H120"/>
-      <path d="M138 80 L166 112"/>
+    <g stroke="url(#tsStroke)" stroke-width="16">
+      <path d="M20 32 H104"/>
+      <path d="M62 32 V112"/>
+      <path d="M148 40 H126 A13 13 0 0 0 126 66 H138 A13 13 0 0 1 138 92 H116"/>
     </g>
     <g stroke="#F0E2C6" stroke-width="7">
-      <path d="M22 32 H126"/>
-      <path d="M65 32 V112"/>
-      <path d="M120 32 V112"/>
-      <path d="M120 36 H136 A22 22 0 0 1 136 80 H120"/>
-      <path d="M138 80 L166 112"/>
+      <path d="M20 32 H104"/>
+      <path d="M62 32 V112"/>
+      <path d="M148 40 H126 A13 13 0 0 0 126 66 H138 A13 13 0 0 1 138 92 H116"/>
     </g>
   </g>
 </svg>
