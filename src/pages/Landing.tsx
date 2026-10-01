@@ -5,6 +5,7 @@ import Marquee from "@/components/Marquee";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
+import Vision from "@/components/Vision";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/motion/ScrollProgress";
@@ -27,6 +28,7 @@ export default function Landing() {
         <Services />
         <FluidSectionDivider h={64} accent="#A78BFA" bg="#0A0A0A" layers={2} flip />
         <Portfolio />
+        <Vision />
         <FluidSectionDivider h={56} accent="#A78BFA" bg="#0A0A0A" layers={1} />
         <Contact />
       </main>
