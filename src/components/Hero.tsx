@@ -6,6 +6,7 @@ import ScrollReveal from "@/components/motion/ScrollReveal";
 import MagneticButton from "@/components/motion/MagneticButton";
 import AstraBackground from "@/components/AstraBackground";
 import NebulaBackground from "@/components/NebulaBackground";
+import VariableProximity from "@/components/VariableProximity";
 import StrokeText from "@/components/StrokeText";
 
 /* ── Mouse-following gradient blob ─────────────────────────────── */
@@ -478,6 +479,7 @@ function TypingCursor() {
 /* ── Main Hero ─────────────────────────────────────────────────── */
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -507,6 +509,7 @@ export default function Hero() {
 
       {/* Content */}
       <motion.div
+        ref={heroContentRef}
         className="relative z-10 mx-auto max-w-5xl text-center"
         style={{ y: contentY, opacity: contentOpacity }}
       >
@@ -516,21 +519,22 @@ export default function Hero() {
           </p>
         </ScrollReveal>
 
-        {/* Main headline */}
+        {/* Main headline — VariableProximity on the whole line */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[80px]"
+          className="text-4xl leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[80px]"
         >
-          We build{" "}
-          <span
-            className="relative inline-block"
-            style={{ filter: "url(#fluid-distort)" }}
-          >
-            <span className="text-[#A78BFA]">creative</span>
-          </span>
-          <br />
+          <VariableProximity
+            label="We build creative"
+            containerRef={heroContentRef}
+            fromFontVariationSettings="'wght' 700, 'opsz' 9"
+            toFontVariationSettings="'wght' 1000, 'opsz' 40"
+            radius={140}
+            falloff="gaussian"
+            className="font-bold"
+          />
           <br />
           <span className="block">
             <StrokeText
