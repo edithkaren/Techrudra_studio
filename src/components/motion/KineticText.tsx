@@ -56,7 +56,7 @@ export default function KineticText({
         {items.map((item, i) => (
           <motion.span
             key={i}
-            className={`inline-block ${revealType === "line" ? "" : "whitespace-nowrap"}`}
+            className={`inline-block ${revealType === "line" ? "" : "whitespace-nowrap mr-[0.28em] last:mr-0"}`}
             variants={{
               hidden: { clipPath: "inset(100% 0 0 0)" },
               visible: {
@@ -67,7 +67,7 @@ export default function KineticText({
           >
             {item === "\n"
               ? "\u00A0"
-              : item + (i < items.length - 1 && revealType === "word" ? " " : "")}
+              : item}
           </motion.span>
         ))}
       </motion.div>

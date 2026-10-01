@@ -25,7 +25,7 @@ const MONO_STROKES = [
   "M120 36 H136 A22 22 0 0 1 136 80 H120", // R bowl
   "M138 80 L166 112", // R leg
 ];
-const MONO_VIEWBOX = "14 24 160 96";
+const MONO_VIEWBOX = "10 20 168 104";
 const MONO_INNER = "#3A3422";
 const SPARK =
   "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
@@ -127,17 +127,17 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             </defs>
           </motion.svg>
 
-          {/* Gradient-bordered dark glass tile */}
+          {/* Circular badge tile with gradient ring */}
           <motion.div
-            className="absolute inset-0 rounded-[11px] bg-gradient-to-br from-[#8B5CF6] via-[#B49BE8] to-[#D4B896] p-px shadow-lg shadow-[#B49BE8]/30"
+            className="absolute inset-0 rounded-full bg-gradient-to-br from-[#8B5CF6] via-[#B49BE8] to-[#D4B896] p-[2px] shadow-lg shadow-[#B49BE8]/30"
             animate={{ scale: hovered ? 1.06 : 1 }}
             transition={{ type: "spring", stiffness: 320, damping: 18 }}
           >
             <div
-              className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[10px]"
+              className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full"
               style={{
                 background:
-                  "linear-gradient(140deg, #FFFDF6 0%, #FAF3E3 55%, #F3E8CF 100%)",
+                  "radial-gradient(circle at 32% 24%, #FFFDF6 0%, #FAF3E3 48%, #F0E2C6 100%)",
               }}
             >
               {/* Inner top-light glass sheen */}
@@ -187,7 +187,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                     y2="120"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop offset="0%" stopColor="#8B5CF6" />
+                    <stop offset="0%" stopColor="#7C3AED" />
                     <stop offset="55%" stopColor="#B49BE8" />
                     <stop offset="100%" stopColor="#B08D57" />
                   </linearGradient>
@@ -205,6 +205,17 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                   </linearGradient>
                 </defs>
                 <g strokeLinecap="round" strokeLinejoin="round">
+                  {/* Soft echo stroke — engraved depth behind the mark */}
+                  <g
+                    stroke="#D8C49A"
+                    strokeWidth={16}
+                    opacity={0.55}
+                    transform="translate(3.5,3.5)"
+                  >
+                    {MONO_STROKES.map((d) => (
+                      <path key={d} d={d} />
+                    ))}
+                  </g>
                   {/* Hollow core — glows violet on hover */}
                   <g
                     stroke={hovered ? `url(#${monoGlowId})` : MONO_INNER}
