@@ -61,6 +61,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2025",
     featured: true,
+    repoUrl: "https://github.com/edithkaren/SHILTR-Cafe",
   },
   {
     id: "3",
@@ -112,6 +113,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion", "Convex"],
     year: "2026",
     featured: true,
+    repoUrl: "https://github.com/edithkaren/Techrudra_studio",
   },
   {
     id: "6",
@@ -129,6 +131,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2025",
     featured: false,
+    repoUrl: "https://github.com/edithkaren/nexenity-tech-",
   },
   {
     id: "7",
