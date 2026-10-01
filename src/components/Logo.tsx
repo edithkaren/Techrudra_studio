@@ -11,9 +11,9 @@ interface LogoProps {
 }
 
 const SIZE_STYLES: Record<LogoSize, { tile: string; mono: string }> = {
-  sm: { tile: "h-10 w-10", mono: "w-[60%]" },
-  md: { tile: "h-12 w-12", mono: "w-[62%]" },
-  lg: { tile: "h-16 w-16", mono: "w-[64%]" },
+  sm: { tile: "h-10 w-10", mono: "w-full" },
+  md: { tile: "h-12 w-12", mono: "w-full" },
+  lg: { tile: "h-16 w-16", mono: "w-full" },
 };
 
 /* Solid metallic "TR" monogram — the T stem threads behind the R,
@@ -31,7 +31,6 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
   const uid = rawId.replace(/:/g, "");
   const metalId = `logo-metal-${uid}`;
   const metalSheenId = `logo-sheen-${uid}`;
-  const tileId = `logo-tile-${uid}`;
 
   const handleClick = (e: React.MouseEvent) => {
     // Already home: smooth-scroll to top instead of a no-op navigation.
@@ -71,41 +70,12 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             }}
           />
 
-          {/* Dark tile — same charcoal family as the site background */}
-          <motion.div
-            className="absolute inset-0 overflow-hidden rounded-2xl border border-white/[0.08]"
-            animate={{ scale: hovered ? 1.05 : 1 }}
-            transition={{ type: "spring", stiffness: 320, damping: 18 }}
-            style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.55)" }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(150deg, #17171A 0%, #0F0F12 45%, #0A0A0A 100%)`,
-              }}
-            />
-            {/* Brushed-metal tile texture */}
-            <div
-              className="absolute inset-0 opacity-[0.14]"
-              style={{
-                background:
-                  "repeating-linear-gradient(115deg, rgba(255,255,255,0.16) 0px, rgba(255,255,255,0.16) 1px, transparent 1px, transparent 3px)",
-              }}
-            />
-            {/* Top-left light falloff */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 26% 18%, rgba(255,255,255,0.14) 0%, transparent 55%)",
-              }}
-            />
-          </motion.div>
-
           {/* Metallic TR monogram */}
-          <svg
+          <motion.svg
             viewBox={MONO_VIEWBOX}
             className={`absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 ${s.mono}`}
+            animate={{ scale: hovered ? 1.06 : 1 }}
+            transition={{ type: "spring", stiffness: 320, damping: 18 }}
             style={{
               filter: hovered
                 ? "drop-shadow(0 3px 6px rgba(0,0,0,0.65)) drop-shadow(0 0 10px rgba(167,139,250,0.5))"
@@ -127,26 +97,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                 <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.05" />
                 <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.35" />
               </linearGradient>
-              <linearGradient id={tileId} x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#B49BE8" stopOpacity="0.55" />
-                <stop offset="55%" stopColor="#8B5CF6" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#D4B896" stopOpacity="0.5" />
-              </linearGradient>
             </defs>
-
-            {/* Soft violet-to-bronze rim light on hover */}
-            <rect
-              x="0.6"
-              y="0.6"
-              width="108.8"
-              height="100.8"
-              rx="10"
-              fill="none"
-              stroke={`url(#${tileId})`}
-              strokeWidth="1.2"
-              opacity={hovered ? 1 : 0.35}
-              style={{ transition: "opacity 0.4s ease" }}
-            />
 
             <g fill={`url(#${metalId})`}>
               <path d={MONO_T} />
@@ -157,7 +108,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
               <path d={MONO_T} />
               <path d={MONO_R} fillRule="evenodd" />
             </g>
-          </svg>
+          </motion.svg>
 
           {/* Sparkle accent */}
           <motion.svg
