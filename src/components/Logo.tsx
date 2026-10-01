@@ -161,8 +161,15 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                   repeatType: "mirror",
                 }}
               />
-              {/* Interlocked outlined TR monogram — strokes draw in on load,
-                  hollow interior reveals a violet glow on hover ("emergent" effect) */}
+              {/* Gradient shading overlay across the badge */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(124,58,237,0.16) 0%, rgba(180,155,232,0.10) 42%, rgba(176,141,87,0.16) 100%)",
+                }}
+              />
+              {/* Interlocked outlined TS monogram — strokes draw in on load */}
               <svg
                 viewBox={MONO_VIEWBOX}
                 fill="none"
@@ -270,8 +277,9 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
           </motion.svg>
         </div>
 
-        {/* ── Wordmark lockup — 3D DepthText ─────────────────── */}
+        {/* ── Wordmark lockup — 3D gradient DepthText ─────────── */}
         <DepthText
+          className="depth-text--gradient"
           text={siteConfig.name}
           layers={10}
           depth={1.1}

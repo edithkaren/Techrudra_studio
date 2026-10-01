@@ -5,6 +5,11 @@
       <stop offset="48%" stop-color="#FAF3E3"/>
       <stop offset="100%" stop-color="#F0E2C6"/>
     </radialGradient>
+    <linearGradient id="tsShade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.16"/>
+      <stop offset="42%" stop-color="#B49BE8" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#B08D57" stop-opacity="0.16"/>
+    </linearGradient>
     <linearGradient id="tsStroke" x1="8" y1="22" x2="166" y2="124" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#7C3AED"/>
       <stop offset="55%" stop-color="#B49BE8"/>
@@ -12,6 +17,7 @@
     </linearGradient>
   </defs>
   <circle cx="100" cy="100" r="100" fill="url(#tsBg)"/>
+  <circle cx="100" cy="100" r="100" fill="url(#tsShade)"/>
   <g stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(21,49) scale(0.79)">
     <g stroke="#D8C49A" stroke-width="16" opacity="0.55" transform="translate(3.5,3.5)">
       <path d="M20 32 H104"/>
