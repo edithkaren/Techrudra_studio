@@ -10,7 +10,9 @@ import { ArrowUpRight, Globe, Github } from "lucide-react";
 import {
   portfolioProjects,
   portfolioCategories,
+  upcomingProjects,
   type PortfolioCategory,
+  type PortfolioProject,
 } from "@/data/portfolio";
 import ProjectMockup from "@/components/ProjectMockup";
 import CardTilt from "@/components/motion/CardTilt";
@@ -172,6 +174,61 @@ function FilterPill({
     >
       {label}
     </motion.button>
+  );
+}
+
+/* "Coming soon" placeholder card with animated shimmer */
+function ComingSoonCard({ project, index, choreo }: { project: PortfolioProject; index: number; choreo: Choreo }) {
+  return (
+    <motion.div
+      layout
+      custom={index}
+      variants={choreo.card}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      exit={choreo.exitCard}
+      className="magic-bento-card group relative flex flex-col overflow-hidden rounded-2xl border border-dashed border-white/[0.08] bg-white/[0.015]"
+    >
+      <ParticleCard className="block h-full w-full" glowColor={VIOLET_RGB} particleCount={8}>
+        <div className="relative flex aspect-[4/3] w-full shrink-0 items-center justify-center overflow-hidden bg-[#0D0D0D]">
+          {/* Slow sweep shimmer */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(105deg, transparent 35%, rgba(167,139,250,0.08) 48%, transparent 62%)",
+              backgroundSize: "220% 220%",
+            }}
+            animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+          />
+          <span className="relative z-10 text-3xl opacity-40 grayscale">✦</span>
+          <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#A78BFA] transition-all duration-500 group-hover:w-full" />
+        </div>
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <motion.div variants={choreo.item} className="mb-2 flex items-center gap-2">
+            <span className="text-[11px] font-semibold tracking-wider text-[#A78BFA]/70">UPCOMING</span>
+            <span className="text-[11px] text-white/10">&middot;</span>
+            <span className="text-[11px] text-white/25">{project.year}</span>
+          </motion.div>
+          <motion.h3 variants={choreo.item} className="mb-2 text-base font-semibold text-white/70 sm:text-lg">
+            {project.title}
+          </motion.h3>
+          <motion.p variants={choreo.item} className="text-sm leading-relaxed text-white/25">
+            New project coming soon...
+          </motion.p>
+          <motion.div variants={choreo.tags} className="mt-auto pt-4">
+            <motion.span variants={choreo.tag} className="inline-flex items-center gap-1.5 rounded-full border border-[#A78BFA]/20 bg-[#A78BFA]/[0.06] px-3 py-1 text-[11px] font-medium text-[#CDBBFF]/80">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A78BFA] opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#A78BFA]" />
+              </span>
+              In the works
+            </motion.span>
+          </motion.div>
+        </div>
+      </ParticleCard>
+    </motion.div>
   );
 }
 
@@ -374,6 +431,10 @@ export default function Portfolio() {
             {filtered.map((project, i) => (
               <ProjectCard key={project.id} project={project} index={i} choreo={choreo} />
             ))}
+            {active === "All" &&
+              upcomingProjects.map((project, i) => (
+                <ComingSoonCard key={project.id} project={project} index={filtered.length + i} choreo={choreo} />
+              ))}
           </AnimatePresence>
         </motion.div>
       </div>
