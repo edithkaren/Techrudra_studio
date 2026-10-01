@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
 import AnimatedText from "@/components/motion/AnimatedText";
 import KineticText from "@/components/motion/KineticText";
@@ -7,48 +7,6 @@ import MagneticButton from "@/components/motion/MagneticButton";
 import AstraBackground from "@/components/AstraBackground";
 import NebulaBackground from "@/components/NebulaBackground";
 import StrokeText from "@/components/StrokeText";
-
-const words = [
-  "native",
-  "bold",
-  "premium",
-  "intelligent",
-  "creative",
-  "dynamic",
-  "stunning",
-  "powerful",
-];
-const WORD_INTERVAL = 2800;
-const SCRAMBLE_DURATION = 600;
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-function useScrambleText(target: string, duration: number, active: boolean) {
-  const [display, setDisplay] = useState(target);
-  useEffect(() => {
-    if (!active) {
-      setDisplay(target);
-      return;
-    }
-    const frames = 12;
-    const step = duration / frames;
-    let frame = 0;
-    const iv = setInterval(() => {
-      frame++;
-      const progress = frame / frames;
-      const result = target
-        .split("")
-        .map((char, i) => {
-          if (i / target.length < progress) return char;
-          return CHARS[Math.floor(Math.random() * CHARS.length)];
-        })
-        .join("");
-      setDisplay(result);
-      if (frame >= frames) clearInterval(iv);
-    }, step);
-    return () => clearInterval(iv);
-  }, [target, duration, active]);
-  return display;
-}
 
 /* ── Mouse-following gradient blob ─────────────────────────────── */
 function MouseGradient() {
@@ -506,7 +464,7 @@ function NoiseOverlay() {
   );
 }
 
-/* ── Typing cursor ─────────────────────────────────────────────── */
+/* ── Blinking cursor (unused placeholder kept for reference) ──── */
 function TypingCursor() {
   return (
     <motion.span
@@ -519,8 +477,6 @@ function TypingCursor() {
 
 /* ── Main Hero ─────────────────────────────────────────────────── */
 export default function Hero() {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isScrambling, setIsScrambling] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -529,23 +485,6 @@ export default function Hero() {
   });
   const contentY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
-  useEffect(() => {
-    const iv = setInterval(() => {
-      setIsScrambling(true);
-      setTimeout(() => {
-        setWordIndex((prev) => (prev + 1) % words.length);
-        setTimeout(() => setIsScrambling(false), SCRAMBLE_DURATION);
-      }, 100);
-    }, WORD_INTERVAL);
-    return () => clearInterval(iv);
-  }, []);
-
-  const scrambledWord = useScrambleText(
-    words[wordIndex],
-    SCRAMBLE_DURATION,
-    isScrambling,
-  );
 
   return (
     <section
@@ -586,14 +525,10 @@ export default function Hero() {
         >
           We build{" "}
           <span
-            className="relative inline-block cursor-pointer"
-            style={{
-              filter: isScrambling ? "url(#fluid-distort-hover)" : "url(#fluid-distort)",
-              transition: "filter 0.3s ease",
-            }}
+            className="relative inline-block"
+            style={{ filter: "url(#fluid-distort)" }}
           >
-            <span className="text-[#A78BFA]">{scrambledWord}</span>
-            <TypingCursor />
+            <span className="text-[#A78BFA]">creative</span>
           </span>
           <br />
           <br />
