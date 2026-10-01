@@ -7,6 +7,7 @@ import MagneticButton from "@/components/motion/MagneticButton";
 import AstraBackground from "@/components/AstraBackground";
 import NebulaBackground from "@/components/NebulaBackground";
 import VariableProximity from "@/components/VariableProximity";
+import WebThreads from "@/components/WebThreads";
 import StrokeText from "@/components/StrokeText";
 
 /* ── Mouse-following gradient blob ─────────────────────────────── */
@@ -499,6 +500,34 @@ export default function Hero() {
 
       {/* Cinematic nebula clouds — slow drift/morph, ambient only */}
       <NebulaBackground />
+
+      {/* Woven light threads — interactive WebGL scene behind everything */}
+      <div className="pointer-events-none absolute inset-0 z-[1] opacity-70">
+        <div className="pointer-events-auto h-full w-full">
+          <WebThreads
+            color1="#7C3AED"
+            color2="#D4B896"
+            color3="#FFFFFF"
+            speed={0.18}
+            threadCount={5}
+            frequency={4.2}
+            spread={0.2}
+            position={0.55}
+            fanMode="center"
+            glow={0.024}
+            falloff={0.65}
+            thickness={1.15}
+            brightness={0.55}
+            opacity={0.85}
+            mirror
+            shimmer
+            grain
+            grainIntensity={0.04}
+            mouseInteraction
+            mouseStrength={0.25}
+          />
+        </div>
+      </div>
 
       <EnergyRings />
       <FloatingGeometry />
