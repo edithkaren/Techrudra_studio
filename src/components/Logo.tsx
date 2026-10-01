@@ -10,23 +10,23 @@ interface LogoProps {
   size?: LogoSize;
 }
 
-const SIZE_STYLES: Record<LogoSize, { tile: string; mono: string }> = {
-  sm: { tile: "h-10 w-10", mono: "w-full" },
-  md: { tile: "h-12 w-12", mono: "w-full" },
-  lg: { tile: "h-16 w-16", mono: "w-full" },
+const SIZE_STYLES: Record<LogoSize, string> = {
+  sm: "h-11 w-auto",
+  md: "h-14 w-auto",
+  lg: "h-20 w-auto",
 };
 
 /* Solid metallic "TR" monogram — the T stem threads behind the R,
-   exactly like the brand tile: brushed-silver letterforms on charcoal. */
+   exactly like the brand tile: brushed-silver letterforms. */
 const MONO_T = "M6 6 H70 V22 H6 Z M28 22 H44 V96 H28 Z";
 const MONO_R =
   "M56 14 H84 A22 22 0 0 1 84 58 H56 Z M70 26 H82 A10 10 0 0 1 82 46 H70 Z M78 52 L104 96 H85 L67 62 Z";
-const MONO_VIEWBOX = "0 0 110 102";
+/* Full lockup viewBox: monogram centered above a letter-spaced STUDIO wordmark. */
+const LOCKUP_VIEWBOX = "0 0 160 134";
 const SPARK = "M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z";
 
 export default function Logo({ className = "", size = "md" }: LogoProps) {
   const [hovered, setHovered] = useState(false);
-  const s = SIZE_STYLES[size];
   const rawId = useId();
   const uid = rawId.replace(/:/g, "");
   const metalId = `logo-metal-${uid}`;
@@ -53,16 +53,16 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
         aria-label={siteConfig.name}
         className="group flex items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA]/60"
       >
-        <div className={`relative ${s.tile}`}>
+        <div className={`relative ${SIZE_STYLES[size]}`}>
           {/* Ambient glow halo — kept subtle so the mark stays premium */}
           <motion.div
             className="absolute -inset-1 rounded-2xl"
             style={{
               background:
-                "radial-gradient(circle at 32% 26%, rgba(167,139,250,0.45), rgba(212,184,150,0.22) 48%, transparent 74%)",
-              filter: "blur(8px)",
+                "radial-gradient(circle at 50% 30%, rgba(167,139,250,0.4), rgba(212,184,150,0.18) 52%, transparent 76%)",
+              filter: "blur(10px)",
             }}
-            animate={{ opacity: hovered ? 0.95 : [0.3, 0.5, 0.3] }}
+            animate={{ opacity: hovered ? 0.9 : [0.25, 0.45, 0.25] }}
             transition={{
               opacity: hovered
                 ? { duration: 0.3 }
@@ -70,11 +70,11 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
             }}
           />
 
-          {/* Metallic TR monogram */}
+          {/* Metallic TR + STUDIO lockup — no background, sits on the site's dark bg */}
           <motion.svg
-            viewBox={MONO_VIEWBOX}
-            className={`absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 ${s.mono}`}
-            animate={{ scale: hovered ? 1.06 : 1 }}
+            viewBox={LOCKUP_VIEWBOX}
+            className="relative z-10 h-full w-full"
+            animate={{ scale: hovered ? 1.04 : 1 }}
             transition={{ type: "spring", stiffness: 320, damping: 18 }}
             style={{
               filter: hovered
@@ -82,7 +82,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
                 : "drop-shadow(0 3px 5px rgba(0,0,0,0.6))",
               transition: "filter 0.4s ease",
             }}
-            aria-hidden="true"
+            role="img"
+            aria-label={siteConfig.name}
           >
             <defs>
               <linearGradient id={metalId} x1="0" y1="0" x2="1" y2="1">
@@ -99,21 +100,50 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
               </linearGradient>
             </defs>
 
-            <g fill={`url(#${metalId})`}>
+            {/* TR monogram, centered */}
+            <g transform="translate(25,0)" fill={`url(#${metalId})`}>
               <path d={MONO_T} />
               <path d={MONO_R} fillRule="evenodd" />
             </g>
-            {/* Specular sheen sweeping across the metal */}
-            <g fill={`url(#${metalSheenId})`} opacity={0.55}>
+            <g transform="translate(25,0)" fill={`url(#${metalSheenId})`} opacity={0.55}>
               <path d={MONO_T} />
               <path d={MONO_R} fillRule="evenodd" />
             </g>
+
+            {/* STUDIO wordmark — wide-tracked, same metal gradient */}
+            <text
+              x="80"
+              y="128"
+              textAnchor="middle"
+              textLength="152"
+              lengthAdjust="spacing"
+              fontFamily="ui-sans-serif, system-ui, 'Segoe UI', Arial, sans-serif"
+              fontWeight={700}
+              fontSize="24"
+              fill={`url(#${metalId})`}
+            >
+              STUDIO
+            </text>
+            <text
+              x="80"
+              y="128"
+              textAnchor="middle"
+              textLength="152"
+              lengthAdjust="spacing"
+              fontFamily="ui-sans-serif, system-ui, 'Segoe UI', Arial, sans-serif"
+              fontWeight={700}
+              fontSize="24"
+              fill={`url(#${metalSheenId})`}
+              opacity={0.45}
+            >
+              STUDIO
+            </text>
           </motion.svg>
 
           {/* Sparkle accent */}
           <motion.svg
             viewBox="0 0 10 10"
-            className="absolute -right-1 -bottom-1 z-20 h-2.5 w-2.5"
+            className="absolute -top-1 -right-1 z-20 h-2.5 w-2.5"
             animate={{ scale: [1, 1.3, 1], opacity: [0.55, 1, 0.55], rotate: [0, 18, 0] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             aria-hidden="true"
