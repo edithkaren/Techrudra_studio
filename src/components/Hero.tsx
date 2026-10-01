@@ -552,18 +552,18 @@ export default function Hero() {
         </motion.h1>
 
         <ScrollReveal variant="fadeUp" delay={0.6}>
-          <p className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-white/40 sm:text-lg">
+          <p className="mx-auto mt-7 max-w-xl text-base font-semibold leading-relaxed text-white/75 sm:text-lg">
             Native iOS, cross-platform apps, creative animations, product
             design, and high-converting landing pages.
           </p>
         </ScrollReveal>
 
         <ScrollReveal variant="fadeUp" delay={0.7}>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-white/25">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-white/55">
             <span>Native mobile development</span>
-            <span className="text-white/10">·</span>
+            <span className="text-white/20">·</span>
             <span>Mobile motion design</span>
-            <span className="text-white/10">·</span>
+            <span className="text-white/20">·</span>
             <span>UI/UX and landing pages</span>
           </div>
         </ScrollReveal>
