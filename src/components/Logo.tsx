@@ -2,7 +2,6 @@ import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { siteConfig } from "@/data/site";
-import DepthText from "@/components/DepthText";
 
 type LogoSize = "sm" | "md" | "lg";
 
@@ -36,11 +35,8 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
   const uid = rawId.replace(/:/g, "");
   const monoGradId = `logo-mono-${uid}`;
   const monoGlowId = `logo-glow-${uid}`;
-  const orbitGradId = `logo-orbit-${uid}`;
 
-  /* Brand lockup: "TechRudra Studio" rendered with 3D depth text */
-  const depthFontSize = size === "sm" ? "11px" : size === "lg" ? "19px" : "15px";
-
+  /* Brand lockup: icon-only mark, no wordmark */
   const handleClick = (e: React.MouseEvent) => {
     // Already home: smooth-scroll to top instead of a no-op navigation.
     if (window.location.pathname === "/") {
@@ -83,46 +79,6 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
               scale: { type: "spring", stiffness: 300, damping: 20 },
             }}
           />
-
-          {/* Orbit ring with comet head */}
-          <motion.svg
-            className="absolute -inset-1"
-            viewBox="0 0 44 44"
-            fill="none"
-            animate={{ rotate: 360, opacity: hovered ? 1 : 0.5 }}
-            transition={{
-              rotate: {
-                duration: hovered ? 2.4 : 9,
-                repeat: Infinity,
-                ease: "linear",
-              },
-              opacity: { duration: 0.3 },
-            }}
-          >
-            <circle
-              cx="22"
-              cy="22"
-              r="20.5"
-              stroke={`url(#${orbitGradId})`}
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeDasharray="50 79"
-            />
-            <circle
-              cx="22"
-              cy="1.5"
-              r="2"
-              fill="#F472B6"
-              style={{ filter: "drop-shadow(0 0 4px rgba(244,114,182,0.9))" }}
-            />
-            <defs>
-              <linearGradient id={orbitGradId} x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#8B5CF6" />
-                <stop offset="55%" stopColor="#B49BE8" />
-                <stop offset="100%" stopColor="#D4B896" />
-              </linearGradient>
-            </defs>
-          </motion.svg>
 
           {/* Circular badge tile with gradient ring */}
           <motion.div
@@ -277,24 +233,6 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
           </motion.svg>
         </div>
 
-        {/* ── Wordmark lockup — 3D gradient DepthText ─────────── */}
-        <DepthText
-          className="depth-text--gradient"
-          text={siteConfig.name}
-          layers={10}
-          depth={1.1}
-          faceColor="#FFFFFF"
-          depthColor={hovered ? "#8B5CF6" : "#B49BE8"}
-          tilt={hovered ? 6 : 3.5}
-          pointerTracking
-          smoothing={0.14}
-          perspective={700}
-          autoOrbit
-          orbitSpeed={0.25}
-          fontSize={depthFontSize}
-          fontWeight={900}
-          shadow={false}
-        />
       </Link>
     </motion.div>
   );
