@@ -44,6 +44,8 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
     year: "2025",
     featured: true,
+    liveUrl: "",
+    repoUrl: "",
   },
   {
     id: "2",
@@ -61,6 +63,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2025",
     featured: true,
+    liveUrl: "",
     repoUrl: "https://github.com/edithkaren/SHILTR-Cafe",
   },
   {
@@ -79,6 +82,8 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["Python", "OpenAI", "Speech Recognition"],
     year: "2025",
     featured: true,
+    liveUrl: "",
+    repoUrl: "",
   },
   {
     id: "4",
@@ -96,6 +101,8 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["Python", "LLMs", "Automation APIs"],
     year: "2026",
     featured: false,
+    liveUrl: "",
+    repoUrl: "",
   },
   {
     id: "5",
@@ -113,6 +120,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion", "Convex"],
     year: "2026",
     featured: true,
+    liveUrl: "",
     repoUrl: "https://github.com/edithkaren/Techrudra_studio",
   },
   {
@@ -131,6 +139,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2025",
     featured: false,
+    liveUrl: "",
     repoUrl: "https://github.com/edithkaren/nexenity-tech-",
   },
   {
@@ -149,5 +158,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "GSAP", "Framer Motion"],
     year: "2026",
     featured: false,
+    liveUrl: "",
+    repoUrl: "",
   },
 ];

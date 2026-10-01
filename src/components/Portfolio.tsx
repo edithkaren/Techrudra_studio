@@ -265,7 +265,7 @@ function ProjectCard({
           </motion.h3>
           <motion.p variants={choreo.item} className="mb-4 line-clamp-3 text-sm leading-relaxed text-white/35">{project.description}</motion.p>
           <motion.div variants={choreo.item} className="mb-4 flex flex-wrap items-center gap-2">
-            {project.liveUrl && (
+            {project.liveUrl ? (
               <a
                 href={project.liveUrl}
                 target="_blank"
@@ -275,8 +275,12 @@ function ProjectCard({
               >
                 <Globe className="h-3 w-3" /> Live
               </a>
+            ) : (
+              <span className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-[11px] font-medium text-white/25">
+                <Globe className="h-3 w-3" /> Live
+              </span>
             )}
-            {project.repoUrl && (
+            {project.repoUrl ? (
               <a
                 href={project.repoUrl}
                 target="_blank"
@@ -286,6 +290,10 @@ function ProjectCard({
               >
                 <Github className="h-3 w-3" /> GitHub
               </a>
+            ) : (
+              <span className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-[11px] font-medium text-white/25">
+                <Github className="h-3 w-3" /> Private
+              </span>
             )}
           </motion.div>
           <motion.div variants={choreo.tags} className="mt-auto flex flex-wrap gap-1.5">
