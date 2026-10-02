@@ -122,7 +122,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion", "Convex"],
     year: "2026",
     featured: true,
-    liveUrl: "",
+    liveUrl: "https://techrudra-studio.vercel.app",
     repoUrl: "https://github.com/edithkaren/Techrudra_studio",
   },
   {
@@ -141,7 +141,7 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2025",
     featured: false,
-    liveUrl: "",
+    liveUrl: "https://nexenity-tech.vercel.app",
     repoUrl: "https://github.com/edithkaren/nexenity-tech-",
   },
   {
