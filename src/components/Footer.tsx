@@ -19,13 +19,26 @@ const socialLinks = [
   { label: "YouTube", href: siteConfig.social.youtube },
 ];
 
+/* Column accent colors — one per footer section */
+const NAV_ACCENT = "#A78BFA"; // violet
+const SERVICES_ACCENT = "#60A5FA"; // sky blue
+const CONNECT_ACCENT = "#F472B6"; // pink
+
 /* Liquid footer link with fluid distortion */
-function LiquidFooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+function LiquidFooterLink({
+  href,
+  children,
+  accent = NAV_ACCENT,
+}: {
+  href: string;
+  children: React.ReactNode;
+  accent?: string;
+}) {
   const [hovered, setHovered] = useState(false);
   return (
     <a
       href={href}
-      className="group inline-flex items-center text-sm text-white/55 transition-colors hover:text-white"
+      className="group inline-flex items-center text-sm text-white/75 transition-colors hover:text-white"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -33,12 +46,15 @@ function LiquidFooterLink({ href, children }: { href: string; children: React.Re
         className="transition-all duration-300"
         style={{
           filter: hovered ? "url(#fluid-distort-hover)" : "none",
-          color: hovered ? "#A78BFA" : undefined,
+          color: hovered ? accent : undefined,
         }}
       >
         {children}
       </span>
-      <span className="ml-0 h-px w-0 bg-[#A78BFA] transition-all duration-300 group-hover:ml-1 group-hover:w-2" />
+      <span
+        className="ml-0 h-px w-0 transition-all duration-300 group-hover:ml-1 group-hover:w-2"
+        style={{ backgroundColor: accent }}
+      />
     </a>
   );
 }
@@ -85,7 +101,7 @@ export default function Footer() {
                 className="mb-4 h-px w-20"
                 style={{ background: "linear-gradient(90deg, #A78BFA, #60A5FA, transparent)" }}
               />
-              <p className="mb-5 text-sm leading-relaxed text-white/60">{siteConfig.description}</p>
+              <p className="mb-5 text-sm leading-relaxed text-white/75">{siteConfig.description}</p>
               <p className="inline-flex items-center gap-2 rounded-full border border-[#A78BFA]/25 bg-[#A78BFA]/[0.08] px-3.5 py-1.5 text-sm font-medium text-[#CDBBFF]">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A78BFA] opacity-60" />
@@ -98,15 +114,28 @@ export default function Footer() {
 
           <ScrollReveal variant="fadeUp" delay={0.15}>
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/45">Navigation</p>
+              <p
+                className="mb-4 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: NAV_ACCENT }}
+              >
+                Navigation
+              </p>
+              <div
+                className="mb-4 h-px w-10"
+                style={{ background: `linear-gradient(90deg, ${NAV_ACCENT}, transparent)` }}
+              />
               <ul className="space-y-2.5">
                 {footerNav.map((l) => (
                   <li key={l.href}>
-                    <LiquidFooterLink href={l.href}>{l.label}</LiquidFooterLink>
+                    <LiquidFooterLink href={l.href} accent={NAV_ACCENT}>
+                      {l.label}
+                    </LiquidFooterLink>
                   </li>
                 ))}
                 <li>
-                  <LiquidFooterLink href="/booking">Book a Session</LiquidFooterLink>
+                  <LiquidFooterLink href="/booking" accent={NAV_ACCENT}>
+                    Book a Session
+                  </LiquidFooterLink>
                 </li>
               </ul>
             </div>
@@ -114,11 +143,22 @@ export default function Footer() {
 
           <ScrollReveal variant="fadeUp" delay={0.2}>
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/45">Services</p>
+              <p
+                className="mb-4 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: SERVICES_ACCENT }}
+              >
+                Services
+              </p>
+              <div
+                className="mb-4 h-px w-10"
+                style={{ background: `linear-gradient(90deg, ${SERVICES_ACCENT}, transparent)` }}
+              />
               <ul className="space-y-2.5">
                 {services.slice(0, 6).map((s) => (
                   <li key={s.id}>
-                    <LiquidFooterLink href="#services">{s.title}</LiquidFooterLink>
+                    <LiquidFooterLink href="#services" accent={SERVICES_ACCENT}>
+                      {s.title}
+                    </LiquidFooterLink>
                   </li>
                 ))}
               </ul>
@@ -127,13 +167,32 @@ export default function Footer() {
 
           <ScrollReveal variant="fadeUp" delay={0.25}>
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/45">Connect</p>
+              <p
+                className="mb-4 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: CONNECT_ACCENT }}
+              >
+                Connect
+              </p>
+              <div
+                className="mb-4 h-px w-10"
+                style={{ background: `linear-gradient(90deg, ${CONNECT_ACCENT}, transparent)` }}
+              />
               <ul className="space-y-2.5">
                 {socialLinks.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1 text-sm text-white/55 transition-colors hover:text-white">
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-1 text-sm text-white/75 transition-colors hover:text-white"
+                    >
                       {l.label}
-                      <span className="translate-x-0 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">↗</span>
+                      <span
+                        className="translate-x-0 opacity-60 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100"
+                        style={{ color: CONNECT_ACCENT }}
+                      >
+                        ↗
+                      </span>
                     </a>
                   </li>
                 ))}
@@ -144,8 +203,12 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
-          <p className="text-xs text-white/40">&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <p className="text-xs text-white/40">Designed &amp; built with code, AI &amp; creativity.</p>
+          <p className="text-xs text-white/55">
+            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
+          <p className="text-xs text-white/55">
+            Designed &amp; built with code, AI &amp; creativity.
+          </p>
         </div>
       </div>
     </footer>
