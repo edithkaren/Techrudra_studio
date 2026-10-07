@@ -31,6 +31,68 @@ export default function Contact() {
       {/* Subtle background orb */}
       <div className="pointer-events-none absolute top-1/2 right-0 h-[400px] w-[400px] -translate-y-1/2 rounded-full opacity-15 blur-3xl" style={{ background: "radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%)" }} />
 
+      {/* ── Background art ───────────────────────────────── */}
+      {/* Dot-grid texture, faded toward the edges */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)",
+          backgroundSize: "30px 30px",
+          maskImage: "radial-gradient(75% 65% at 50% 45%, black 0%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(75% 65% at 50% 45%, black 0%, transparent 100%)",
+        }}
+      />
+      {/* Drifting color orbs (site palette) */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 left-0 h-[420px] w-[420px] rounded-full bg-[#A78BFA]/20 blur-[110px]"
+        animate={{ x: [0, 70, -20, 0], y: [0, 50, -30, 0], scale: [1, 1.12, 0.94, 1] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 left-1/3 h-[380px] w-[380px] rounded-full bg-[#60A5FA]/15 blur-[110px]"
+        animate={{ x: [0, -60, 40, 0], y: [0, -40, 30, 0], scale: [1, 0.92, 1.1, 1] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-20 right-10 h-[340px] w-[340px] rounded-full bg-[#F472B6]/12 blur-[100px]"
+        animate={{ x: [0, -50, 20, 0], y: [0, -30, -60, 0], scale: [1, 1.08, 0.96, 1] }}
+        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+      />
+      {/* Slowly rotating dashed orbit rings */}
+      <motion.svg
+        aria-hidden
+        viewBox="0 0 200 200"
+        className="pointer-events-none absolute -left-20 bottom-12 h-[300px] w-[300px] text-[#A78BFA]/30 sm:h-[380px] sm:w-[380px]"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
+      >
+        <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 9" />
+        <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="0.4" strokeDasharray="2 7" />
+        <circle cx="194" cy="100" r="2.2" fill="currentColor" />
+        <circle cx="100" cy="30" r="1.6" fill="currentColor" />
+      </motion.svg>
+      {/* Twinkling sparkles */}
+      {[
+        { top: "18%", left: "46%", delay: 0, color: "#A78BFA" },
+        { top: "62%", left: "12%", delay: 1.4, color: "#60A5FA" },
+        { top: "34%", left: "88%", delay: 2.6, color: "#F472B6" },
+      ].map((s, i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          className="pointer-events-none absolute select-none text-xs"
+          style={{ top: s.top, left: s.left, color: s.color }}
+          animate={{ opacity: [0.15, 0.9, 0.15], scale: [0.8, 1.25, 0.8] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
+        >
+          ✦
+        </motion.span>
+      ))}
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid gap-16 lg:grid-cols-2">
           {/* Left: copy */}
@@ -96,6 +158,16 @@ export default function Contact() {
                   animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
                   transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
                 />
+                {/* Faint dot-grid texture inside the card */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    backgroundImage: "radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
+                    backgroundSize: "22px 22px",
+                    opacity: 0.5,
+                  }}
+                />
                 {/* Soft scrim so labels, inputs and button stay readable over the gradient */}
                 <div
                   aria-hidden
@@ -104,6 +176,17 @@ export default function Contact() {
                     background:
                       "radial-gradient(120% 90% at 50% 50%, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.25) 55%, rgba(10,10,10,0.6) 100%)",
                   }}
+                />
+                {/* Periodic light sheen sweeping across the card */}
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
+                  style={{
+                    background:
+                      "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%)",
+                  }}
+                  animate={{ x: [0, 520] }}
+                  transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
                 />
                 <div className="relative z-10 grid gap-5">
                   <div>
