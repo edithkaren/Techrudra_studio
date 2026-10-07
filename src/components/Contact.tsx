@@ -79,9 +79,33 @@ export default function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="rounded-3xl border border-white/[0.06] bg-[#111111] p-6 sm:p-8"
+                className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#111111] p-6 sm:p-8"
               >
-                <div className="grid gap-5">
+                {/* Auto-shifting gradient backdrop (site palette: violet → sky → pink → orange) */}
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(130deg, #A78BFA 0%, #60A5FA 22%, #F472B6 46%, #FB923C 70%, #A78BFA 100%)",
+                    backgroundSize: "300% 300%",
+                    opacity: 0.3,
+                    transform: "translateZ(0)",
+                    willChange: "background-position",
+                  }}
+                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+                />
+                {/* Soft scrim so labels, inputs and button stay readable over the gradient */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(120% 90% at 50% 50%, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.25) 55%, rgba(10,10,10,0.6) 100%)",
+                  }}
+                />
+                <div className="relative z-10 grid gap-5">
                   <div>
                     <label htmlFor="name" className="mb-1.5 block text-xs font-medium text-white/40">Name</label>
                     <input id="name" name="name" required placeholder="Your name"
@@ -114,7 +138,7 @@ export default function Contact() {
                       className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA]" />
                   </div>
                 </div>
-                <div className="mt-6">
+                <div className="relative z-10 mt-6">
                   <button
                     type="submit"
                     disabled={loading}
