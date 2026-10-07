@@ -63,7 +63,7 @@ function LiquidFooterLink({
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/[0.06] bg-[#0A0A0A] px-6 pt-16 pb-8 lg:px-10">
+    <footer className="relative overflow-hidden border-t border-white/[0.06] bg-[#0A0A0A] px-6 pt-20 pb-10 lg:px-10 lg:pt-24">
       {/* Liquid blob accents */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ filter: "url(#liquid-morph)" }}>
         <div className="absolute -bottom-40 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-[#A78BFA]/[0.04]" />
@@ -72,20 +72,25 @@ export default function Footer() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         {/* Large animated statement with liquid distortion */}
-        <div className="mb-14">
+        <div className="mb-16 lg:mb-20">
           <ScrollReveal>
-            <p className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            <p className="text-3xl leading-[1.2] font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
               Let&apos;s build something{" "}
               <motion.span
-                className="inline-block"
+                className="inline-block will-change-[background-position]"
                 animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 style={{
+                  /* shorthand FIRST — later keys override it, so backgroundSize
+                     must come after `background` or it gets reset to auto and
+                     the clipped text paints partially transparent. */
+                  background:
+                    "linear-gradient(135deg, #A78BFA, #60A5FA, #F472B6, #FB923C, #A78BFA)",
                   backgroundSize: "200% 200%",
-                  background: "linear-gradient(135deg, #A78BFA, #60A5FA, #F472B6, #FB923C, #A78BFA)",
                   WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  transform: "translateZ(0)",
                 }}
               >
                 great.
