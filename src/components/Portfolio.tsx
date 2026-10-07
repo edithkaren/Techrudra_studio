@@ -15,6 +15,7 @@ import {
   type PortfolioProject,
 } from "@/data/portfolio";
 import ProjectMockup from "@/components/ProjectMockup";
+import FitnessVisual from "@/components/FitnessVisual";
 import CardTilt from "@/components/motion/CardTilt";
 import { ParticleCard, GlobalSpotlight } from "@/components/MagicBento";
 
@@ -192,18 +193,33 @@ function ComingSoonCard({ project, index, choreo }: { project: PortfolioProject;
     >
       <ParticleCard className="block h-full w-full" glowColor={VIOLET_RGB} particleCount={8}>
         <div className="relative flex aspect-[4/3] w-full shrink-0 items-center justify-center overflow-hidden bg-[#0D0D0D]">
-          {/* Slow sweep shimmer */}
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              background: "linear-gradient(105deg, transparent 35%, rgba(167,139,250,0.08) 48%, transparent 62%)",
-              backgroundSize: "220% 220%",
-            }}
-            animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
-          />
-          <span className="relative z-10 text-3xl opacity-40 grayscale">✦</span>
-          <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#A78BFA] transition-all duration-500 group-hover:w-full" />
+          {project.slug === "upcoming-1" ? (
+            /* Fitness App — real UI mockup instead of the shimmer placeholder */
+            <motion.div
+              className="absolute inset-0"
+              variants={choreo.mock}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+            >
+              <FitnessVisual />
+            </motion.div>
+          ) : (
+            <>
+              {/* Slow sweep shimmer */}
+              <motion.div
+                className="absolute inset-0"
+                style={{
+                  background: "linear-gradient(105deg, transparent 35%, rgba(167,139,250,0.08) 48%, transparent 62%)",
+                  backgroundSize: "220% 220%",
+                }}
+                animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+              />
+              <span className="relative z-10 text-3xl opacity-40 grayscale">✦</span>
+            </>
+          )}
+          <div className="absolute top-0 left-0 z-10 h-[2px] w-0 bg-[#A78BFA] transition-all duration-500 group-hover:w-full" />
         </div>
         <div className="flex flex-1 flex-col p-5 sm:p-6">
           <motion.div variants={choreo.item} className="mb-2 flex items-center gap-2">
