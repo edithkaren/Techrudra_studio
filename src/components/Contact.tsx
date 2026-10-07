@@ -141,17 +141,17 @@ export default function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#0C0C0C] p-6 sm:p-8"
+                className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#111111] p-6 sm:p-8"
               >
-                {/* Auto-shifting gradient backdrop — deep, darkened site palette (violet → sky → pink → orange) */}
+                {/* Auto-shifting gradient backdrop (site palette: violet → sky → pink → orange) */}
                 <motion.div
                   aria-hidden
                   className="pointer-events-none absolute inset-0"
                   style={{
                     background:
-                      "linear-gradient(130deg, #5B4B9E 0%, #33547F 22%, #7E3B60 46%, #7A4A22 70%, #5B4B9E 100%)",
+                      "linear-gradient(130deg, #A78BFA 0%, #60A5FA 22%, #F472B6 46%, #FB923C 70%, #A78BFA 100%)",
                     backgroundSize: "300% 300%",
-                    opacity: 0.6,
+                    opacity: 0.3,
                     transform: "translateZ(0)",
                     willChange: "background-position",
                   }}
@@ -174,7 +174,7 @@ export default function Contact() {
                   className="pointer-events-none absolute inset-0"
                   style={{
                     background:
-                      "radial-gradient(120% 90% at 50% 50%, rgba(8,8,8,0.62) 0%, rgba(8,8,8,0.4) 55%, rgba(8,8,8,0.68) 100%)",
+                      "radial-gradient(120% 90% at 50% 50%, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.25) 55%, rgba(10,10,10,0.6) 100%)",
                   }}
                 />
                 {/* Periodic light sheen sweeping across the card */}
@@ -183,7 +183,7 @@ export default function Contact() {
                   className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
                   style={{
                     background:
-                      "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
+                      "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%)",
                   }}
                   animate={{ x: [0, 520] }}
                   transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
