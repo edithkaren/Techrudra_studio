@@ -39,7 +39,8 @@ function LiquidFooterLink({
   return (
     <a
       href={href}
-      className="group inline-flex items-center text-sm text-white/75 transition-colors hover:text-white"
+      className="group inline-flex items-center text-sm"
+      style={{ color: accent }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -47,7 +48,7 @@ function LiquidFooterLink({
         className="transition-all duration-300"
         style={{
           filter: hovered ? "url(#fluid-distort-hover)" : "none",
-          color: hovered ? accent : undefined,
+          color: hovered ? "#FFFFFF" : accent,
         }}
       >
         {children}
@@ -185,7 +186,7 @@ export default function Footer() {
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-1 text-sm text-white/75 transition-colors hover:text-white"
+                      className="group inline-flex items-center gap-1 text-sm text-[#F472B6] transition-colors hover:text-white"
                     >
                       {l.label}
                       <span
