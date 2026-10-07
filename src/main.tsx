@@ -17,6 +17,12 @@ const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
 const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail.tsx"));
 const BookingPage = lazy(() => import("./pages/BookingPage.tsx"));
 const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
+const TermsPage = lazy(() =>
+  import("./pages/LegalPages.tsx").then((m) => ({ default: m.TermsPage })),
+);
+const PrivacyPage = lazy(() =>
+  import("./pages/LegalPages.tsx").then((m) => ({ default: m.PrivacyPage })),
+);
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 // Simple loading fallback for route transitions
@@ -59,8 +65,8 @@ class RootErrorBoundary extends React.Component<
       stack: error.stack || "",
     };
   }
-  componentDidCatch(err: Error) {
-    console.error("[WebContainer preview] Root crash:", err);
+  componentDidCatch(error: Error) {
+    console.error("[WebContainer preview] Root crash:", error);
   }
   render() {
     if (this.state.hasError) {
@@ -139,6 +145,8 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/booking" element={<BookingPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

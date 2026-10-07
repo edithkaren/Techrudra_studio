@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 import { siteConfig } from "@/data/site";
 import { services } from "@/data/services";
 import ScrollReveal from "@/components/motion/ScrollReveal";
@@ -206,9 +207,23 @@ export default function Footer() {
           <p className="text-xs text-white/55">
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="text-xs text-white/55">
-            Designed &amp; built with code, AI &amp; creativity.
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link
+              to="/terms"
+              className="text-xs text-white/55 transition-colors hover:text-white"
+            >
+              Terms &amp; Conditions
+            </Link>
+            <Link
+              to="/privacy"
+              className="text-xs text-white/55 transition-colors hover:text-white"
+            >
+              Privacy Policy
+            </Link>
+            <p className="text-xs text-white/55">
+              Designed &amp; built with code, AI &amp; creativity.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

@@ -207,7 +207,9 @@ function ComingSoonCard({ project, index, choreo }: { project: PortfolioProject;
         </div>
         <div className="flex flex-1 flex-col p-5 sm:p-6">
           <motion.div variants={choreo.item} className="mb-2 flex items-center gap-2">
-            <span className="text-[11px] font-semibold tracking-wider text-[#A78BFA]/70">UPCOMING</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#A78BFA]/70">
+              {project.status ?? "Upcoming"}
+            </span>
             <span className="text-[11px] text-white/10">&middot;</span>
             <span className="text-[11px] text-white/25">{project.year}</span>
           </motion.div>
@@ -215,7 +217,7 @@ function ComingSoonCard({ project, index, choreo }: { project: PortfolioProject;
             {project.title}
           </motion.h3>
           <motion.p variants={choreo.item} className="text-sm leading-relaxed text-white/25">
-            New project coming soon...
+            {project.description}
           </motion.p>
           <motion.div variants={choreo.tags} className="mt-auto pt-4">
             <motion.span variants={choreo.tag} className="inline-flex items-center gap-1.5 rounded-full border border-[#A78BFA]/20 bg-[#A78BFA]/[0.06] px-3 py-1 text-[11px] font-medium text-[#CDBBFF]/80">
@@ -223,7 +225,7 @@ function ComingSoonCard({ project, index, choreo }: { project: PortfolioProject;
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A78BFA] opacity-60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#A78BFA]" />
               </span>
-              In the works
+              {project.status ?? "In the works"}
             </motion.span>
           </motion.div>
         </div>

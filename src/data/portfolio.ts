@@ -18,6 +18,8 @@ export interface PortfolioProject {
   repoUrl?: string;
   /** Placeholder card for an upcoming project. */
   comingSoon?: boolean;
+  /** Status badge for in-progress projects (e.g. "On Working"). */
+  status?: string;
 }
 
 export const portfolioCategories = [
@@ -167,7 +169,7 @@ export const portfolioProjects: PortfolioProject[] = [
 
 /* Upcoming projects — rendered as "coming soon" placeholder cards */
 export const upcomingProjects: PortfolioProject[] = [
-  { id: "up-1", title: "Project 08", slug: "upcoming-1", category: "Websites", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
+  { id: "up-1", title: "Fitness App", slug: "upcoming-1", category: "Apps", status: "On Working", description: "A personal fitness companion — track workouts, log progress, and stay consistent with smart routines, daily streaks, and goals that adapt to you.", longDescription: "Fitness App is an in-progress mobile fitness companion that makes training simple and measurable. It plans workouts around your goals, tracks sets, reps, and progress over time, and keeps you honest with daily streaks and reminders. Designed mobile-first with a clean, motivating interface.", client: "—", role: "Mobile App Development, UI/UX Design", image: "", gallery: [], technologies: ["React Native", "TypeScript", "Firebase"], year: "2026", featured: false, comingSoon: true },
   { id: "up-2", title: "Project 09", slug: "upcoming-2", category: "AI", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
   { id: "up-3", title: "Project 10", slug: "upcoming-3", category: "Apps", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
   { id: "up-4", title: "Project 11", slug: "upcoming-4", category: "Websites", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
