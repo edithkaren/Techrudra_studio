@@ -27,7 +27,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative bg-[#0A0A0A] px-6 py-24 sm:py-32 lg:px-10">
+    <section id="contact" className="relative overflow-hidden bg-[#0A0A0A] px-4 py-16 sm:px-6 sm:py-24 lg:px-10 lg:py-32">
       {/* Subtle background orb */}
       <div className="pointer-events-none absolute top-1/2 right-0 h-[400px] w-[400px] -translate-y-1/2 rounded-full opacity-15 blur-3xl" style={{ background: "radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%)" }} />
 
@@ -94,7 +94,7 @@ export default function Contact() {
       ))}
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-16 lg:grid-cols-2">
+        <div className="grid gap-10 sm:gap-14 lg:grid-cols-2 lg:gap-16">
           {/* Left: copy */}
           <div>
             <ScrollReveal>
@@ -105,7 +105,7 @@ export default function Contact() {
                 text="Have an idea? Let&apos;s make it real."
                 as="h2"
                 speed="medium"
-                className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+                className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
               />
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.2}>
@@ -130,7 +130,7 @@ export default function Contact() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center rounded-3xl border border-white/[0.06] bg-[#111111] p-10 text-center"
+                className="flex flex-col items-center justify-center rounded-3xl border border-white/[0.06] bg-[#111111] p-8 text-center sm:p-10"
               >
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, delay: 0.1 }}>
                   <CheckCircle2 className="mb-4 h-10 w-10 text-[#2DD4BF]" />
@@ -141,7 +141,7 @@ export default function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#111111] p-6 sm:p-8"
+                className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#111111] p-5 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6)] sm:p-7 lg:p-8"
               >
                 {/* Auto-shifting gradient backdrop (site palette: violet → sky → pink → orange) */}
                 <motion.div
@@ -185,24 +185,24 @@ export default function Contact() {
                     background:
                       "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%)",
                   }}
-                  animate={{ x: [0, 520] }}
+                  animate={{ x: ["0%", "430%"] }}
                   transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
                 />
-                <div className="relative z-10 grid gap-5">
+                <div className="relative z-10 grid gap-4 sm:gap-5">
                   <div>
                     <label htmlFor="name" className="mb-1.5 block text-xs font-medium text-white/40">Name</label>
                     <input id="name" name="name" required placeholder="Your name"
-                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA] focus:bg-white/[0.05]" />
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-base leading-6 text-white outline-none sm:text-sm sm:leading-normal transition-colors placeholder:text-white/20 focus:border-[#A78BFA] focus:bg-white/[0.05]" />
                   </div>
                   <div>
                     <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-white/40">Email</label>
                     <input id="email" name="email" type="email" required placeholder="you@company.com"
-                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA] focus:bg-white/[0.05]" />
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-base leading-6 text-white outline-none sm:text-sm sm:leading-normal transition-colors placeholder:text-white/20 focus:border-[#A78BFA] focus:bg-white/[0.05]" />
                   </div>
                   <div>
                     <label htmlFor="projectType" className="mb-1.5 block text-xs font-medium text-white/40">Project Type</label>
                     <select id="projectType" name="projectType" required
-                      className="w-full appearance-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors focus:border-[#A78BFA]">
+                      className="w-full appearance-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-base leading-6 text-white outline-none sm:text-sm sm:leading-normal transition-colors focus:border-[#A78BFA]">
                       <option value="" className="bg-[#111111]">Select a project type</option>
                       {projectTypes.map((t) => <option key={t} value={t} className="bg-[#111111]">{t}</option>)}
                     </select>
@@ -210,7 +210,7 @@ export default function Contact() {
                   <div>
                     <label htmlFor="budget" className="mb-1.5 block text-xs font-medium text-white/40">Budget Range</label>
                     <select id="budget" name="budget"
-                      className="w-full appearance-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors focus:border-[#A78BFA]">
+                      className="w-full appearance-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-base leading-6 text-white outline-none sm:text-sm sm:leading-normal transition-colors focus:border-[#A78BFA]">
                       <option value="" className="bg-[#111111]">Select budget range</option>
                       {budgetRanges.map((b) => <option key={b} value={b} className="bg-[#111111]">{b}</option>)}
                     </select>
@@ -218,7 +218,7 @@ export default function Contact() {
                   <div>
                     <label htmlFor="message" className="mb-1.5 block text-xs font-medium text-white/40">Project Details</label>
                     <textarea id="message" name="message" rows={4} required placeholder="Tell us about your project, goals, and timeline…"
-                      className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/20 focus:border-[#A78BFA]" />
+                      className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-base leading-6 text-white outline-none sm:text-sm sm:leading-normal transition-colors placeholder:text-white/20 focus:border-[#A78BFA]" />
                   </div>
                 </div>
                 <div className="relative z-10 mt-6">
