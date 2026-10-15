@@ -165,12 +165,30 @@ export const portfolioProjects: PortfolioProject[] = [
     liveUrl: "",
     repoUrl: "",
   },
+  {
+    id: "8",
+    title: "CivicAssist",
+    slug: "civicassist",
+    category: "Websites",
+    description:
+      "A live government schemes & public services guide — indexes official scheme documents, retrieves the relevant instructions, and checks live application and deadline data from official sources.",
+    longDescription:
+      "CivicAssist is a live government scheme and public services guide portal built to help citizens make the most of the benefits available to them. It indexes official scheme documents from government sources, retrieves the most relevant instructions and eligibility criteria for every query, and checks live application windows and deadline data from official sources wherever available — so citizens always see accurate, up-to-date guidance. The portal brings central, state, and local programs into one searchable place, explains them in plain language, and walks citizens through what to apply for, the documents they need, and when to act — letting citizens know about all the government schemes for their benefit.",
+    client: "—",
+    role: "Full-Stack Development, AI Search & Data Integration",
+    image: "",
+    gallery: [],
+    technologies: ["React", "TypeScript", "Node.js", "Vector Search"],
+    year: "2026",
+    featured: false,
+    liveUrl: "",
+    repoUrl: "",
+  },
 ];
 
 /* Upcoming projects — rendered as "coming soon" placeholder cards */
 export const upcomingProjects: PortfolioProject[] = [
   { id: "up-1", title: "Fitness App", slug: "upcoming-1", category: "Apps", status: "On Working", description: "A personal fitness companion — track workouts, log progress, and stay consistent with smart routines, daily streaks, and goals that adapt to you.", longDescription: "Fitness App is an in-progress mobile fitness companion that makes training simple and measurable. It plans workouts around your goals, tracks sets, reps, and progress over time, and keeps you honest with daily streaks and reminders. Designed mobile-first with a clean, motivating interface.", client: "—", role: "Mobile App Development, UI/UX Design", image: "", gallery: [], technologies: ["React Native", "TypeScript", "Firebase"], year: "2026", featured: false, comingSoon: true },
-  { id: "up-2", title: "Project 09", slug: "upcoming-2", category: "AI", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
   { id: "up-3", title: "Project 10", slug: "upcoming-3", category: "Apps", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
   { id: "up-4", title: "Project 11", slug: "upcoming-4", category: "Websites", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },
   { id: "up-5", title: "Project 12", slug: "upcoming-5", category: "AI", description: "Something new is brewing in the studio.", longDescription: "", client: "", role: "", image: "", gallery: [], technologies: [], year: "2026", featured: false, comingSoon: true },

@@ -30,6 +30,7 @@ const projectVisuals: Record<
   "techrudra-studio-website": { device: "laptop", title: "Techrudra Studio", accent: "#6C3AED", elements: "dashboard" },
   "nexenity-website": { device: "laptop", title: "Nexenity", accent: "#2DD4BF", elements: "dashboard" },
   "cinematic-website": { device: "browser", title: "Cinematic", accent: "#F87171", elements: "video" },
+  "civicassist": { device: "browser", title: "CivicAssist", accent: "#60A5FA", elements: "search" },
 };
 
 function DashboardVisual({ accent }: { accent: string }) {
