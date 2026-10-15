@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import ShiltrVisual from "@/components/ShiltrVisual";
 import NexenityVisual from "@/components/NexenityVisual";
 import CinematicVisual from "@/components/CinematicVisual";
+import CivicAssistVisual from "@/components/CivicAssistVisual";
 
 type DeviceType = "browser" | "phone" | "laptop";
 
@@ -449,6 +450,10 @@ export default function ProjectMockup({
     ) : projectSlug === "cinematic-website" ? (
       <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
         <CinematicVisual />
+      </motion.div>
+    ) : projectSlug === "civicassist" ? (
+      <motion.div className={className} whileHover={{ y: -4, scale: 1.01 }} transition={{ duration: 0.4, ease: "easeOut" }}>
+        <CivicAssistVisual />
       </motion.div>
     ) : (
       <motion.div
