@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import AstraBackground from "@/components/AstraBackground";
 import Marquee from "@/components/Marquee";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
+import About from "@/components/About";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import Vision from "@/components/Vision";
@@ -25,6 +26,7 @@ export default function Landing() {
         <Marquee />
         <FeaturedShowcase />
         <FluidSectionDivider h={72} accent="#A78BFA" bg="#0A0A0A" layers={3} className="overflow-hidden" />
+        <About />
         <Services />
         <FluidSectionDivider h={64} accent="#A78BFA" bg="#0A0A0A" layers={2} flip />
         <Portfolio />

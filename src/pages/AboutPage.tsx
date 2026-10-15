@@ -7,6 +7,7 @@ import Logo from "@/components/Logo";
 import AnimatedCounter from "@/components/motion/AnimatedCounter";
 import KineticText from "@/components/motion/KineticText";
 import CardTilt from "@/components/motion/CardTilt";
+import { siteConfig } from "@/data/site";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -152,6 +153,75 @@ export default function AboutPage() {
                 </div>
                 <div className="mt-6 flex items-center gap-3"><Logo /></div>
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder */}
+      <section className="px-6 py-24 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger} className="mb-14 text-center">
+            <motion.p variants={fadeUp} custom={0} className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#60A5FA]">Founder</motion.p>
+            <motion.h2 variants={fadeUp} custom={1} className="text-3xl font-bold tracking-tight text-white md:text-4xl">
+              <KineticText text={`Led by ${siteConfig.founder.name}`} as="span" speed="medium" className="" />
+            </motion.h2>
+          </motion.div>
+
+          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+            {/* Founder card */}
+            <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: "easeOut" }}>
+              <div className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#111111] p-8">
+                <div className="pointer-events-none absolute top-0 left-0 h-14 w-14 border-t border-l border-[#60A5FA]/25 rounded-tl-3xl" />
+                <div className="pointer-events-none absolute right-0 bottom-0 h-14 w-14 border-r border-b border-[#A78BFA]/25 rounded-br-3xl" />
+
+                <div className="flex items-center gap-4">
+                  <span
+                    className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-xl font-bold text-white shadow-[0_10px_30px_-10px_rgba(96,165,250,0.6)]"
+                    style={{ background: "linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%)" }}
+                    aria-hidden
+                  >
+                    RP
+                  </span>
+                  <div>
+                    <p className="text-xl font-bold tracking-tight text-white md:text-2xl">{siteConfig.founder.name}</p>
+                    <p className="text-sm text-[#60A5FA]">{siteConfig.founder.role}</p>
+                  </div>
+                </div>
+
+                <p className="mt-5 text-sm leading-relaxed text-white/45">{siteConfig.founder.shortBio}</p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {siteConfig.founder.tags.map((tag) => (
+                    <span key={tag} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 text-xs text-white/55">{tag}</span>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-white/[0.03] px-5 py-4">
+                  <Sparkles className="h-4 w-4 shrink-0 text-[#A78BFA]" />
+                  <p className="text-sm italic leading-relaxed text-white/50">
+                    &ldquo;Every project we ship gets the founder&apos;s hands on it — from the first wireframe to launch day.&rdquo;
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Founder bio */}
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
+              <motion.p variants={fadeUp} custom={0} className="max-w-lg text-lg leading-relaxed text-white/50">
+                {siteConfig.founder.bio}
+              </motion.p>
+              <motion.p variants={fadeUp} custom={1} className="mt-5 max-w-lg text-base leading-relaxed text-white/30">
+                Techrudra.Studio exists because of that approach: one creative technologist who refuses to hand your vision off to five different vendors. Every engagement gets founder-level attention — strategy, design, code, and growth reviewed by the same person who set the direction.
+              </motion.p>
+              <motion.div variants={fadeUp} custom={2} className="mt-8 flex flex-wrap gap-3">
+                <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-300 hover:bg-white/90">
+                  Work with us <ArrowRight className="h-4 w-4" />
+                </a>
+                <Link to="/booking" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white/70 backdrop-blur-md transition-all duration-300 hover:border-white/20">
+                  Book a Session
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </div>

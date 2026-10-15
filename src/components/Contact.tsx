@@ -4,6 +4,7 @@ import { CheckCircle2, ArrowRight } from "lucide-react";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import KineticText from "@/components/motion/KineticText";
 import MagneticButton from "@/components/motion/MagneticButton";
+import { siteConfig } from "@/data/site";
 
 const projectTypes = [
   "Website", "AI Chatbot", "AI Application", "Automation", "UI/UX",
@@ -114,6 +115,23 @@ export default function Contact() {
                 or a full marketing strategy — drop us a message and we&apos;ll
                 get back to you within 24 hours.
               </p>
+            </ScrollReveal>
+            <ScrollReveal variant="fadeUp" delay={0.25}>
+              <div className="mt-6 flex max-w-md items-center gap-4 rounded-2xl border border-white/[0.06] bg-[#111111] p-4">
+                <span
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-base font-bold text-white"
+                  style={{ background: "linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%)" }}
+                  aria-hidden
+                >
+                  RP
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-white">{siteConfig.founder.name}</p>
+                  <p className="text-xs leading-relaxed text-white/40">
+                    {siteConfig.founder.role} — every inquiry is read personally by the founder.
+                  </p>
+                </div>
+              </div>
             </ScrollReveal>
             <ScrollReveal variant="fadeUp" delay={0.3}>
               <div className="mt-8 flex flex-col gap-3">
