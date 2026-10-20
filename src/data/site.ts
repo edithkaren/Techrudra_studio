@@ -3,7 +3,7 @@ export const siteConfig = {
   tagline: "Creative Technology Studio",
   description:
     "We make your project look trend. From bold visuals to intelligent systems — we craft digital experiences that turn heads and drive results.",
-  email: "hello@techrudra.studio",
+  email: "TRStudio@gmail.com",
   founder: {
     name: "Rudraksh Paliwal",
     role: "Founder & Creative Technologist",
