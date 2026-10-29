@@ -168,6 +168,8 @@ const schema = defineSchema(
       .index("byUserProblem", ["userId", "problemId"])
       .index("byCompetition", ["competitionId"])
       .index("byHackathon", ["hackathonId"])
+      .index("byStatus", ["status"]),
+
     competitions: defineTable({
       organizerId: v.id("users"),
       title: v.string(),
@@ -426,6 +428,8 @@ const schema = defineSchema(
       .index("byCompany", ["companyId"])
       .index("byOrganizer", ["organizerId"])
       .index("bySlug", ["slug"])
+      .index("byStatus", ["status"]),
+
     submissionEvaluations: defineTable({
       challengeId: v.id("companyChallenges"),
       userId: v.id("users"),
@@ -479,26 +483,15 @@ const schema = defineSchema(
       createdAt: v.number(),
       updatedAt: v.number(),
     }).index("byOrganization", ["organizationId"])
+      .index("byStatus", ["status"]),
+
     organizerVerification: defineTable({
       organizationId: v.id("organizations"),
       reviewedById: v.id("users"),
       reviewedAt: v.number(),
       scopes: v.array(v.string()),
       note: v.optional(v.string()),
-    }).index("byOrganization", ["organizationId"])
-    userBadges: defineTable({
-      userId: v.id("users"),
-      badgeId: v.id("badges"),
-      unlockedAt: v.optional(v.number()),
-      iconColor: v.optional(v.string()),
-    }).index("byUser", ["userId"]).index("byBadge", ["badgeId"])
-
-    userBadges: defineTable({
-      userId: v.id("users"),
-      badgeId: v.id("badges"),
-      unlockedAt: v.optional(v.number()),
-      iconColor: v.optional(v.string()),
-    }).index("byUser", ["userId"]).index("byBadge", ["badgeId"])
+    }).index("byOrganization", ["organizationId"]),
 
     badges: defineTable({
       name: v.string(),
@@ -512,6 +505,7 @@ const schema = defineSchema(
       createdAt: v.number(),
     }).index("byCategory", ["category"]),
 
+    userBadges: defineTable({
       userId: v.id("users"),
       badgeId: v.id("badges"),
       unlockedAt: v.optional(v.number()),

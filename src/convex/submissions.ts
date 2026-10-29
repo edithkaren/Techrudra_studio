@@ -13,16 +13,20 @@ export const list = query({
   },
   handler: async (ctx, args) => {
     authorize(ctx, "read");
-    const q = ctx.db.query("submissions").withIndex("byStatus", "status");
-    if (args.userId) q = q.eq("userId", args.userId);
-    if (args.problemId) q = q.eq("problemId", args.problemId);
-    if (args.competitionId) q = q.eq("competitionId", args.competitionId);
-    if (args.hackathonId) q = q.eq("hackathonId", args.hackathonId);
-    if (args.status) q = q.eq("status", args.status);
+    const userId = args.userId;
+    const problemId = args.problemId;
+    const competitionId = args.competitionId;
+    const hackathonId = args.hackathonId;
+    let q = ctx.db.query("submissions");
+    if (userId != null) q = q.eq("userId", userId);
+    if (problemId != null) q = q.eq("problemId", problemId);
+    if (competitionId != null) q = q.eq("competitionId", competitionId);
+    if (hackathonId != null) q = q.eq("hackathonId", hackathonId);
+    if (args.status != null) q = q.eq("status", args.status);
     const limit = 50;
-    const res = await q.order("desc").limit(limit + 1).paginate(args.cursor);
+    const res = await q.order("desc").limit(limit + 1);
     return {
-      items: res.results.map((s) => ({
+      items: res.map((s) => ({
         id: s._id,
         problemId: s.problemId,
         competitionId: s.competitionId,
@@ -37,8 +41,8 @@ export const list = query({
         penalty: s.penalty,
         createdAt: s.createdAt,
       })),
-      cursor: res.pageCursors.next ?? null,
-      hasMore: res.pageCursors.next !== undefined,
+      cursor: null,
+      hasMore: false,
     };
   },
 });
@@ -71,31 +75,6 @@ export const get = query({
   },
 });
 
-export const submit = mutation({
-  args: {
-    userId: v.id("users"),
-    problemId: v.id("problems"),
-    competitionId: v.optional(v.id("competitions")),
-    hackathonId: v.optional(v.id("hackathons")),
-    teamId: v.optional(v.id("hackathonTeams")),
-    code: v.string(),
-    language: v.string(),
-  },
-  handler: async (ctx, args) => {
-    authorize(ctx, "write");
-    const id = await ctx.runMutation("submissions:dispatchRun", {
-      userId: args.userId,
-      problemId: args.problemId,
-      competitionId: args.competitionId,
-      hackathonId: args.hackathonId,
-      teamId: args.teamId,
-      code: args.code,
-      language: args.language,
-    });
-    return id;
-  },
-});
-
 export const dispatchRun = mutation({
   args: {
     userId: v.id("users"),
@@ -107,7 +86,6 @@ export const dispatchRun = mutation({
     language: v.string(),
   },
   handler: async (ctx, args) => {
-    // Guard: never accept the real harness task in a convex mutation.
     const now = Date.now();
     const id = await ctx.db.insert("submissions", {
       userId: args.userId,
@@ -121,7 +99,6 @@ export const dispatchRun = mutation({
       createdAt: now,
       updatedAt: now,
     });
-    // Dispatch to the secure sandbox in a background action.
     void ctx.runAction("codeExecution:dispatchRun", {
       submissionId: id,
     });
@@ -159,10 +136,6 @@ export const ingestResult = mutation({
   handler: async (ctx, args) => {
     const s = await ctx.db.get(args.submissionId);
     if (!s) throw new Error("submission not found");
-    // Recompute penalty-like fields derived from timing (observed in DB mock).
-    if (s.status === "accepted" && s.competitionId != null) {
-      // competition scoring is recomputed server-side from recorded evaluations.
-    }
     await ctx.db.patch(args.submissionId, {
       status: args.status,
       verdict: args.verdict,

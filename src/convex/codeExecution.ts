@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { action, mutation } from "./_generated/server";
+import { get as submissionsGet, ingestResult as submissionsIngestResult } from "./submissions.js";
 
 /**
  * Secure code execution / judging integration.
@@ -47,7 +48,7 @@ type SandboxJudgeResult = {
 export const dispatchRun = action({
   args: { submissionId: v.id("submissions") },
   handler: async (ctx, args) => {
-    const sub = await ctx.runQuery("submissions:get", { id: args.submissionId });
+    const sub = await ctx.runQuery(submissionsGet, { id: args.submissionId });
     if (!sub) throw new Error("submission not found");
 
     const now = Date.now();
@@ -97,7 +98,7 @@ export const ingestResult = mutation({
   handler: async (ctx, args) => {
     const { result, ...rest } = args;
     // A proper deployment would validate the HMAC + timestamp here.
-    await ctx.runMutation("submissions:ingestResult", {
+    await ctx.runMutation(submissionsIngestResult, {
       id: rest.submissionId,
       status: result.passed ? "accepted" : "wrongAnswer",
       verdict: result.verdict,

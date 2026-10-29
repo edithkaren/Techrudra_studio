@@ -6,8 +6,7 @@ export const list = query({
   args: { hackathonId: v.optional(v.id("hackathons")) },
   handler: async (ctx, args) => {
     authorize(ctx, "read");
-    const q = ctx.db.query("teamInvitations");
-    if (args.hackathonId != null) q = q.eq("hackathonId", args.hackathonId);
+    let q = ctx.db.query("teamInvitations"); if (args.hackathonId != null) q = q.eq("hackathonId", args.hackathonId);
     const rows = await q.order("desc").limit(100).collect();
     return rows.map((i) => ({
       id: i._id,
