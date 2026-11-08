@@ -7,6 +7,7 @@ import { ConvexReactClient } from "convex/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import SplashCursor from "./components/SplashCursor";
+import StudioChat from "./components/ai/StudioChat";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import "./index.css";
 
@@ -151,6 +152,7 @@ createRoot(document.getElementById("root")!).render(
             </Routes>
           </Suspense>
         </BrowserRouter>
+        <StudioChat />
         <Toaster />
         <SplashCursor RAINBOW_MODE={false} COLOR="#A78BFA" />
       </ConvexAuthProvider>

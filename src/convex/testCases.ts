@@ -5,11 +5,10 @@ import { authorize } from "./utils/auth";
 export const list = query({
   args: { problemId: v.id("problems") },
   handler: async (ctx, args) => {
-    authorize(ctx, "read");
+    await authorize(ctx, "read");
     const rows = await ctx.db
       .query("testCases")
-      .withIndex("byProblem", "problemId")
-      .eq("problemId", args.problemId)
+      .withIndex("byProblem", (q) => q.eq("problemId", args.problemId))
       .order("asc")
       .collect();
     return rows.map((t) => ({
@@ -35,10 +34,11 @@ export const create = mutation({
     memoryLimitKb: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    authorize(ctx, "write");
-    const existing = await ctx.db.get(args.problemId);
-    // In a real app, verify ownership here; delegated per use-case.
-    const id = await ctx.db.insert("testCases", {
+    await authorize(ctx, "write");
+    const problem = await ctx.db.get(args.problemId);
+    if (!problem) throw new Error("problem not found");
+
+    return await ctx.db.insert("testCases", {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       problemId: args.problemId,
       input: args.input,
@@ -48,13 +48,12 @@ export const create = mutation({
       memoryLimitKb: args.memoryLimitKb,
       createdAt: Date.now(),
     });
-    return id;
   },
 });
 
 export const update = mutation({
   args: {
-    id: v.string(),
+    id: v.id("testCases"),
     patch: v.object({
       input: v.optional(v.string()),
       output: v.optional(v.string()),
@@ -64,15 +63,19 @@ export const update = mutation({
     }),
   },
   handler: async (ctx, args) => {
-    authorize(ctx, "write");
-    await ctx.db.patch("testCases", args.id as any, args.patch);
+    await authorize(ctx, "write");
+    const existing = await ctx.db.get(args.id);
+    if (!existing) throw new Error("test case not found");
+    await ctx.db.patch(args.id, args.patch);
   },
 });
 
 export const deleteTestCase = mutation({
-  args: { id: v.string() },
+  args: { id: v.id("testCases") },
   handler: async (ctx, args) => {
-    authorize(ctx, "write");
-    await ctx.db.delete("testCases", args.id as any);
+    await authorize(ctx, "write");
+    const existing = await ctx.db.get(args.id);
+    if (!existing) throw new Error("test case not found");
+    await ctx.db.delete(args.id);
   },
 });

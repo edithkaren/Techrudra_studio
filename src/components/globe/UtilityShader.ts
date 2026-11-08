@@ -6,7 +6,11 @@ import { Vector3 } from "three";
  * render pass.  Zero-cost reuse.
  */
 export class UniformState<T> {
-  constructor(public value: T) {}
+  value: T;
+
+  constructor(value: T) {
+    this.value = value;
+  }
 }
 
 /**
@@ -15,9 +19,11 @@ export class UniformState<T> {
  * erasableSyntaxOnly tsconfig stays happy.
  */
 export class Vector3State {
-  constructor(
-    public readonly values: [number, number, number]
-  ) {}
+  readonly values: [number, number, number];
+
+  constructor(values: [number, number, number]) {
+    this.values = values;
+  }
 
   get x(): number { return this.values[0]; }
   set x(v: number) { this.values[0] = v; }
@@ -33,7 +39,11 @@ export class Vector3State {
  * One [number, number, number] tuple exposed as a uniform value.
  */
 export class Tuple3State<T = [number, number, number]> {
-  constructor(public value: T) {}
+  value: T;
+
+  constructor(value: T) {
+    this.value = value;
+  }
 }
 
 // ── Globally shared uniform state (updated from useFrame) ────────────────────────
@@ -41,7 +51,7 @@ export const GLOBAL_TIME = new UniformState(0);
 export const GLOBAL_SUN = new Tuple3State([0.35, 0.8, 0.4]);
 export const GLOBAL_NODES = new Tuple3State<[number, number, number][]>([]);
 export const GLOBAL_NODE_COLORS = new Tuple3State<[number, number, number][]>([]);
-export const GLOBAL_NODE_RADII = new Tuple3State<[number, number, number]>([0, 0, 0]);
+export const GLOBAL_NODE_RADII = new Tuple3State<[number, number, number][]>([]);
 export const GLOBAL_ARCS = new Tuple3State<[number, number, number][]>([]);
 export const GLOBAL_ARC_COLORS = new Tuple3State<[number, number, number][]>([]);
 export const GLOBAL_ARC_PARTICLES = new Tuple3State<[number, number, number][]>([]);
@@ -53,7 +63,7 @@ export const GLOBAL_PARALLAX = new Vector3State([0, 0, 0]);
  * vector.  Used for parallax dipoles on the globe surface.
  */
 export function projectToNDC(p: [number, number, number], camera: any, target: [number, number, number]) {
-  const fwd = new Vector3().copy(target).sub(camera.position).normalize();
+  const fwd = new Vector3(target[0], target[1], target[2]).sub(camera.position).normalize();
   return [(p[0] - target[0]) / (camera.right.length() * 2), (p[1] - target[1]) / (camera.up.length() * 2)] as [number, number];
 }
 

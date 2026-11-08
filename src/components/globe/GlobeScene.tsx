@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useCallback, useState, useRef } from "react";
-import { Vector3, SphereGeometry, Mesh, MeshBasicMaterial, Raycaster, BackSide, AdditiveBlending, Color, FogExp2 } from "three";
-import { extend, useThree, Canvas, useFrame, ThreeEvent, RawShaderMaterial as R3FRawShaderMaterial } from "@react-three/fiber";
+import { Vector3, SphereGeometry, Mesh, MeshBasicMaterial, Raycaster, BackSide, AdditiveBlending, Color, FogExp2, RawShaderMaterial as R3FRawShaderMaterial } from "three";
+import { extend, useThree, Canvas, useFrame, ThreeEvent } from "@react-three/fiber";
 import { OrbitControls, Sky, Stars, ContactShadows, Environment, Float, Grid } from "@react-three/drei";
 import { cities, latLngToPos, type City } from "./GlobeData";
 import { buildHubs, buildArcs } from "./GlobeCities";
@@ -20,19 +20,26 @@ import {
   closestPointOnSegment,
 } from "./UtilityShader";
 
-declare global {
+/**
+ * Custom three.js elements used below (registered through `extend`) are not
+ * part of @react-three/fiber's built-in JSX catalogue, so their props are
+ * declared here.
+ */
+type ThreeElementProps = { children?: React.ReactNode } & Record<string, unknown>;
+
+declare module "react" {
   namespace JSX {
     interface IntrinsicElements {
-      dotGrid: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      energyWaves: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      scanStroke: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      rippleRing: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      cityNode: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      arcStrip: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      orbitRing: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      glowSphere: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      labelSphere: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
-      labels: React.DetailedHTMLProps<React.SVGProps<SVGGraphicsElement>, unknown>;
+      dotGrid: ThreeElementProps;
+      energyWaves: ThreeElementProps;
+      scanStroke: ThreeElementProps;
+      rippleRing: ThreeElementProps;
+      cityNode: ThreeElementProps;
+      arcStrip: ThreeElementProps;
+      orbitRing: ThreeElementProps;
+      glowSphere: ThreeElementProps;
+      labelSphere: ThreeElementProps;
+      labels: ThreeElementProps;
     }
   }
 }
@@ -423,7 +430,7 @@ const GlobeScene = () => {
     for (const h of hubs) {
       nodes.push(h.pos as [number, number, number]);
       colors.push([h.color[0] / 255, h.color[1] / 255, h.color[2] / 255] as [number, number, number]);
-      radii.push(0.016 / 1.0);
+      radii.push([0.016, 0.016, 0.016]);
     }
     GLOBAL_NODES.value = nodes;
     GLOBAL_NODE_COLORS.value = colors;
@@ -450,7 +457,7 @@ const GlobeScene = () => {
     raycaster.setFromCamera(new Vector3(ptr.x, ptr.y, 0.5) as any, camera as any);
     const intersects = raycaster.intersectObject(new Mesh(new SphereGeometry(0.1), new MeshBasicMaterial({ transparent: true })) as any);
     if (intersects.length > 0) {
-      const hit = intersects[0].point as [number, number, number];
+      const hit = intersects[0].point as unknown as [number, number, number];
       const cam = (camera as any).position as [number, number, number];
       const dir = [hit[0] - cam[0], hit[1] - cam[1], hit[2] - cam[2]] as [number, number, number];
       const len = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2]);
@@ -503,10 +510,16 @@ const GlobeScene = () => {
           floatIntensity={0.6}
           rotation={[0.5, 0, 0]}
         >
-          <mesh
-            geometry={new SphereGeometry(1.01, 64, 64)}
-            material={{ color: 0x0a0a1a, side: BackSide, depthWrite: false, transparent: true, opacity: 0.35, blending: AdditiveBlending }}
-          />
+          <mesh geometry={new SphereGeometry(1.01, 64, 64)}>
+            <meshBasicMaterial
+              color={0x0a0a1a}
+              side={BackSide}
+              depthWrite={false}
+              transparent
+              opacity={0.35}
+              blending={AdditiveBlending}
+            />
+          </mesh>
         </Float>
 
         <dotGrid

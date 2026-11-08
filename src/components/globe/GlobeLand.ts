@@ -1,5 +1,9 @@
-import landData from "./110m_land.json";
-import { feature, mesh } from "topojson-client";
+import landDataJson from "./110m_land.json";
+import { mesh } from "topojson-client";
+
+// The bundled world-atlas topology is plain JSON; its shape is validated by the
+// topojson-client helpers at runtime rather than by the TypeScript compiler.
+const landData = landDataJson as any;
 
 /** A single land polygon vertex in 3D. */
 export type LandVertex = { x: number; y: number; z: number };
@@ -20,7 +24,7 @@ function to3d(lat: number, lng: number, radius: number): [number, number, number
  * The scale is chosen so the land roughly fills a unit sphere.
  */
 export function buildLandPositions(radius: number) {
-  const meshData = mesh(landData, landData.objects.land) as unknown as number[][][];
+  const meshData = mesh(landData, landData.objects.land) as unknown as number[][];
   const positions: LandVertex[] = [];
 
   for (let i = 0; i < meshData.length; i += 2) {
