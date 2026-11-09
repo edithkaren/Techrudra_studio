@@ -6,6 +6,7 @@ import FeaturedShowcase from "@/components/FeaturedShowcase";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
+import WhatsNext from "@/components/WhatsNext";
 import Vision from "@/components/Vision";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -30,6 +31,7 @@ export default function Landing() {
         <Services />
         <FluidSectionDivider h={64} accent="#A78BFA" bg="#0A0A0A" layers={2} flip />
         <Portfolio />
+        <WhatsNext />
         <Vision />
         <FluidSectionDivider h={56} accent="#A78BFA" bg="#0A0A0A" layers={1} />
         <Contact />
