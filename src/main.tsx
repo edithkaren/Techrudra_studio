@@ -17,6 +17,7 @@ const AuthPage = lazy(() => import("./pages/AuthPage.tsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
 const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail.tsx"));
 const BookingPage = lazy(() => import("./pages/BookingPage.tsx"));
+const OffersPage = lazy(() => import("./pages/OffersPage.tsx"));
 const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
 const TermsPage = lazy(() =>
   import("./pages/LegalPages.tsx").then((m) => ({ default: m.TermsPage })),
@@ -146,6 +147,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/booking" element={<BookingPage />} />
+              <Route path="/offers" element={<OffersPage />} />
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="*" element={<NotFound />} />
